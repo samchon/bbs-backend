@@ -9,4 +9,3 @@ src/migrations
 package-lock.json
 swagger.json
 .npmrc
-*.sh
