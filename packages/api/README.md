@@ -1,8 +1,8 @@
 # SDK for Client Developers
 ## Outline
-[`@samchon/bbs`](https://github.com/samchon/backend) provides SDK (Software Development Kit) for convenience.
+[`@samchon/bbs`](https://github.com/samchon/bbs-backend) provides SDK (Software Development Kit) for convenience.
 
-For the client developers who are connecting to this backend server, [`@samchon/bbs`](https://github.com/samchon/backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
+For the client developers who are connecting to this backend server, [`@samchon/bbs`](https://github.com/samchon/bbs-backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
 
 With the SDK, client developers never need to re-define the duplicated API interfaces. Just utilize the provided interfaces and asynchronous functions defined in the SDK. It would be much convenient than any other Rest API solutions.
 
@@ -17,70 +17,54 @@ npm install --save @samchon/bbs-api
 Import the `@samchon/bbs-api` and enjoy the auto-completion.
 
 ```typescript
-import api from "@samchon/bbs-api";
+import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
+import { randint } from "tstl";
+import typia from "typia";
 
-import { IBbsCitizen } from "@samchon/bbs-api/lib/structures/bbs/actors/IBbsCitizen";
-import { IBbsQuestionArticle } from "@samchon/bbs-api/lib/structures/bbs/articles/IBbsQuestionArticle";
-import { IBbsSection } from "@samchon/bbs-api/lib/api/structures/bbs/systematic/IBbsSection";
+import api from "@samchon/bbs-api/lib/index";
+import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 
-async function main(): Promise<void>
-{
-    //----
-    // PREPARATIONS
-    //----
-    // CONNECTION INFO
-    const connection: api.IConnection = {
-        host: "http://127.0.0.1:37001",
-        password: {
-            key: "pJXhbHlYfzkC1CBK8R67faaBgJWB9Myu",
-            iv: "IXJBt4MflFxvxKkn"
-        }
-    };
+import { prepare_random_file } from "./internal/prepare_random_file";
 
-    // ISSUE A CUSTOMER ACCOUNT
-    const customer: IBbsCustomer = await api.functional.bbs.customers.authenticate.issue
-    (
-        connection,
-        {
-            href: window.location.href,
-            referrer: window.document.referrer
-        }
-    );
+export const test_api_bbs_article_create = async (
+  connection: api.IConnection,
+): Promise<void> => {
+  // PREPARE INPUT DATA
+  const input: IBbsArticle.ICreate = {
+    writer: RandomGenerator.name(),
+    password: RandomGenerator.alphaNumeric(8),
+    title: RandomGenerator.paragraph()(),
+    body: RandomGenerator.content()()(),
+    format: "md",
+    files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
+  };
 
-    // ACTIVATE THE CUSTOMER
-    customer.citizen = await api.functional.bbs.customers.authenticate.activate
-    (
-        connection,
-        {
-            name: "Jeongho Nam",
-            mobile: "821036270016"
-        }
-    );
+  // DO CREATE
+  const article: IBbsArticle = await api.functional.bbs.articles.create(
+    connection,
+    input,
+  );
+  typia.assertEquals(article);
 
-    //----
-    // WRITE A QUESTION ARTICLE
-    //----
-    // FIND TARGET SECTION
-    const sectionList: IBbsSection[] = await api.functional.bbs.customers.systematic.sections.index
-    (
-        connection
-    );
-    const section: IBbsSection = sectionList.find(section => section.type === "qna")!;
+  // VALIDATE WHETHER EXACT DATA IS INSERTED
+  TestValidator.equals("create")({
+    snapshots: [
+      {
+        format: input.format,
+        title: input.title,
+        body: input.body,
+        files: input.files,
+      },
+    ],
+    writer: input.writer,
+  })(article);
 
-    // PREPARE INPUT DATA
-    const input: IBbsQuestionArticle.IStore = {
-        title: "Some Question Title",
-        body: "Some Question Body Content...",
-        files: []
-    };
-
-    // DO WRITE
-    const question: IBbsQuestionArticle = await api.functional.bbs.customers.articles.qna.store
-    (
-        connection, 
-        section.code,
-        input
-    );
-    console.log(question);
-}
+  // COMPARE WITH READ DATA
+  const read: IBbsArticle = await api.functional.bbs.articles.at(
+    connection,
+    article.id,
+  );
+  typia.assertEquals(read);
+  TestValidator.equals("read")(read)(article);
+};
 ```

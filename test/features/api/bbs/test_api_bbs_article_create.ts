@@ -10,6 +10,7 @@ import { prepare_random_file } from "./internal/prepare_random_file";
 export const test_api_bbs_article_create = async (
   connection: api.IConnection,
 ): Promise<void> => {
+  // PREPARE INPUT DATA
   const input: IBbsArticle.ICreate = {
     writer: RandomGenerator.name(),
     password: RandomGenerator.alphaNumeric(8),
@@ -18,12 +19,15 @@ export const test_api_bbs_article_create = async (
     format: "md",
     files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
   };
+
+  // DO CREATE
   const article: IBbsArticle = await api.functional.bbs.articles.create(
     connection,
     input,
   );
   typia.assertEquals(article);
 
+  // VALIDATE WHETHER EXACT DATA IS INSERTED
   TestValidator.equals("create")({
     snapshots: [
       {
@@ -36,6 +40,7 @@ export const test_api_bbs_article_create = async (
     writer: input.writer,
   })(article);
 
+  // COMPARE WITH READ DATA
   const read: IBbsArticle = await api.functional.bbs.articles.at(
     connection,
     article.id,

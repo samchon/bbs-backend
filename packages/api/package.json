@@ -1,19 +1,19 @@
 {
   "name": "@samchon/bbs-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "API for bbs",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/samchon/backend"
+    "url": "https://github.com/samchon/bbs-backend"
   },
-  "author": "AUTHOR",
+  "author": "Samchon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samchon/backend/issues"
+    "url": "https://github.com/samchon/bbs-backend/issues"
   },
-  "homepage": "https://github.com/samchon/backend#readme",
+  "homepage": "https://github.com/samchon/bbs-backend#readme",
   "dependencies": {
     "@nestia/fetcher": "^2.3.9",
     "typia": "^5.2.6"

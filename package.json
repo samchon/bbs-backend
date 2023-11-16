@@ -1,13 +1,12 @@
 {
   "name": "@samchon/bbs-backend",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Backend for bbs",
   "scripts": {
     "test": "node bin/test",
     "test:update": "node bin/test/manual/update",
     "------------------------BUILDS------------------------": "",
     "build": "npm run build:prisma && npm run build:sdk && npm run build:main && npm run build:test",
-    "build:api": "rimraf packages/api/lib && nestia sdk && tsc -p packages/api/tsconfig.json",
     "build:main": "rimraf lib && tsc",
     "build:prisma": "prisma generate --schema=src/schema.prisma",
     "build:sdk": "rimraf src/api/functional && nestia sdk",
@@ -25,7 +24,7 @@
     "webpack:start:updator:master": "node dist/updator-master",
     "webpack:start:updator:slave": "node dist/updator-slave",
     "------------------------DEPLOYS------------------------": "",
-    "package:api": "npm run build:api && cd packages/api && npm publish",
+    "package:api": "rimraf packages/api/lib && nestia sdk && tsc -p packages/api/tsconfig.json && cd packages/api && npm publish --access public",
     "start": "node lib/executable/server",
     "start:updator:master": "node lib/executable/updator-master",
     "start:updator:slave": "node lib/executable/updator-slave",
@@ -44,14 +43,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/samchon/backend"
+    "url": "https://github.com/samchon/bbs-backend"
   },
-  "author": "AUTHOR",
+  "author": "Samchon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samchon/backend/issues"
+    "url": "https://github.com/samchon/bbs-backend/issues"
   },
-  "homepage": "https://github.com/samchon/backend",
+  "homepage": "https://github.com/samchon/bbs-backend",
   "devDependencies": {
     "@nestia/e2e": "^0.3.7",
     "@nestia/sdk": "^2.3.9",
