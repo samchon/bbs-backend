@@ -30,6 +30,7 @@ List of the run commands defined in the [package.json](package.json) are like be
     - `package:api`: Build and publish the SDK library
     - `schema`: Reset the DB schema
     - `start`: Start the main program
+    - `start:swagger`: Start the `swagger-ui` application
   - Webpack
     - `webpack`: Build to a single JS file with Webpack
     - `webpack:prune`: Prune the `devDependencies` stably
