@@ -2,10 +2,7 @@ import fs from "fs";
 import { randint } from "tstl/algorithm/random";
 import { Singleton } from "tstl/thread/Singleton";
 
-import { MyBackend } from "../MyBackend";
-import { MyGlobal } from "../MyGlobal";
-import { MyUpdator } from "../MyUpdator";
-import { MyScheduler } from "../schedulers/MyScheduler";
+import { BbsBackend } from "../BbsBackend";
 import { ErrorUtil } from "../utils/ErrorUtil";
 
 const EXTENSION = __filename.substr(-2);
@@ -49,7 +46,7 @@ async function handle_error(exp: any): Promise<void> {
 
 async function main(): Promise<void> {
   // BACKEND SEVER LATER
-  const backend: MyBackend = new MyBackend();
+  const backend: BbsBackend = new BbsBackend();
   await backend.open();
 
   //----
@@ -58,15 +55,6 @@ async function main(): Promise<void> {
   // UNEXPECTED ERRORS
   global.process.on("uncaughtException", handle_error);
   global.process.on("unhandledRejection", handle_error);
-
-  // SCHEDULER ONLY WHEN MASTER
-  if (MyGlobal.env.MODE !== "real" || process.argv[3] === "master") {
-    if (MyGlobal.env.MODE === "local")
-      try {
-        await MyUpdator.master();
-      } catch {}
-    await MyScheduler.repeat();
-  }
 }
 main().catch((exp) => {
   console.log(exp);

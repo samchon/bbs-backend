@@ -1,7 +1,7 @@
-import { MyUpdator } from "../MyUpdator";
+import { BbsUpdator } from "../BbsUpdator";
 
 async function main(): Promise<void> {
-  await MyUpdator.slave();
+  await BbsUpdator.slave();
 }
 main().catch((exp) => {
   console.error(exp);

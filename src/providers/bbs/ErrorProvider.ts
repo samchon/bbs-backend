@@ -1,6 +1,6 @@
 import { HttpException } from "@nestjs/common";
 
-import { IDiagnosis } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IDiagnosis";
+import { IDiagnosis } from "@samchon/bbs-api/lib/structures/common/IDiagnosis";
 
 export namespace ErrorProvider {
   const http =

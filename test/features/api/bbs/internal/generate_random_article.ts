@@ -1,0 +1,21 @@
+import { RandomGenerator } from "@nestia/e2e";
+import typia from "typia";
+
+import api from "@samchon/bbs-api/lib/index";
+import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
+
+import { prepare_random_article } from "./prepare_random_article";
+
+export const generate_random_article = async (
+  connection: api.IConnection,
+  password?: string,
+): Promise<IBbsArticle> => {
+  const article: IBbsArticle = await api.functional.bbs.articles.create(
+    connection,
+    {
+      writer: RandomGenerator.name(),
+      ...prepare_random_article(password ?? RandomGenerator.alphaNumeric(8)),
+    },
+  );
+  return typia.assertEquals(article);
+};

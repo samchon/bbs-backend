@@ -1,10 +1,10 @@
 import { MutexAcceptor, MutexConnector, MutexServer } from "mutex-server";
 import { HashSet } from "tstl";
 
-import { MyConfiguration } from "./MyConfiguration";
+import { BbsConfiguration } from "./BbsConfiguration";
 import { Terminal } from "./utils/Terminal";
 
-export namespace MyUpdator {
+export namespace BbsUpdator {
   export interface IController {
     update: () => Promise<void>;
     revert: (commit: string) => Promise<void>;
@@ -34,8 +34,8 @@ export namespace MyUpdator {
     };
 
     // OPEN SERVER
-    await server.open(MyConfiguration.UPDATOR_PORT(), async (acceptor) => {
-      if (acceptor.header !== MyConfiguration.SYSTEM_PASSWORD()) {
+    await server.open(BbsConfiguration.UPDATOR_PORT(), async (acceptor) => {
+      if (acceptor.header !== BbsConfiguration.SYSTEM_PASSWORD()) {
         await acceptor.reject();
         return;
       } else if (acceptor.path === "/slave") {
@@ -56,13 +56,13 @@ export namespace MyUpdator {
     host?: string,
   ): Promise<MutexConnector<string, IController>> => {
     const connector: MutexConnector<string, IController> = new MutexConnector(
-      MyConfiguration.SYSTEM_PASSWORD(),
+      BbsConfiguration.SYSTEM_PASSWORD(),
       UpdateProvider,
     );
     await connector.connect(
       `ws://${
-        host ?? MyConfiguration.MASTER_IP()
-      }:${MyConfiguration.UPDATOR_PORT()}/slave`,
+        host ?? BbsConfiguration.MASTER_IP()
+      }:${BbsConfiguration.UPDATOR_PORT()}/slave`,
     );
     return connector;
   };

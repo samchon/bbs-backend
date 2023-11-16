@@ -1,7 +1,7 @@
 import { assert } from "typia";
 
-import api from "@ORGANIZATION/PROJECT-api";
-import { ISystem } from "@ORGANIZATION/PROJECT-api/lib/structures/monitors/ISystem";
+import api from "@samchon/bbs-api";
+import { ISystem } from "@samchon/bbs-api/lib/structures/monitors/ISystem";
 
 export async function test_api_monitor_system(
   connection: api.IConnection,

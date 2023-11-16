@@ -1,20 +1,26 @@
 import { Prisma } from "@prisma/client";
 import { v4 } from "uuid";
 
-import { IBbsArticle } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IBbsArticle";
-import { IPage } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IPage";
+import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
+import { IPage } from "@samchon/bbs-api/lib/structures/common/IPage";
 
-import { MyGlobal } from "../../MyGlobal";
+import { BbsGlobal } from "../../BbsGlobal";
+import { BcryptUtil } from "../../utils/BcryptUtil";
 import { PaginationUtil } from "../../utils/PaginationUtil";
-import { AttachmentFileProvider } from "./AttachmentFileProvider";
+import { AttachmentFileProvider } from "../common/AttachmentFileProvider";
 import { BbsArticleSnapshotProvider } from "./BbsArticleSnapshotProvider";
+import { ErrorProvider } from "./ErrorProvider";
 
 export namespace BbsArticleProvider {
+  /* -----------------------------------------------------------
+    TRANSFORMERS
+  ----------------------------------------------------------- */
   export namespace json {
     export const transform = (
       input: Prisma.bbs_articlesGetPayload<ReturnType<typeof select>>,
     ): IBbsArticle => ({
       id: input.id,
+      writer: input.writer,
       snapshots: input.snapshots
         .sort((a, b) => a.created_at.getTime() - b.created_at.getTime())
         .map(BbsArticleSnapshotProvider.json.transform),
@@ -30,23 +36,11 @@ export namespace BbsArticleProvider {
   }
 
   export namespace abridge {
-    export const paginate = (
-      input: IBbsArticle.IRequest,
-    ): Promise<IPage<IBbsArticle.IAbridge>> =>
-      PaginationUtil.paginate({
-        schema: MyGlobal.prisma.bbs_articles,
-        payload: abridge.select,
-        transform: abridge.transform,
-      })({
-        where: search(input.search ?? {}),
-        orderBy: input.sort?.length
-          ? PaginationUtil.orderBy(orderBy)(input.sort)
-          : [{ created_at: "desc" }],
-      })(input);
     export const transform = (
       input: Prisma.bbs_articlesGetPayload<ReturnType<typeof select>>,
     ): IBbsArticle.IAbridge => ({
       id: input.id,
+      writer: input.writer,
       title: input.mv_last!.snapshot.title,
       body: input.mv_last!.snapshot.body,
       format: input.mv_last!.snapshot.format as IBbsArticle.Format,
@@ -77,23 +71,11 @@ export namespace BbsArticleProvider {
   }
 
   export namespace summarize {
-    export const paginate = (
-      input: IBbsArticle.IRequest,
-    ): Promise<IPage<IBbsArticle.ISummary>> =>
-      PaginationUtil.paginate({
-        schema: MyGlobal.prisma.bbs_articles,
-        payload: summarize.select,
-        transform: summarize.transform,
-      })({
-        where: search(input.search ?? {}),
-        orderBy: input.sort?.length
-          ? PaginationUtil.orderBy(orderBy)(input.sort)
-          : [{ created_at: "desc" }],
-      })(input);
     export const transform = (
       input: Prisma.bbs_articlesGetPayload<ReturnType<typeof select>>,
     ): IBbsArticle.ISummary => ({
       id: input.id,
+      writer: input.writer,
       title: input.mv_last!.snapshot.title,
       created_at: input.created_at.toISOString(),
       updated_at: input.mv_last!.snapshot.created_at.toISOString(),
@@ -115,16 +97,63 @@ export namespace BbsArticleProvider {
       });
   }
 
-  export const search = (input: IBbsArticle.IRequest.ISearch | undefined) =>
+  /* -----------------------------------------------------------
+    READERS
+  ----------------------------------------------------------- */
+  export const index = (
+    input: IBbsArticle.IRequest,
+  ): Promise<IPage<IBbsArticle.ISummary>> =>
+    PaginationUtil.paginate({
+      schema: BbsGlobal.prisma.bbs_articles,
+      payload: summarize.select(),
+      transform: summarize.transform,
+    })({
+      where: {
+        AND: [{ deleted_at: null }, ...search(input.search ?? {})],
+      },
+      orderBy: input.sort?.length
+        ? PaginationUtil.orderBy(orderBy)(input.sort)
+        : [{ created_at: "desc" }],
+    })(input);
+
+  export const abridges = (
+    input: IBbsArticle.IRequest,
+  ): Promise<IPage<IBbsArticle.IAbridge>> =>
+    PaginationUtil.paginate({
+      schema: BbsGlobal.prisma.bbs_articles,
+      payload: abridge.select(),
+      transform: abridge.transform,
+    })({
+      where: {
+        AND: [{ deleted_at: null }, ...search(input.search ?? {})],
+      },
+      orderBy: input.sort?.length
+        ? PaginationUtil.orderBy(orderBy)(input.sort)
+        : [{ created_at: "desc" }],
+    })(input);
+
+  export const at = async (id: string): Promise<IBbsArticle> => {
+    const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+      where: {
+        id,
+        deleted_at: null,
+      },
+      ...json.select(),
+    });
+    return json.transform(record);
+  };
+
+  const search = (input: IBbsArticle.IRequest.ISearch | undefined) =>
     Prisma.validator<Prisma.bbs_articlesWhereInput["AND"]>()([
+      ...(input?.writer?.length
+        ? [{ writer: { contains: input.writer } }]
+        : []),
       ...(input?.title?.length
         ? [
             {
               mv_last: {
                 snapshot: {
-                  title: {
-                    contains: input.title,
-                  },
+                  title: { contains: input.title },
                 },
               },
             },
@@ -189,12 +218,14 @@ export namespace BbsArticleProvider {
         : []),
     ]);
 
-  export const orderBy = (
+  const orderBy = (
     key: IBbsArticle.IRequest.SortableColumns,
     value: "asc" | "desc",
   ) =>
     Prisma.validator<Prisma.bbs_articlesOrderByWithRelationInput>()(
-      key === "title"
+      key === "writer"
+        ? { writer: value }
+        : key === "title"
         ? { mv_last: { snapshot: { title: value } } }
         : key === "created_at"
         ? { created_at: value }
@@ -202,26 +233,85 @@ export namespace BbsArticleProvider {
           { mv_last: { snapshot: { created_at: value } } },
     );
 
-  export const collect =
-    <
-      Input extends IBbsArticle.IStore,
-      Snapshot extends Prisma.bbs_article_snapshotsCreateWithoutArticleInput,
-    >(
-      snapshotFactory: (input: Input) => Snapshot,
-    ) =>
-    (input: Input) => {
-      const snapshot = snapshotFactory(input);
-      return Prisma.validator<Prisma.bbs_articlesCreateInput>()({
+  /* -----------------------------------------------------------
+    WRITERS
+  ----------------------------------------------------------- */
+  export const create = async (
+    input: IBbsArticle.ICreate,
+    ip: string,
+  ): Promise<IBbsArticle> => {
+    const snapshot = BbsArticleSnapshotProvider.collect(input, ip);
+    const record = await BbsGlobal.prisma.bbs_articles.create({
+      data: {
         id: v4(),
+        writer: input.writer,
+        created_at: new Date(),
+        password: await BcryptUtil.hash(input.password),
         snapshots: {
           create: [snapshot],
         },
-        created_at: new Date(),
-        deleted_at: null,
         mv_last: {
           create: {
-            snapshot: { connect: { id: snapshot.id } },
+            bbs_article_snapshot_id: snapshot.id,
           },
+        },
+      },
+      ...json.select(),
+    });
+    return json.transform(record);
+  };
+
+  export const update =
+    (id: string) =>
+    async (
+      input: IBbsArticle.IUpdate,
+      ip: string,
+    ): Promise<IBbsArticle.ISnapshot> => {
+      const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+        where: {
+          id,
+          deleted_at: null,
+        },
+        ...json.select(),
+      });
+      if (
+        false ===
+        (await BcryptUtil.equals({
+          input: input.password,
+          hashed: record.password,
+        }))
+      )
+        throw ErrorProvider.forbidden({
+          accessor: "input.password",
+          message: "Wrong password.",
+        });
+      return BbsArticleSnapshotProvider.store({ id })(input, ip);
+    };
+
+  export const erase =
+    (id: string) =>
+    async (input: IBbsArticle.IErase): Promise<void> => {
+      const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+        where: {
+          id,
+          deleted_at: null,
+        },
+      });
+      if (
+        false ===
+        (await BcryptUtil.equals({
+          input: input.password,
+          hashed: record.password,
+        }))
+      )
+        throw ErrorProvider.forbidden({
+          accessor: "input.password",
+          message: "Wrong password.",
+        });
+      await BbsGlobal.prisma.bbs_articles.update({
+        where: { id },
+        data: {
+          deleted_at: new Date(),
         },
       });
     };

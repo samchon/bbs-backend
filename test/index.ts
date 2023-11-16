@@ -3,12 +3,12 @@ import fs from "fs";
 import { Singleton, randint } from "tstl";
 import { sleep_for } from "tstl/thread/global";
 
-import { MyBackend } from "../src/MyBackend";
-import { MyConfiguration } from "../src/MyConfiguration";
-import { MyGlobal } from "../src/MyGlobal";
-import { MyUpdator } from "../src/MyUpdator";
+import { BbsBackend } from "../src/BbsBackend";
+import { BbsConfiguration } from "../src/BbsConfiguration";
+import { BbsGlobal } from "../src/BbsGlobal";
+import { BbsUpdator } from "../src/BbsUpdator";
 import api from "../src/api";
-import { MySetupWizard } from "../src/setup/MySetupWizard";
+import { BbsSetupWizard } from "../src/setup/BbsSetupWizard";
 import { ArgumentParser } from "../src/utils/ArgumentParser";
 import { ErrorUtil } from "../src/utils/ErrorUtil";
 
@@ -66,21 +66,21 @@ async function main(): Promise<void> {
 
   // CONFIGURE
   const options: IOptions = await getOptions();
-  MyGlobal.testing = true;
+  BbsGlobal.testing = true;
 
   if (options.reset) {
-    await StopWatch.trace("Reset DB")(MySetupWizard.schema);
-    await StopWatch.trace("Seed Data")(MySetupWizard.seed);
+    await StopWatch.trace("Reset DB")(BbsSetupWizard.schema);
+    await StopWatch.trace("Seed Data")(BbsSetupWizard.seed);
   }
 
   // OPEN SERVER
-  const updator = await MyUpdator.master();
-  const backend: MyBackend = new MyBackend();
+  const updator = await BbsUpdator.master();
+  const backend: BbsBackend = new BbsBackend();
   await backend.open();
 
   // DO TEST
   const connection: api.IConnection = {
-    host: `http://127.0.0.1:${MyConfiguration.API_PORT()}`,
+    host: `http://127.0.0.1:${BbsConfiguration.API_PORT()}`,
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",

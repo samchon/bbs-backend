@@ -6,8 +6,8 @@ module.exports = {
     trailingComma: "all",
     importOrder: [
         "<THIRD_PARTY_MODULES>",
-        "^@ORGANIZATION/PROJECT-api(.*)$",
-        "^@ORGANIZATION/PROJECT-models(.*)$",
+        "^@samchon/bbs-api(.*)$",
+        "^@samchon/bbs-models(.*)$",
         "(.*)providers/(.*)$",
         "^[./]"
     ],

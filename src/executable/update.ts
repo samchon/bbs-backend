@@ -2,30 +2,30 @@ import { MutexConnector, RemoteMutex } from "mutex-server";
 import { Promisive } from "tgrid/typings/Promisive";
 import { UniqueLock } from "tstl/thread/UniqueLock";
 
-import { MyConfiguration } from "../MyConfiguration";
-import { MyGlobal } from "../MyGlobal";
-import { MyUpdator } from "../MyUpdator";
+import { BbsConfiguration } from "../BbsConfiguration";
+import { BbsGlobal } from "../BbsGlobal";
+import { BbsUpdator } from "../BbsUpdator";
 import api from "../api";
 import { ISystem } from "../api/structures/monitors/ISystem";
 
 async function main(): Promise<void> {
   // CONFIGURE MODE
   if (process.argv[2])
-    MyGlobal.setMode(process.argv[2].toUpperCase() as typeof MyGlobal.mode);
+    BbsGlobal.setMode(process.argv[2].toUpperCase() as typeof BbsGlobal.mode);
 
   // CONNECT TO THE UPDATOR SERVER
   const connector: MutexConnector<string, null> = new MutexConnector(
-    MyConfiguration.SYSTEM_PASSWORD(),
+    BbsConfiguration.SYSTEM_PASSWORD(),
     null,
   );
   await connector.connect(
-    `ws://${MyConfiguration.MASTER_IP()}:${MyConfiguration.UPDATOR_PORT()}/update`,
+    `ws://${BbsConfiguration.MASTER_IP()}:${BbsConfiguration.UPDATOR_PORT()}/update`,
   );
 
   // REQUEST UPDATE WITH MONOPOLYING A GLOBAL MUTEX
   const mutex: RemoteMutex = await connector.getMutex("update");
   const success: boolean = await UniqueLock.try_lock(mutex, async () => {
-    const updator: Promisive<MyUpdator.IController> = connector.getDriver();
+    const updator: Promisive<BbsUpdator.IController> = connector.getDriver();
     await updator.update();
   });
   await connector.close();
@@ -38,7 +38,7 @@ async function main(): Promise<void> {
 
   // PRINT THE COMMIT STATUS
   const connection: api.IConnection = {
-    host: `http://${MyConfiguration.MASTER_IP()}:${MyConfiguration.API_PORT()}`,
+    host: `http://${BbsConfiguration.MASTER_IP()}:${BbsConfiguration.API_PORT()}`,
   };
   const system: ISystem = await api.functional.monitors.system.get(connection);
   console.log("branch", system.arguments[2], system.commit.branch);

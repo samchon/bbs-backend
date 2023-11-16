@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client";
 import { v4 } from "uuid";
 
-import { IBbsArticle } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IBbsArticle";
-import { IEntity } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IEntity";
+import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
+import { IEntity } from "@samchon/bbs-api/lib/structures/common/IEntity";
 
-import { MyGlobal } from "../../MyGlobal";
-import { AttachmentFileProvider } from "./AttachmentFileProvider";
+import { BbsGlobal } from "../../BbsGlobal";
+import { AttachmentFileProvider } from "../common/AttachmentFileProvider";
 
 export namespace BbsArticleSnapshotProvider {
   export namespace json {
@@ -35,15 +35,18 @@ export namespace BbsArticleSnapshotProvider {
 
   export const store =
     (article: IEntity) =>
-    async (input: IBbsArticle.IUpdate): Promise<IBbsArticle.ISnapshot> => {
-      const snapshot = await MyGlobal.prisma.bbs_article_snapshots.create({
+    async (
+      input: IBbsArticle.IUpdate,
+      ip: string,
+    ): Promise<IBbsArticle.ISnapshot> => {
+      const snapshot = await BbsGlobal.prisma.bbs_article_snapshots.create({
         data: {
-          ...collect(input),
+          ...collect(input, ip),
           article: { connect: { id: article.id } },
         },
         ...json.select(),
       });
-      await MyGlobal.prisma.mv_bbs_article_last_snapshots.update({
+      await BbsGlobal.prisma.mv_bbs_article_last_snapshots.update({
         where: {
           bbs_article_id: article.id,
         },
@@ -54,12 +57,13 @@ export namespace BbsArticleSnapshotProvider {
       return json.transform(snapshot);
     };
 
-  export const collect = (input: IBbsArticle.IStore) =>
+  export const collect = (input: IBbsArticle.IUpdate, ip: string) =>
     Prisma.validator<Prisma.bbs_article_snapshotsCreateWithoutArticleInput>()({
       id: v4(),
       title: input.title,
       format: input.format,
       body: input.body,
+      ip,
       created_at: new Date(),
       to_files: {
         create: input.files.map((file, i) => ({

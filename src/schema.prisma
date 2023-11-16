@@ -1,6 +1,6 @@
 datasource db {
     provider = "postgresql"
-    url      = env("POSTGRES_URL")
+    url      = env("BBS_POSTGRES_URL")
 }
 
 generator client {
@@ -10,7 +10,7 @@ generator client {
 
 generator markdown {
     provider = "prisma-markdown"
-    title    = "PROJECT"
+    title    = "bbs"
     output   = "../docs/ERD.md"
 }
 
@@ -94,6 +94,12 @@ model bbs_articles {
     /// @format uuid
     id String @id @db.Uuid
 
+    /// Writer's name.
+    writer String @db.VarChar
+
+    /// Password for modification.
+    password String @db.VarChar
+
     /// Creation time of article.
     created_at DateTime @db.Timestamptz
 
@@ -154,6 +160,11 @@ model bbs_article_snapshots {
 
     /// Content body of article.
     body String
+
+    /// IP address of the snapshot writer.
+    ///
+    /// @format ip
+    ip String @db.VarChar
 
     /// Creation time of record.
     ///
@@ -258,6 +269,12 @@ model bbs_article_comments {
     /// @format uuid
     parent_id String? @db.Uuid
 
+    /// Writer's name.
+    writer String @db.VarChar
+
+    /// Password for modification.
+    password String @db.VarChar
+
     /// Creation time of comment.
     created_at DateTime @db.Timestamptz
 
@@ -323,6 +340,11 @@ model bbs_article_comment_snapshots {
 
     /// Content body of comment.
     body String
+
+    /// IP address of the snapshot writer.
+    ///
+    /// @format ip
+    ip String @db.VarChar
 
     /// Creation time of record.
     ///

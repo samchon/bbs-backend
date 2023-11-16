@@ -1,11 +1,11 @@
 import { Prisma } from "@prisma/client";
 import { v4 } from "uuid";
 
-import { IBbsArticleComment } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IBbsArticleComment";
-import { IEntity } from "@ORGANIZATION/PROJECT-api/lib/structures/common/IEntity";
+import { IBbsArticleComment } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticleComment";
+import { IEntity } from "@samchon/bbs-api/lib/structures/common/IEntity";
 
-import { MyGlobal } from "../../MyGlobal";
-import { AttachmentFileProvider } from "./AttachmentFileProvider";
+import { BbsGlobal } from "../../BbsGlobal";
+import { AttachmentFileProvider } from "../common/AttachmentFileProvider";
 
 export namespace BbsArticleCommentSnapshotProvider {
   export namespace json {
@@ -34,15 +34,16 @@ export namespace BbsArticleCommentSnapshotProvider {
       });
   }
 
-  export const store =
+  export const create =
     (comment: IEntity) =>
     async (
       input: IBbsArticleComment.IUpdate,
+      ip: string,
     ): Promise<IBbsArticleComment.ISnapshot> => {
       const snapshot =
-        await MyGlobal.prisma.bbs_article_comment_snapshots.create({
+        await BbsGlobal.prisma.bbs_article_comment_snapshots.create({
           data: {
-            ...collect(input),
+            ...collect(input, ip),
             comment: { connect: { id: comment.id } },
           },
           ...json.select(),
@@ -50,12 +51,13 @@ export namespace BbsArticleCommentSnapshotProvider {
       return json.transform(snapshot);
     };
 
-  export const collect = (input: IBbsArticleComment.IStore) =>
+  export const collect = (input: IBbsArticleComment.IUpdate, ip: string) =>
     Prisma.validator<Prisma.bbs_article_comment_snapshotsCreateWithoutCommentInput>()(
       {
         id: v4(),
         format: input.format,
         body: input.body,
+        ip,
         created_at: new Date(),
         to_files: {
           create: input.files.map((file, i) => ({

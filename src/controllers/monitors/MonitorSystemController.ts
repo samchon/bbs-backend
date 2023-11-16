@@ -1,7 +1,7 @@
 import core from "@nestia/core";
 import { Controller } from "@nestjs/common";
 
-import { ISystem } from "@ORGANIZATION/PROJECT-api/lib/structures/monitors/ISystem";
+import { ISystem } from "@samchon/bbs-api/lib/structures/monitors/ISystem";
 
 import { SystemProvider } from "../../providers/monitors/SystemProvider";
 

@@ -1,7 +1,7 @@
 import { tags } from "typia";
 
-import { IAttachmentFile } from "./IAttachmentFile";
-import { IPage } from "./IPage";
+import { IAttachmentFile } from "../common/IAttachmentFile";
+import { IPage } from "../common/IPage";
 
 /**
  * Comment written on an article.
@@ -18,9 +18,7 @@ import { IPage } from "./IPage";
  *
  * @author Samchon
  */
-export interface IBbsArticleComment<
-  Snapshot extends IBbsArticleComment.ISnapshot = IBbsArticleComment.ISnapshot,
-> {
+export interface IBbsArticleComment {
   /**
    * Primary Key.
    */
@@ -32,12 +30,17 @@ export interface IBbsArticleComment<
   parent_id: null | (string & tags.Format<"uuid">);
 
   /**
+   * Writer of comment.
+   */
+  writer: string;
+
+  /**
    * List of snapshot contents.
    *
    * It is created for the first time when a comment being created, and is
    * accumulated every time the comment is modified.
    */
-  snapshots: Snapshot[] & tags.MinItems<1>;
+  snapshots: IBbsArticleComment.ISnapshot[] & tags.MinItems<1>;
 
   /**
    * Creation time of comment.
@@ -45,20 +48,18 @@ export interface IBbsArticleComment<
   created_at: string & tags.Format<"date-time">;
 }
 export namespace IBbsArticleComment {
-  export type Format = "TEXT" | "MARKDOWN" | "HTML";
+  export type Format = "txt" | "md" | "html";
 
-  export interface IRequest<
-    Search extends IRequest.ISearch = IRequest.ISearch,
-    Sortable extends string = IRequest.SortableColumns,
-  > extends IPage.IRequest {
-    search?: Search;
-    sort?: IPage.Sort<Sortable>;
+  export interface IRequest extends IPage.IRequest {
+    search?: IRequest.ISearch;
+    sort?: IPage.Sort<IRequest.SortableColumns>;
   }
   export namespace IRequest {
     export interface ISearch {
+      writer?: string;
       body?: string;
     }
-    export type SortableColumns = "created_at";
+    export type SortableColumns = "writer" | "created_at";
   }
 
   /**
@@ -70,7 +71,7 @@ export namespace IBbsArticleComment {
    * As mentioned in {@link IBbsArticleComment}, designed to keep evidence
    * and prevent fraud.
    */
-  export interface ISnapshot extends IStore {
+  export interface ISnapshot extends Omit<IUpdate, "password"> {
     /**
      * Primary Key.
      */
@@ -84,7 +85,12 @@ export namespace IBbsArticleComment {
     created_at: string & tags.Format<"date-time">;
   }
 
-  export interface IStore {
+  export interface ICreate {
+    /**
+     * Writer of comment.
+     */
+    writer: string;
+
     /**
      * Format of body.
      *
@@ -101,7 +107,16 @@ export namespace IBbsArticleComment {
      * List of attachment files.
      */
     files: IAttachmentFile.IStore[];
+
+    /**
+     * Password for modification.
+     */
+    password: string;
   }
 
-  export type IUpdate = IStore;
+  export type IUpdate = Omit<ICreate, "writer">;
+
+  export interface IErase {
+    password: string;
+  }
 }

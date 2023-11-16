@@ -1,7 +1,7 @@
 import { tags } from "typia";
 
-import { IAttachmentFile } from "./IAttachmentFile";
-import { IPage } from "./IPage";
+import { IAttachmentFile } from "../common/IAttachmentFile";
+import { IPage } from "../common/IPage";
 
 /**
  * Article entity.
@@ -27,13 +27,16 @@ import { IPage } from "./IPage";
  * @template Snapshot Snapshot content type of the article
  * @author Samchon
  */
-export interface IBbsArticle<
-  Snapshot extends IBbsArticle.ISnapshot = IBbsArticle.ISnapshot,
-> {
+export interface IBbsArticle {
   /**
    * Primary Key.
    */
   id: string & tags.Format<"uuid">;
+
+  /**
+   * Writer of article.
+   */
+  writer: string;
 
   /**
    * List of snapshot contents.
@@ -41,7 +44,7 @@ export interface IBbsArticle<
    * It is created for the first time when an article is created, and is
    * accumulated every time the article is modified.
    */
-  snapshots: Snapshot[] & tags.MinItems<1>;
+  snapshots: IBbsArticle.ISnapshot[] & tags.MinItems<1>;
 
   /**
    * Creation time of article.
@@ -49,7 +52,7 @@ export interface IBbsArticle<
   created_at: string & tags.Format<"date-time">;
 }
 export namespace IBbsArticle {
-  export type Format = "TEXT" | "MARKDOWN" | "HTML";
+  export type Format = "txt" | "md" | "html";
 
   /**
    * Snapshot of article.
@@ -58,11 +61,11 @@ export namespace IBbsArticle {
    * the article, as mentioned in {@link IBbsArticle}, the contents of the article
    * are separated from the article record to keep evidence and prevent fraud.
    */
-  export interface ISnapshot extends IStore {
+  export interface ISnapshot extends Omit<IUpdate, "password"> {
     /**
      * Primary Key.
      */
-    id: string;
+    id: string & tags.Format<"uuid">;
 
     /**
      * Creation time of snapshot record.
@@ -72,27 +75,23 @@ export namespace IBbsArticle {
     created_at: string & tags.Format<"date-time">;
   }
 
-  export interface IRequest<
-    Search extends IRequest.ISearch = IRequest.ISearch,
-    Sortable extends
-      | IRequest.SortableColumns
-      | string = IRequest.SortableColumns,
-  > extends IPage.IRequest {
+  export interface IRequest extends IPage.IRequest {
     /**
      * Search condition.
      */
-    search?: Search;
+    search?: IRequest.ISearch;
 
     /**
      * Sort condition.
      */
-    sort?: IPage.Sort<Sortable>;
+    sort?: IPage.Sort<IRequest.SortableColumns>;
   }
   export namespace IRequest {
     /**
      * 검색 정보.
      */
     export interface ISearch {
+      writer?: string;
       title?: string;
       body?: string;
       title_or_body?: string;
@@ -111,7 +110,11 @@ export namespace IBbsArticle {
     /**
      * Sortable columns of {@link IBbsArticle}.
      */
-    export type SortableColumns = "title" | "created_at" | "updated_at";
+    export type SortableColumns =
+      | "writer"
+      | "title"
+      | "created_at"
+      | "updated_at";
   }
 
   /**
@@ -122,6 +125,11 @@ export namespace IBbsArticle {
      * Primary Key.
      */
     id: string & tags.Format<"uuid">;
+
+    /**
+     * Writer of the article.
+     */
+    writer: string;
 
     /**
      * Title of the last snapshot.
@@ -144,12 +152,16 @@ export namespace IBbsArticle {
   /**
    * Abriged information of the article.
    */
-  export interface IAbridge extends ISummary, IStore {}
+  export interface IAbridge extends ISummary, Omit<IUpdate, "password"> {}
 
   /**
    * Store content type of the article.
    */
-  export interface IStore {
+  export interface ICreate extends IUpdate {
+    writer: string;
+  }
+
+  export interface IUpdate {
     /**
      * Format of body.
      *
@@ -171,7 +183,14 @@ export namespace IBbsArticle {
      * List of attachment files.
      */
     files: IAttachmentFile.IStore[];
+
+    /**
+     * Password for modification.
+     */
+    password: string;
   }
 
-  export type IUpdate = IStore;
+  export interface IErase {
+    password: string;
+  }
 }

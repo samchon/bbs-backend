@@ -1,9 +1,9 @@
 import { ArrayUtil } from "@nestia/e2e";
 import { sleep_for } from "tstl/thread/global";
 
-import api from "@ORGANIZATION/PROJECT-api";
+import api from "@samchon/bbs-api";
 
-import { MyConfiguration } from "../../src/MyConfiguration";
+import { BbsConfiguration } from "../../src/BbsConfiguration";
 import { Terminal } from "../../src/utils/Terminal";
 
 async function main(): Promise<void> {
@@ -20,7 +20,7 @@ async function main(): Promise<void> {
 
   // API LIBRARY
   const connection: api.IConnection = {
-    host: `http://127.0.0.1:${MyConfiguration.API_PORT()}`,
+    host: `http://127.0.0.1:${BbsConfiguration.API_PORT()}`,
   };
 
   sleep_for(1000)

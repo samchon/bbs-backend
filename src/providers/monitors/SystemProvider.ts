@@ -3,9 +3,9 @@ import git from "git-last-commit";
 import { randint } from "tstl/algorithm/random";
 import { Singleton } from "tstl/thread/Singleton";
 
-import { ISystem } from "@ORGANIZATION/PROJECT-api/lib/structures/monitors/ISystem";
+import { ISystem } from "@samchon/bbs-api/lib/structures/monitors/ISystem";
 
-import { MyConfiguration } from "../../MyConfiguration";
+import { BbsConfiguration } from "../../BbsConfiguration";
 import { DateUtil } from "../../utils/DateUtil";
 
 export class SystemProvider {
@@ -44,7 +44,7 @@ const commit_: Singleton<Promise<ISystem.ICommit>> = new Singleton(
 const package_: Singleton<Promise<ISystem.IPackage>> = new Singleton(
   async () => {
     const content: string = await fs.promises.readFile(
-      `${MyConfiguration.ROOT}/package.json`,
+      `${BbsConfiguration.ROOT}/package.json`,
       "utf8",
     );
     return JSON.parse(content);

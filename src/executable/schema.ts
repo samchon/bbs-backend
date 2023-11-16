@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
-import { MyGlobal } from "../MyGlobal";
-import { MySetupWizard } from "../setup/MySetupWizard";
+import { BbsGlobal } from "../BbsGlobal";
+import { BbsSetupWizard } from "../setup/BbsSetupWizard";
 
 async function execute(
   database: string,
@@ -13,7 +13,7 @@ async function execute(
     const prisma = new PrismaClient({
       datasources: {
         db: {
-          url: `postgresql://${username}:${password}@${MyGlobal.env.POSTGRES_HOST}:${MyGlobal.env.POSTGRES_PORT}/${database}`,
+          url: `postgresql://${username}:${password}@${BbsGlobal.env.BBS_POSTGRES_HOST}:${BbsGlobal.env.BBS_POSTGRES_PORT}/${database}`,
         },
       },
     });
@@ -35,11 +35,11 @@ async function execute(
 
 async function main(): Promise<void> {
   const config = {
-    database: MyGlobal.env.POSTGRES_DATABASE,
-    schema: MyGlobal.env.POSTGRES_SCHEMA,
-    username: MyGlobal.env.POSTGRES_USERNAME,
-    readonlyUsername: MyGlobal.env.POSTGRES_USERNAME_READONLY,
-    password: MyGlobal.env.POSTGRES_PASSWORD,
+    database: BbsGlobal.env.BBS_POSTGRES_DATABASE,
+    schema: BbsGlobal.env.BBS_POSTGRES_SCHEMA,
+    username: BbsGlobal.env.BBS_POSTGRES_USERNAME,
+    readonlyUsername: BbsGlobal.env.BBS_POSTGRES_USERNAME_READONLY,
+    password: BbsGlobal.env.BBS_POSTGRES_PASSWORD,
   };
   const root = {
     account: process.argv[2] ?? "postgres",
@@ -79,8 +79,8 @@ async function main(): Promise<void> {
     `,
   );
 
-  MyGlobal.testing = true;
-  await MySetupWizard.schema();
+  BbsGlobal.testing = true;
+  await BbsSetupWizard.schema();
 }
 main().catch((exp) => {
   console.log(exp);
