@@ -1,8 +1,8 @@
 # SDK for Client Developers
 ## Outline
-[`@samchon/bbs`](https://github.com/samchon/bbs-backend) provides SDK (Software Development Kit) for convenience.
+[`@samchon/bbs-backend`](https://github.com/samchon/bbs-backend) provides SDK (Software Development Kit) for convenience.
 
-For the client developers who are connecting to this backend server, [`@samchon/bbs`](https://github.com/samchon/bbs-backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
+For the client developers who are connecting to this backend server, [`@samchon/bbs-backend`](https://github.com/samchon/bbs-backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
 
 With the SDK, client developers never need to re-define the duplicated API interfaces. Just utilize the provided interfaces and asynchronous functions defined in the SDK. It would be much convenient than any other Rest API solutions.
 

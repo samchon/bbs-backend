@@ -1,12 +1,16 @@
 # Backend of Bullet-in Board System
 ## 1. Outline
 ### 1.1. Introduction
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/samchon/bbs-backend/tree/master/LICENSE)
+[![npm version](https://badge.fury.io/js/@samchon/bbs-api.svg)](https://www.npmjs.com/package/@samchon/bbs-api)
+[![Build Status](https://github.com/samchon/bbs-backend/workflows/build/badge.svg)](https://github.com/samchon/bbs-backend/actions?query=workflow%3Abuild)
+
 Example project for below stacks:
 
   - [NestJS](https://nestjs.com)
   - [Prisma](https://www.prisma.io)
 
-Also, it guides how to utilize my helper libraries of them:
+Also, it guides how to utilize my helper libraries for above stacks:
 
   - [typia](https://github.com/samchon/typia)
   - [nestia](https://github.com/samchon/nestia)
