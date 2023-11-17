@@ -1,7 +1,7 @@
 import { ArrayUtil, GaffComparator, TestValidator } from "@nestia/e2e";
 import typia from "typia";
 
-import api from "@samchon/bbs-api/lib/index";
+import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 import { IBbsArticleComment } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticleComment";
 import { IPage } from "@samchon/bbs-api/lib/structures/common/IPage";
@@ -10,7 +10,7 @@ import { generate_random_article } from "./internal/generate_random_article";
 import { generate_random_comment } from "./internal/generate_random_comment";
 
 export const test_api_bbs_article_comment_index_sort = async (
-  connection: api.IConnection,
+  connection: BbsApi.IConnection,
 ): Promise<void> => {
   const article: IBbsArticle = await generate_random_article(connection);
 
@@ -24,10 +24,14 @@ export const test_api_bbs_article_comment_index_sort = async (
     IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>
   >(async (input: IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>) => {
     const page: IPage<IBbsArticleComment> =
-      await api.functional.bbs.articles.comments.index(connection, article.id, {
-        limit: REPEAT,
-        sort: input,
-      });
+      await BbsApi.functional.bbs.articles.comments.index(
+        connection,
+        article.id,
+        {
+          limit: REPEAT,
+          sort: input,
+        },
+      );
     return typia.assertEquals(page).data;
   });
 

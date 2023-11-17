@@ -1,14 +1,14 @@
 import { ArrayUtil, GaffComparator, TestValidator } from "@nestia/e2e";
 import typia from "typia";
 
-import api from "@samchon/bbs-api/lib/index";
+import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 import { IPage } from "@samchon/bbs-api/lib/structures/common/IPage";
 
 import { generate_random_article } from "./internal/generate_random_article";
 
 export const test_api_bbs_article_index_sort = async (
-  connection: api.IConnection,
+  connection: BbsApi.IConnection,
 ): Promise<void> => {
   await ArrayUtil.asyncRepeat(REPEAT)(() =>
     generate_random_article(connection),
@@ -20,7 +20,7 @@ export const test_api_bbs_article_index_sort = async (
     IPage.Sort<IBbsArticle.IRequest.SortableColumns>
   >(async (input: IPage.Sort<IBbsArticle.IRequest.SortableColumns>) => {
     const page: IPage<IBbsArticle.ISummary> =
-      await api.functional.bbs.articles.index(connection, {
+      await BbsApi.functional.bbs.articles.index(connection, {
         limit: REPEAT,
         sort: input,
       });

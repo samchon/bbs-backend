@@ -2,7 +2,7 @@ import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
 import { randint } from "tstl";
 import typia from "typia";
 
-import api from "@samchon/bbs-api/lib/index";
+import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 import { IBbsArticleComment } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticleComment";
 
@@ -10,7 +10,7 @@ import { generate_random_article } from "./internal/generate_random_article";
 import { prepare_random_file } from "./internal/prepare_random_file";
 
 export const test_api_bbs_article_comment_create = async (
-  connection: api.IConnection,
+  connection: BbsApi.IConnection,
 ): Promise<void> => {
   const article: IBbsArticle = await generate_random_article(connection);
 
@@ -22,7 +22,7 @@ export const test_api_bbs_article_comment_create = async (
     files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
   };
   const comment: IBbsArticleComment =
-    await api.functional.bbs.articles.comments.create(
+    await BbsApi.functional.bbs.articles.comments.create(
       connection,
       article.id,
       input,
@@ -41,7 +41,7 @@ export const test_api_bbs_article_comment_create = async (
   })(comment);
 
   const read: IBbsArticleComment =
-    await api.functional.bbs.articles.comments.at(
+    await BbsApi.functional.bbs.articles.comments.at(
       connection,
       article.id,
       comment.id,

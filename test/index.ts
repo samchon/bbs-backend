@@ -3,11 +3,12 @@ import fs from "fs";
 import { Singleton, randint } from "tstl";
 import { sleep_for } from "tstl/thread/global";
 
+import BbsApi from "@samchon/bbs-api";
+
 import { BbsBackend } from "../src/BbsBackend";
 import { BbsConfiguration } from "../src/BbsConfiguration";
 import { BbsGlobal } from "../src/BbsGlobal";
 import { BbsUpdator } from "../src/BbsUpdator";
-import api from "../src/api";
 import { BbsSetupWizard } from "../src/setup/BbsSetupWizard";
 import { ArgumentParser } from "../src/utils/ArgumentParser";
 import { ErrorUtil } from "../src/utils/ErrorUtil";
@@ -79,7 +80,7 @@ async function main(): Promise<void> {
   await backend.open();
 
   // DO TEST
-  const connection: api.IConnection = {
+  const connection: BbsApi.IConnection = {
     host: `http://127.0.0.1:${BbsConfiguration.API_PORT()}`,
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({

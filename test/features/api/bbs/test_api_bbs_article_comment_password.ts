@@ -1,6 +1,6 @@
 import { RandomGenerator, TestValidator } from "@nestia/e2e";
 
-import api from "@samchon/bbs-api/lib/index";
+import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 import { IBbsArticleComment } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticleComment";
 
@@ -9,7 +9,7 @@ import { generate_random_comment } from "./internal/generate_random_comment";
 import { prepare_random_comment } from "./internal/prepare_random_comment";
 
 export const test_api_bbs_article_comment_password = async (
-  connection: api.IConnection,
+  connection: BbsApi.IConnection,
 ): Promise<void> => {
   const article: IBbsArticle = await generate_random_article(connection);
 
@@ -21,7 +21,7 @@ export const test_api_bbs_article_comment_password = async (
   );
 
   await TestValidator.httpError("update")(403)(() =>
-    api.functional.bbs.articles.comments.update(
+    BbsApi.functional.bbs.articles.comments.update(
       connection,
       article.id,
       comment.id,
@@ -30,7 +30,7 @@ export const test_api_bbs_article_comment_password = async (
   );
 
   await TestValidator.httpError("erase")(403)(() =>
-    api.functional.bbs.articles.comments.erase(
+    BbsApi.functional.bbs.articles.comments.erase(
       connection,
       article.id,
       comment.id,

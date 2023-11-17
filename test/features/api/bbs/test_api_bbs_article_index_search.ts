@@ -1,21 +1,21 @@
 import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
 import typia from "typia";
 
-import api from "@samchon/bbs-api/lib/index";
+import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 import { IPage } from "@samchon/bbs-api/lib/structures/common/IPage";
 
 import { generate_random_article } from "./internal/generate_random_article";
 
 export const test_api_bbs_article_index_search = async (
-  connection: api.IConnection,
+  connection: BbsApi.IConnection,
 ): Promise<void> => {
   await ArrayUtil.asyncRepeat(REPEAT)(() =>
     generate_random_article(connection),
   );
 
   const expected: IPage<IBbsArticle.IAbridge> =
-    await api.functional.bbs.articles.abridges(connection, {
+    await BbsApi.functional.bbs.articles.abridges(connection, {
       limit: REPEAT,
     });
   typia.assertEquals(expected);
@@ -23,7 +23,7 @@ export const test_api_bbs_article_index_search = async (
   const validator = TestValidator.search("search")(
     async (search: IBbsArticle.IRequest.ISearch) => {
       const page: IPage<IBbsArticle.IAbridge> =
-        await api.functional.bbs.articles.abridges(connection, {
+        await BbsApi.functional.bbs.articles.abridges(connection, {
           search,
           limit: REPEAT,
         });

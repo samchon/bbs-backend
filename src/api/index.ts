@@ -1,5 +1,5 @@
-import * as api from "./module";
+import * as BbsApi from "./module";
 
 export * from "./module";
 
-export default api;
+export default BbsApi;

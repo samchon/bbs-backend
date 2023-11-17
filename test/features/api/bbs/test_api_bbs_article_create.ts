@@ -2,13 +2,13 @@ import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
 import { randint } from "tstl";
 import typia from "typia";
 
-import api from "@samchon/bbs-api/lib/index";
+import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
 
 import { prepare_random_file } from "./internal/prepare_random_file";
 
 export const test_api_bbs_article_create = async (
-  connection: api.IConnection,
+  connection: BbsApi.IConnection,
 ): Promise<void> => {
   // PREPARE INPUT DATA
   const input: IBbsArticle.ICreate = {
@@ -21,7 +21,7 @@ export const test_api_bbs_article_create = async (
   };
 
   // DO CREATE
-  const article: IBbsArticle = await api.functional.bbs.articles.create(
+  const article: IBbsArticle = await BbsApi.functional.bbs.articles.create(
     connection,
     input,
   );
@@ -41,7 +41,7 @@ export const test_api_bbs_article_create = async (
   })(article);
 
   // COMPARE WITH READ DATA
-  const read: IBbsArticle = await api.functional.bbs.articles.at(
+  const read: IBbsArticle = await BbsApi.functional.bbs.articles.at(
     connection,
     article.id,
   );
