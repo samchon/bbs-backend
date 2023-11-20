@@ -23,7 +23,7 @@ export namespace BbsArticleCommentSnapshotProvider {
       created_at: input.created_at.toISOString(),
     });
     export const select = () =>
-      Prisma.validator<Prisma.bbs_article_comment_snapshotsFindManyArgs>()({
+      ({
         include: {
           to_files: {
             include: {
@@ -31,7 +31,7 @@ export namespace BbsArticleCommentSnapshotProvider {
             },
           },
         } as const,
-      });
+      }) satisfies Prisma.bbs_article_comment_snapshotsFindManyArgs;
   }
 
   export const create =
@@ -52,22 +52,20 @@ export namespace BbsArticleCommentSnapshotProvider {
     };
 
   export const collect = (input: IBbsArticleComment.IUpdate, ip: string) =>
-    Prisma.validator<Prisma.bbs_article_comment_snapshotsCreateWithoutCommentInput>()(
-      {
-        id: v4(),
-        format: input.format,
-        body: input.body,
-        ip,
-        created_at: new Date(),
-        to_files: {
-          create: input.files.map((file, i) => ({
-            id: v4(),
-            file: {
-              create: AttachmentFileProvider.collect(file),
-            },
-            sequence: i,
-          })),
-        },
+    ({
+      id: v4(),
+      format: input.format,
+      body: input.body,
+      ip,
+      created_at: new Date(),
+      to_files: {
+        create: input.files.map((file, i) => ({
+          id: v4(),
+          file: {
+            create: AttachmentFileProvider.collect(file),
+          },
+          sequence: i,
+        })),
       },
-    );
+    }) satisfies Prisma.bbs_article_comment_snapshotsCreateWithoutCommentInput;
 }

@@ -28,11 +28,11 @@ export namespace BbsArticleProvider {
     });
 
     export const select = () =>
-      Prisma.validator<Prisma.bbs_articlesFindManyArgs>()({
+      ({
         include: {
           snapshots: BbsArticleSnapshotProvider.json.select(),
         } as const,
-      });
+      }) satisfies Prisma.bbs_articlesFindManyArgs;
   }
 
   export namespace abridge {
@@ -51,7 +51,7 @@ export namespace BbsArticleProvider {
       ),
     });
     export const select = () =>
-      Prisma.validator<Prisma.bbs_articlesFindManyArgs>()({
+      ({
         include: {
           mv_last: {
             include: {
@@ -67,7 +67,7 @@ export namespace BbsArticleProvider {
             },
           },
         } as const,
-      });
+      }) satisfies Prisma.bbs_articlesFindManyArgs;
   }
 
   export namespace summarize {
@@ -81,7 +81,7 @@ export namespace BbsArticleProvider {
       updated_at: input.mv_last!.snapshot.created_at.toISOString(),
     });
     export const select = () =>
-      Prisma.validator<Prisma.bbs_articlesFindManyArgs>()({
+      ({
         include: {
           mv_last: {
             include: {
@@ -94,7 +94,7 @@ export namespace BbsArticleProvider {
             },
           },
         } as const,
-      });
+      }) satisfies Prisma.bbs_articlesFindManyArgs;
   }
 
   /* -----------------------------------------------------------
@@ -144,7 +144,7 @@ export namespace BbsArticleProvider {
   };
 
   const search = (input: IBbsArticle.IRequest.ISearch | undefined) =>
-    Prisma.validator<Prisma.bbs_articlesWhereInput["AND"]>()([
+    [
       ...(input?.writer?.length
         ? [{ writer: { contains: input.writer } }]
         : []),
@@ -216,22 +216,22 @@ export namespace BbsArticleProvider {
             },
           ]
         : []),
-    ]);
+    ] satisfies Prisma.bbs_articlesWhereInput["AND"];
 
   const orderBy = (
     key: IBbsArticle.IRequest.SortableColumns,
     value: "asc" | "desc",
   ) =>
-    Prisma.validator<Prisma.bbs_articlesOrderByWithRelationInput>()(
-      key === "writer"
-        ? { writer: value }
-        : key === "title"
+    (key === "writer"
+      ? { writer: value }
+      : key === "title"
         ? { mv_last: { snapshot: { title: value } } }
         : key === "created_at"
-        ? { created_at: value }
-        : // updated_at
-          { mv_last: { snapshot: { created_at: value } } },
-    );
+          ? { created_at: value }
+          : // updated_at
+            {
+              mv_last: { snapshot: { created_at: value } },
+            }) satisfies Prisma.bbs_articlesOrderByWithRelationInput;
 
   /* -----------------------------------------------------------
     WRITERS
