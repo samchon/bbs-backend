@@ -5,6 +5,7 @@
   "scripts": {
     "test": "node bin/test",
     "test:update": "node bin/test/manual/update",
+    "test:webpack": "npm run webpack && node bin/test/webpack",
     "------------------------BUILDS------------------------": "",
     "build": "npm run build:prisma && npm run build:sdk && npm run build:main && npm run build:test",
     "build:main": "rimraf lib && tsc",

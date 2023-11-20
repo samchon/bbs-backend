@@ -17,7 +17,7 @@ export class BbsGlobal {
 
   public static readonly prisma: PrismaClient = new PrismaClient();
 
-  public static get env(): IEnvironments {
+  public static get env(): BbsGlobal.IEnvironments {
     return environments.get();
   }
 
@@ -55,29 +55,29 @@ export class BbsGlobal {
     return connector;
   });
 }
-interface IEnvironments {
-  BBS_MODE: "local" | "dev" | "real";
-  BBS_UPDATOR_PORT: `${number}`;
-  BBS_API_PORT: `${number}`;
-  BBS_SYSTEM_PASSWORD: string;
+export namespace BbsGlobal {
+  export interface IEnvironments {
+    BBS_MODE: "local" | "dev" | "real";
+    BBS_UPDATOR_PORT: `${number}`;
+    BBS_API_PORT: `${number}`;
+    BBS_SYSTEM_PASSWORD: string;
 
-  BBS_POSTGRES_HOST: string;
-  BBS_POSTGRES_PORT: `${number}`;
-  BBS_POSTGRES_DATABASE: string;
-  BBS_POSTGRES_SCHEMA: string;
-  BBS_POSTGRES_USERNAME: string;
-  BBS_POSTGRES_USERNAME_READONLY: string;
-  BBS_POSTGRES_PASSWORD: string;
+    BBS_POSTGRES_HOST: string;
+    BBS_POSTGRES_PORT: `${number}`;
+    BBS_POSTGRES_DATABASE: string;
+    BBS_POSTGRES_SCHEMA: string;
+    BBS_POSTGRES_USERNAME: string;
+    BBS_POSTGRES_USERNAME_READONLY: string;
+    BBS_POSTGRES_PASSWORD: string;
+  }
 }
 
 interface IMode {
   value?: "local" | "dev" | "real";
 }
-
 const modeWrapper: IMode = {};
-
 const environments = new Singleton(() => {
   const env = dotenv.config();
   dotenvExpand.expand(env);
-  return typia.assert<IEnvironments>(process.env);
+  return typia.assert<BbsGlobal.IEnvironments>(process.env);
 });

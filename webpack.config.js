@@ -52,6 +52,10 @@ module.exports = {
           to: "[name][ext]",
         },
         {
+          from: "package.json",
+          to: "[name][ext]",
+        },
+        {
           from: "./node_modules/.prisma/client/*.node",
           to: () => Promise.resolve("[path][name][ext]"),
         },
