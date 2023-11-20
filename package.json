@@ -20,7 +20,6 @@
     "prettier": "prettier src --write && prettier test --write",
     "------------------------WEBPACK------------------------": "",
     "webpack": "rimraf dist && npm run build:prisma && webpack",
-    "webpack:prune": "npm ci --omit=dev --ignore-scripts && npm run build:prisma",
     "webpack:start": "node dist/server",
     "webpack:start:updator:master": "node dist/updator-master",
     "webpack:start:updator:slave": "node dist/updator-slave",
