@@ -28,11 +28,11 @@ export namespace BbsArticleCommentProvider {
       created_at: input.created_at.toISOString(),
     });
     export const select = () =>
-      Prisma.validator<Prisma.bbs_article_commentsFindManyArgs>()({
+      ({
         include: {
           snapshots: BbsArticleCommentSnapshotProvider.json.select(),
         } as const,
-      });
+      }) satisfies Prisma.bbs_article_commentsFindManyArgs;
   }
 
   /* -----------------------------------------------------------
@@ -82,7 +82,7 @@ export namespace BbsArticleCommentProvider {
     };
 
   const search = (input: IBbsArticleComment.IRequest.ISearch | undefined) =>
-    Prisma.validator<Prisma.bbs_article_commentsWhereInput["AND"]>()([
+    [
       ...(input?.writer?.length
         ? [
             {
@@ -105,19 +105,17 @@ export namespace BbsArticleCommentProvider {
             },
           ]
         : []),
-    ]);
+    ] satisfies Prisma.bbs_article_commentsWhereInput["AND"];
 
   const orderBy = (
     key: IBbsArticleComment.IRequest.SortableColumns,
     value: "asc" | "desc",
   ) =>
-    Prisma.validator<Prisma.bbs_article_commentsOrderByWithRelationInput>()(
-      key === "writer"
-        ? { writer: value }
-        : {
-            created_at: value,
-          },
-    );
+    (key === "writer"
+      ? { writer: value }
+      : {
+          created_at: value,
+        }) satisfies Prisma.bbs_article_commentsOrderByWithRelationInput;
 
   /* -----------------------------------------------------------
     WRITERS
