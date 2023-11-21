@@ -86,6 +86,7 @@
     "typescript-transform-paths": "^3.4.6",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
