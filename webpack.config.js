@@ -26,7 +26,7 @@ module.exports = {
     filename: "[name].js",
   },
   optimization: {
-    minimize: false,
+    minimize: true,
   },
 
   // JUST KEEP THEM
@@ -57,10 +57,6 @@ module.exports = {
         },
         {
           from: "./node_modules/.prisma/client/*.node",
-          to: () => Promise.resolve("[path][name][ext]"),
-        },
-        {
-          from: "./node_modules/ws/**/*.*",
           to: () => Promise.resolve("[path][name][ext]"),
         },
       ],
