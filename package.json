@@ -86,7 +86,6 @@
     "typescript-transform-paths": "^3.4.6",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
-    "webpack-node-externals": "^3.0.0",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
@@ -100,7 +99,7 @@
     "dotenv-expand": "^10.0.0",
     "git-last-commit": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
-    "mutex-server": "^0.3.1",
+    "mutex-server": "^0.3.2",
     "prisma": "^5.3.1",
     "prisma-markdown": "^1.0.7",
     "source-map-support": "^0.5.19",

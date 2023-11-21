@@ -1,5 +1,4 @@
 const path = require("path");
-const nodeExternals = require('webpack-node-externals');
 
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
@@ -27,7 +26,7 @@ module.exports = {
     filename: "[name].js",
   },
   optimization: {
-    minimize: true,
+    minimize: false,
   },
 
   // JUST KEEP THEM
@@ -45,7 +44,6 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
-  externals: [nodeExternals()],
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
