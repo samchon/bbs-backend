@@ -106,7 +106,7 @@ export namespace IBbsArticleComment {
     /**
      * List of attachment files.
      */
-    files: IAttachmentFile.IStore[];
+    files: IAttachmentFile.ICreate[];
 
     /**
      * Password for modification.

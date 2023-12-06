@@ -19,7 +19,7 @@ export namespace AttachmentFileProvider {
       ({}) satisfies Prisma.attachment_filesFindManyArgs;
   }
 
-  export const collect = (input: IAttachmentFile.IStore) =>
+  export const collect = (input: IAttachmentFile.ICreate) =>
     ({
       id: v4(),
       name: input.name,
