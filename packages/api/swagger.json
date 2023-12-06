@@ -7,7 +7,7 @@
     }
   ],
   "info": {
-    "version": "1.0.2",
+    "version": "2.0.0",
     "title": "@samchon/bbs-backend",
     "description": "Backend for bbs",
     "license": {
@@ -1887,7 +1887,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           }
         },
@@ -1913,7 +1913,7 @@
           "html"
         ]
       },
-      "IAttachmentFile.IStore": {
+      "IAttachmentFile.ICreate": {
         "type": "object",
         "properties": {
           "name": {
@@ -2164,7 +2164,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           },
           "title": {
@@ -2223,7 +2223,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           },
           "password": {
@@ -2277,7 +2277,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           },
           "password": {
@@ -2620,7 +2620,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           }
         },
@@ -2675,7 +2675,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           },
           "password": {
@@ -2721,7 +2721,7 @@
             "x-typia-optional": false,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/IAttachmentFile.IStore"
+              "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             }
           },
           "password": {

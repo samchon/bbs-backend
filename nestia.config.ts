@@ -14,6 +14,7 @@ export const NESTIA_CONFIG: INestiaConfig = {
         description: "Local Server",
       },
     ],
+    beautify: true,
   },
   simulate: true,
 };

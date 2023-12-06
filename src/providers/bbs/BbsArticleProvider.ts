@@ -285,7 +285,7 @@ export namespace BbsArticleProvider {
           accessor: "input.password",
           message: "Wrong password.",
         });
-      return BbsArticleSnapshotProvider.store({ id })(input, ip);
+      return BbsArticleSnapshotProvider.create({ id })(input, ip);
     };
 
   export const erase =

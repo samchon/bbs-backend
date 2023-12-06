@@ -5,7 +5,7 @@ import { IAttachmentFile } from "@samchon/bbs-api/lib/structures/common/IAttachm
 
 export function prepare_random_file(
   extension?: string,
-): IAttachmentFile.IStore {
+): IAttachmentFile.ICreate {
   const name: string = RandomGenerator.alphabets(randint(5, 16));
   if (extension === undefined) extension = RandomGenerator.alphabets(3);
 

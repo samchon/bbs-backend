@@ -33,7 +33,7 @@ export namespace BbsArticleSnapshotProvider {
       }) satisfies Prisma.bbs_article_snapshotsFindManyArgs;
   }
 
-  export const store =
+  export const create =
     (article: IEntity) =>
     async (
       input: IBbsArticle.IUpdate,
