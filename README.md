@@ -106,7 +106,7 @@ npm run dev
 
 If you want to add a new feature or update ordinary thing in the API level, you should write the code down to the matched *API controller*, who is stored in the [src/controllers](src/controllers) directory as the [Main Program](#34-main-program). 
 
-However, **Wrtn** does not recommend to writing code down into the [Main Program](#34-main-program) first, without any consideration. Instead, **Wrtn** recommends to declare the definition first and implement the [Main Program](#34-main-program) later.
+However, I do not recommend to writing code down into the [Main Program](#34-main-program) first, without any consideration. Instead, I recommend to declare the definition first and implement the [Main Program](#34-main-program) later.
 
 Therefore, if you want to add a new feature in the API level, define the matched data entity in the [src/models](src/models) and [src/api/structures](src/api/structures) directories. After the data entity definition, declare function header in the matched API controller class in the [src/controllers](src/controllers). Note that, it's only the declaration, header only, not meaning to implement the function body.
 
@@ -121,9 +121,9 @@ After those declarations, build the client [SDK](#32-software-development-kit) t
   - Deploy to the Dev and Real servers.
 
 ### 3.2. Software Development Kit
-[`@wrtn/hub-backend`](https://gitlab.wrtn.club/wrtn/hub-backend) provides SDK (Software Development Kit) for convenience.
+[`@samchon/bbs-backend`](https://github.com/samchon/bbs-backend) provides SDK (Software Development Kit) for convenience.
 
-For the client developers who are connecting to this backend server, [`@wrtn/hub-backend`](https://gitlab.wrtn.club/wrtn/hub-backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
+For the client developers who are connecting to this backend server, [`@samchon/bbs-backend`](https://github.com/samchon/bbs-backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
 
 With the SDK, client developers never need to re-define the duplicated API interfaces, by reading Swagger Documents. Just utilize the provided interfaces and asynchronous functions defined in the SDK. It would be much convenient than any other Rest API solutions.
 
