@@ -9,7 +9,19 @@ import { DateUtil } from "../../utils/DateUtil";
 
 @Controller("monitors/system")
 export class MonitorSystemController {
-  @core.TypedRoute.Get()
+  /**
+   * Get system information.
+   *
+   * Get system information with commit and package information.
+   *
+   * As such information is a type of sensitive, response be encrypted.
+   *
+   * @returns System info
+   * @tag Monitor
+   *
+   * @author Samchon
+   */
+  @core.EncryptedRoute.Get()
   public async get(): Promise<ISystem> {
     return {
       uid: SystemProvider.uid,

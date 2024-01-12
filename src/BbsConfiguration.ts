@@ -21,14 +21,6 @@ export namespace BbsConfiguration {
   })();
 
   export const API_PORT = () => Number(BbsGlobal.env.BBS_API_PORT);
-  export const UPDATOR_PORT = () => Number(BbsGlobal.env.BBS_UPDATOR_PORT);
-  export const MASTER_IP = () =>
-    BbsGlobal.mode === "local"
-      ? "127.0.0.1"
-      : BbsGlobal.mode === "dev"
-      ? "your-dev-server-ip"
-      : "your-real-server-master-ip";
-  export const SYSTEM_PASSWORD = () => BbsGlobal.env.BBS_SYSTEM_PASSWORD;
 }
 
 ExceptionManager.insert(PrismaClientKnownRequestError, (exp) => {

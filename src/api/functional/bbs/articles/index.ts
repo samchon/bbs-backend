@@ -22,6 +22,7 @@ export * as comments from "./comments";
  * 
  * @param input Request info of pagination and searching options.
  * @returns Paginated summarized articles.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticlesController.index
@@ -102,6 +103,7 @@ export namespace index {
  * 
  * @param input Request info of pagination and searching options.
  * @returns Paginated abridged articles.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticlesController.abridges
@@ -182,6 +184,7 @@ export namespace abridges {
  * 
  * @param id Target article's {@link IBbsArticle.id}
  * @returns Article information
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticlesController.at
@@ -251,6 +254,7 @@ export namespace at {
  * 
  * @param input Article information to create.
  * @returns Newly created article.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticlesController.create
@@ -332,6 +336,7 @@ export namespace create {
  * @param id Target article's {@link IBbsArticle.id}
  * @param input Article information to update.
  * @returns Newly accumulated snapshot information.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticlesController.update
@@ -416,6 +421,7 @@ export namespace update {
  * 
  * @param id Target article's {@link IBbsArticle.id}
  * @param input Password of the article.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticlesController.erase

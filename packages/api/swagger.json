@@ -7,7 +7,7 @@
     }
   ],
   "info": {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "title": "@samchon/bbs-backend",
     "description": "Backend for bbs",
     "license": {
@@ -17,7 +17,9 @@
   "paths": {
     "/bbs/articles": {
       "patch": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [],
         "requestBody": {
           "description": "Request info of pagination and searching options.",
@@ -28,8 +30,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -40,54 +41,16 @@
                   "$ref": "#/components/schemas/IPageIBbsArticle.ISummary"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "List up all summarized articles",
-        "description": "List up all summarized articles.\n\nList up all summarized articles with pagination and searching options.",
-        "x-nestia-namespace": "bbs.articles.index",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Request info of pagination and searching options.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Paginated summarized articles.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "PATCH"
+        "description": "List up all summarized articles.\n\nList up all summarized articles with pagination and searching options."
       },
       "post": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [],
         "requestBody": {
           "description": "Article information to create.",
@@ -98,8 +61,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -110,56 +72,18 @@
                   "$ref": "#/components/schemas/IBbsArticle"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "Create a new article",
-        "description": "Create a new article.\n\nCreate a new article with its first {@link IBbsArticle.ISnapshot snapshot}.",
-        "x-nestia-namespace": "bbs.articles.create",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Article information to create.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Newly created article.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "POST"
+        "description": "Create a new article.\n\nCreate a new article with its first {@link IBbsArticle.ISnapshot snapshot}."
       }
     },
     "/bbs/articles/abridges": {
       "patch": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [],
         "requestBody": {
           "description": "Request info of pagination and searching options.",
@@ -170,8 +94,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -182,76 +105,25 @@
                   "$ref": "#/components/schemas/IPageIBbsArticle.IAbridge"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "List up all abridged articles",
-        "description": "List up all abridged articles.\n\nList up all abridged articles with pagination and searching options.",
-        "x-nestia-namespace": "bbs.articles.abridges.abridges",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Request info of pagination and searching options.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Paginated abridged articles.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "PATCH"
+        "description": "List up all abridged articles.\n\nList up all abridged articles with pagination and searching options."
       }
     },
     "/bbs/articles/{id}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Target article's ",
             "required": true
@@ -266,93 +138,23 @@
                   "$ref": "#/components/schemas/IBbsArticle"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "Read individual article",
-        "description": "Read individual article.\n\nReads an article with its every {@link IBbsArticle.ISnapshot snapshots}.",
-        "x-nestia-namespace": "bbs.articles.at",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "id",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Target article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id",
-                "kind": "linkName",
-                "target": {
-                  "fileName": "D:/github/samchon/bbs-backend/src/api/structures/bbs/IBbsArticle.ts",
-                  "textSpan": {
-                    "start": 1358,
-                    "length": 33
-                  }
-                }
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Article information",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "GET"
+        "description": "Read individual article.\n\nReads an article with its every {@link IBbsArticle.ISnapshot snapshots}."
       },
       "put": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Target article's ",
             "required": true
@@ -367,8 +169,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -379,110 +180,23 @@
                   "$ref": "#/components/schemas/IBbsArticle.ISnapshot"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "Update an article",
-        "description": "Update an article.\n\nAccumulate a new {@link IBbsArticle.ISnapshot snapshot} record to the article.",
-        "x-nestia-namespace": "bbs.articles.update",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "id",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Target article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id",
-                "kind": "linkName",
-                "target": {
-                  "fileName": "D:/github/samchon/bbs-backend/src/api/structures/bbs/IBbsArticle.ts",
-                  "textSpan": {
-                    "start": 1358,
-                    "length": 33
-                  }
-                }
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Article information to update.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Newly accumulated snapshot information.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "PUT"
+        "description": "Update an article.\n\nAccumulate a new {@link IBbsArticle.ISnapshot snapshot} record to the article."
       },
       "delete": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Target article's ",
             "required": true
@@ -497,108 +211,29 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "",
-            "x-nestia-encrypted": false
+            "description": ""
           }
         },
         "summary": "Erase an article",
-        "description": "Erase an article.\n\nPerforms soft deletion to the article.",
-        "x-nestia-namespace": "bbs.articles.erase",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "id",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Target article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id",
-                "kind": "linkName",
-                "target": {
-                  "fileName": "D:/github/samchon/bbs-backend/src/api/structures/bbs/IBbsArticle.ts",
-                  "textSpan": {
-                    "start": 1358,
-                    "length": 33
-                  }
-                }
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Password of the article.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "DELETE"
+        "description": "Erase an article.\n\nPerforms soft deletion to the article."
       }
     },
     "/bbs/articles/{articleId}/comments": {
       "patch": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "articleId",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "",
             "required": true
@@ -613,8 +248,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -625,74 +259,23 @@
                   "$ref": "#/components/schemas/IPageIBbsArticleComment"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "List up all summarized comments",
-        "description": "List up all summarized comments.\n\nList up all summarized comments with pagination and searching options.",
-        "x-nestia-namespace": "bbs.articles.comments.index",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Request info of pagination and searching options.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Paginated summarized comments.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "PATCH"
+        "description": "List up all summarized comments.\n\nList up all summarized comments with pagination and searching options."
       },
       "post": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "articleId",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Belonged article's ",
             "required": true
@@ -707,8 +290,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -719,105 +301,25 @@
                   "$ref": "#/components/schemas/IBbsArticleComment"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "Create a new comment",
-        "description": "Create a new comment.\n\nCreate a new comment with its first {@link IBbsArticleComment.ISnapshot snapshot}.",
-        "x-nestia-namespace": "bbs.articles.comments.create",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "articleId",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Belonged article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id ",
-                "kind": "linkText"
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Comment information to create.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Newly created comment.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "POST"
+        "description": "Create a new comment.\n\nCreate a new comment with its first {@link IBbsArticleComment.ISnapshot snapshot}."
       }
     },
     "/bbs/articles/{articleId}/comments/{id}": {
       "get": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "articleId",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Belonged article's ",
             "required": true
@@ -827,20 +329,7 @@
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Target comment's ",
             "required": true
@@ -855,122 +344,23 @@
                   "$ref": "#/components/schemas/IBbsArticleComment"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "Read individual comment",
-        "description": "Read individual comment.\n\nReads a comment with its every {@link IBbsArticleComment.ISnapshot snapshots}.",
-        "x-nestia-namespace": "bbs.articles.comments.at",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "articleId",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Belonged article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id ",
-                "kind": "linkText"
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "id",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Target comment's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticleComment.id",
-                "kind": "linkName",
-                "target": {
-                  "fileName": "D:/github/samchon/bbs-backend/src/api/structures/bbs/IBbsArticleComment.ts",
-                  "textSpan": {
-                    "start": 862,
-                    "length": 33
-                  }
-                }
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Comment information",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "GET"
+        "description": "Read individual comment.\n\nReads a comment with its every {@link IBbsArticleComment.ISnapshot snapshots}."
       },
       "put": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "articleId",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Belonged article's ",
             "required": true
@@ -980,20 +370,7 @@
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Target comment's ",
             "required": true
@@ -1008,8 +385,7 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -1020,139 +396,23 @@
                   "$ref": "#/components/schemas/IBbsArticleComment.ISnapshot"
                 }
               }
-            },
-            "x-nestia-encrypted": false
+            }
           }
         },
         "summary": "Update a comment",
-        "description": "Update a comment.\n\nAccumulate a new {@link IBbsArticleComment.ISnapshot snapshot} record to the comment.",
-        "x-nestia-namespace": "bbs.articles.comments.update",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "articleId",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Belonged article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id ",
-                "kind": "linkText"
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "id",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Target comment's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticleComment.id",
-                "kind": "linkName",
-                "target": {
-                  "fileName": "D:/github/samchon/bbs-backend/src/api/structures/bbs/IBbsArticleComment.ts",
-                  "textSpan": {
-                    "start": 862,
-                    "length": 33
-                  }
-                }
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Comment information to update.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "returns",
-            "text": [
-              {
-                "text": "Newly accumulated snapshot information.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "PUT"
+        "description": "Update a comment.\n\nAccumulate a new {@link IBbsArticleComment.ISnapshot snapshot} record to the comment."
       },
       "delete": {
-        "tags": [],
+        "tags": [
+          "BBS"
+        ],
         "parameters": [
           {
             "name": "articleId",
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Belonged article's ",
             "required": true
@@ -1162,20 +422,7 @@
             "in": "path",
             "schema": {
               "type": "string",
-              "format": "uuid",
-              "x-typia-typeTags": [
-                {
-                  "target": "string",
-                  "name": "Format<\"uuid\">",
-                  "kind": "format",
-                  "value": "uuid",
-                  "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                  "exclusive": [
-                    "format",
-                    "pattern"
-                  ]
-                }
-              ]
+              "format": "uuid"
             },
             "description": "Target comment's ",
             "required": true
@@ -1190,171 +437,76 @@
               }
             }
           },
-          "required": true,
-          "x-nestia-encrypted": false
+          "required": true
         },
         "responses": {
           "200": {
-            "description": "",
-            "x-nestia-encrypted": false
+            "description": ""
           }
         },
         "summary": "Erase a comment",
-        "description": "Erase a comment.\n\nPerforms soft deletion to the comment.",
-        "x-nestia-namespace": "bbs.articles.comments.erase",
-        "x-nestia-jsDocTags": [
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "articleId",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Belonged article's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticle.id ",
-                "kind": "linkText"
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "id",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Target comment's ",
-                "kind": "text"
-              },
-              {
-                "text": "{@link ",
-                "kind": "link"
-              },
-              {
-                "text": "IBbsArticleComment.id",
-                "kind": "linkName",
-                "target": {
-                  "fileName": "D:/github/samchon/bbs-backend/src/api/structures/bbs/IBbsArticleComment.ts",
-                  "textSpan": {
-                    "start": 862,
-                    "length": 33
-                  }
-                }
-              },
-              {
-                "text": "}",
-                "kind": "link"
-              }
-            ]
-          },
-          {
-            "name": "param",
-            "text": [
-              {
-                "text": "input",
-                "kind": "parameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Password of the comment.",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ],
-        "x-nestia-method": "DELETE"
+        "description": "Erase a comment.\n\nPerforms soft deletion to the comment."
       }
     },
     "/monitors/health": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Monitor"
+        ],
         "parameters": [],
         "responses": {
           "200": {
-            "description": "",
-            "x-nestia-encrypted": false
+            "description": ""
           }
         },
-        "x-nestia-namespace": "monitors.health.get",
-        "x-nestia-jsDocTags": [],
-        "x-nestia-method": "GET"
+        "summary": "Health check API",
+        "description": "Health check API."
       }
     },
     "/monitors/performance": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Monitor"
+        ],
         "parameters": [],
         "responses": {
           "200": {
-            "description": "",
+            "description": "## Warning\n\nResponse data have been encrypted.\n\nThe response body data would be encrypted as \"AES-128(256) / CBC mode / PKCS#5 Padding / Base64 Encoding\", through the [EncryptedRoute.G.et](https://github.com/samchon/@nestia/core#encryptedroute) component.\n\nTherefore, just utilize this swagger editor only for referencing. If you need to call the real API, using [SDK](https://github.com/samchon/nestia#software-development-kit) would be much better.\n\n----------------\n\nPerformance info",
             "content": {
-              "application/json": {
+              "text/plain": {
                 "schema": {
                   "$ref": "#/components/schemas/IPerformance"
                 }
               }
             },
-            "x-nestia-encrypted": false
+            "x-nestia-encrypted": true
           }
         },
-        "x-nestia-namespace": "monitors.performance.get",
-        "x-nestia-jsDocTags": [],
-        "x-nestia-method": "GET"
+        "summary": "Get performance information",
+        "description": "Get performance information.\n\nGet perofmration information composed with CPU, memory and resource usage.\n\nAs such information is a type of sensitive, response be encrypted."
       }
     },
     "/monitors/system": {
       "get": {
-        "tags": [],
+        "tags": [
+          "Monitor"
+        ],
         "parameters": [],
         "responses": {
           "200": {
-            "description": "",
+            "description": "## Warning\n\nResponse data have been encrypted.\n\nThe response body data would be encrypted as \"AES-128(256) / CBC mode / PKCS#5 Padding / Base64 Encoding\", through the [EncryptedRoute.G.et](https://github.com/samchon/@nestia/core#encryptedroute) component.\n\nTherefore, just utilize this swagger editor only for referencing. If you need to call the real API, using [SDK](https://github.com/samchon/nestia#software-development-kit) would be much better.\n\n----------------\n\nSystem info",
             "content": {
-              "application/json": {
+              "text/plain": {
                 "schema": {
                   "$ref": "#/components/schemas/ISystem"
                 }
               }
             },
-            "x-nestia-encrypted": false
+            "x-nestia-encrypted": true
           }
         },
-        "x-nestia-namespace": "monitors.system.get",
-        "x-nestia-jsDocTags": [],
-        "x-nestia-method": "GET"
+        "summary": "Get system information",
+        "description": "Get system information.\n\nGet system information with commit and package information.\n\nAs such information is a type of sensitive, response be encrypted."
       }
     }
   },
@@ -1364,17 +516,12 @@
         "type": "object",
         "properties": {
           "search": {
-            "$ref": "#/components/schemas/IBbsArticle.IRequest.ISearch"
+            "$ref": "#/components/schemas/IBbsArticle.IRequest.ISearch",
+            "description": "Search condition."
           },
           "sort": {
-            "description": "Sort condition.",
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "array",
             "items": {
-              "description": "Sort condition.",
-              "x-typia-required": false,
-              "x-typia-optional": true,
               "type": "string",
               "enum": [
                 "-writer",
@@ -1386,152 +533,61 @@
                 "+created_at",
                 "+updated_at"
               ]
-            }
+            },
+            "description": "Sort condition."
           },
           "page": {
-            "description": "Page number.",
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ]
+            "description": "Page number."
           },
           "limit": {
-            "description": "Limitation of records per a page.",
-            "x-typia-jsDocTags": [
-              {
-                "name": "default",
-                "text": [
-                  {
-                    "text": "100",
-                    "kind": "text"
-                  }
-                ]
-              }
-            ],
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ],
-            "default": 100
+            "default": 100,
+            "description": "Limitation of records per a page."
           }
         },
-        "nullable": false,
-        "x-typia-jsDocTags": []
+        "nullable": false
       },
       "IBbsArticle.IRequest.ISearch": {
         "type": "object",
         "properties": {
           "writer": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "title": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "body": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "title_or_body": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "from": {
-            "x-typia-jsDocTags": [
-              {
-                "name": "format",
-                "text": [
-                  {
-                    "text": "date-time",
-                    "kind": "text"
-                  }
-                ]
-              }
-            ],
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string",
-            "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": true
-              }
-            ]
+            "format": "date-time"
           },
           "to": {
-            "x-typia-jsDocTags": [
-              {
-                "name": "format",
-                "text": [
-                  {
-                    "text": "date-time",
-                    "kind": "text"
-                  }
-                ]
-              }
-            ],
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string",
-            "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": true
-              }
-            ]
+            "format": "date-time"
           }
         },
         "nullable": false,
-        "description": "검색 정보.",
-        "x-typia-jsDocTags": []
+        "description": "검색 정보."
       },
       "IPageIBbsArticle.ISummary": {
         "type": "object",
         "properties": {
           "pagination": {
-            "$ref": "#/components/schemas/IPage.IPagination"
+            "$ref": "#/components/schemas/IPage.IPagination",
+            "description": "Page information."
           },
           "data": {
-            "description": "List of records.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IBbsArticle.ISummary"
-            }
+            },
+            "description": "List of records."
           }
         },
         "nullable": false,
@@ -1539,114 +595,27 @@
           "pagination",
           "data"
         ],
-        "description": "A page.\n\nCollection of records with pagination indformation.",
-        "x-typia-jsDocTags": [
-          {
-            "name": "template",
-            "text": [
-              {
-                "text": "T",
-                "kind": "typeParameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Record type",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ]
+        "description": "A page.\n\nCollection of records with pagination indformation."
       },
       "IPage.IPagination": {
         "type": "object",
         "properties": {
           "current": {
-            "description": "Current page number.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ]
+            "description": "Current page number."
           },
           "limit": {
-            "description": "Limitation of records per a page.",
-            "x-typia-jsDocTags": [
-              {
-                "name": "default",
-                "text": [
-                  {
-                    "text": "100",
-                    "kind": "text"
-                  }
-                ]
-              }
-            ],
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ],
-            "default": 100
+            "default": 100,
+            "description": "Limitation of records per a page."
           },
           "records": {
-            "description": "Total records in the database.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ]
+            "description": "Total records in the database."
           },
           "pages": {
-            "description": "Total pages.\n\nEqual to {@link records } / {@link limit } with ceiling.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ]
+            "description": "Total pages.\n\nEqual to {@link records } / {@link limit } with ceiling."
           }
         },
         "nullable": false,
@@ -1656,83 +625,33 @@
           "records",
           "pages"
         ],
-        "description": "Page information.",
-        "x-typia-jsDocTags": []
+        "description": "Page information."
       },
       "IBbsArticle.ISummary": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "Primary Key.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Primary Key."
           },
           "writer": {
-            "description": "Writer of the article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Writer of the article."
           },
           "title": {
-            "description": "Title of the last snapshot.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Title of the last snapshot."
           },
           "created_at": {
-            "description": "Creation time of the article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Creation time of the article."
           },
           "updated_at": {
-            "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created."
           }
         },
         "nullable": false,
@@ -1743,23 +662,21 @@
           "created_at",
           "updated_at"
         ],
-        "description": "Summarized information of the article.",
-        "x-typia-jsDocTags": []
+        "description": "Summarized information of the article."
       },
       "IPageIBbsArticle.IAbridge": {
         "type": "object",
         "properties": {
           "pagination": {
-            "$ref": "#/components/schemas/IPage.IPagination"
+            "$ref": "#/components/schemas/IPage.IPagination",
+            "description": "Page information."
           },
           "data": {
-            "description": "List of records.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IBbsArticle.IAbridge"
-            }
+            },
+            "description": "List of records."
           }
         },
         "nullable": false,
@@ -1767,128 +684,48 @@
           "pagination",
           "data"
         ],
-        "description": "A page.\n\nCollection of records with pagination indformation.",
-        "x-typia-jsDocTags": [
-          {
-            "name": "template",
-            "text": [
-              {
-                "text": "T",
-                "kind": "typeParameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Record type",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ]
+        "description": "A page.\n\nCollection of records with pagination indformation."
       },
       "IBbsArticle.IAbridge": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "Primary Key.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Primary Key."
           },
           "writer": {
-            "description": "Writer of the article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Writer of the article."
           },
           "title": {
-            "description": "Title of the last snapshot.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Title of the last snapshot."
           },
           "created_at": {
-            "description": "Creation time of the article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Creation time of the article."
           },
           "updated_at": {
-            "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created."
           },
           "format": {
-            "$ref": "#/components/schemas/IBbsArticle.Format"
+            "$ref": "#/components/schemas/IBbsArticle.Format",
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
-            "description": "Content body of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of article."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           }
         },
         "nullable": false,
@@ -1902,8 +739,7 @@
           "body",
           "files"
         ],
-        "description": "Abriged information of the article.",
-        "x-typia-jsDocTags": []
+        "description": "Abriged information of the article."
       },
       "IBbsArticle.Format": {
         "type": "string",
@@ -1917,78 +753,23 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "File name, except extension.\n\nPossible to omit like `.gitignore` case.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "maxLength": 255,
             "minLength": 1,
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "MinLength<1>",
-                "kind": "minLength",
-                "value": 1,
-                "validate": "1 <= $input.length",
-                "exclusive": true
-              },
-              {
-                "target": "string",
-                "name": "MaxLength<255>",
-                "kind": "maxLength",
-                "value": 255,
-                "validate": "$input.length <= 255",
-                "exclusive": true
-              }
-            ],
-            "nullable": true
+            "nullable": true,
+            "description": "File name, except extension.\n\nPossible to omit like `.gitignore` case."
           },
           "extension": {
-            "description": "Extension.\n\nPossible to omit like `README` case.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "maxLength": 8,
             "minLength": 1,
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "MinLength<1>",
-                "kind": "minLength",
-                "value": 1,
-                "validate": "1 <= $input.length",
-                "exclusive": true
-              },
-              {
-                "target": "string",
-                "name": "MaxLength<8>",
-                "kind": "maxLength",
-                "value": 8,
-                "validate": "$input.length <= 8",
-                "exclusive": true
-              }
-            ],
-            "nullable": true
+            "nullable": true,
+            "description": "Extension.\n\nPossible to omit like `README` case."
           },
           "url": {
-            "description": "URL path of the real file.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "url",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"url\">",
-                "kind": "format",
-                "value": "url",
-                "validate": "/^[a-zA-Z0-9]+:\\/\\/(?:www.)?[-a-zA-Z0-9@:%._+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "URL path of the real file."
           }
         },
         "nullable": false,
@@ -1996,77 +777,32 @@
           "name",
           "extension",
           "url"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "IBbsArticle": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "Primary Key.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Primary Key."
           },
           "writer": {
-            "description": "Writer of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Writer of article."
           },
           "snapshots": {
-            "description": "List of snapshot contents.\n\nIt is created for the first time when an article is created, and is\naccumulated every time the article is modified.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IBbsArticle.ISnapshot"
             },
             "minItems": 1,
-            "x-typia-typeTags": [
-              {
-                "target": "array",
-                "name": "MinItems<1>",
-                "kind": "minItems",
-                "value": 1,
-                "validate": "1 <= $input.length",
-                "exclusive": true
-              }
-            ]
+            "description": "List of snapshot contents.\n\nIt is created for the first time when an article is created, and is\naccumulated every time the article is modified."
           },
           "created_at": {
-            "description": "Creation time of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Creation time of article."
           }
         },
         "nullable": false,
@@ -2076,102 +812,39 @@
           "snapshots",
           "created_at"
         ],
-        "description": "Article entity.\n\n`IBbsArticle* is a super-type entity of all kinds of articles in the current\nbackend system, literally shaping individual articles of the bulletin board.\n\nAnd, as you can see, the elements that must inevitably exist in the article,\nsuch as the `title` or the `body`, do not exist in the `IBbsArticle`, but exist\nin the subsidiary entity, {@link IBbsArticle.ISnapshot }, as a 1: N relationship,\nwhich is because a new snapshot record is published every time the article is\nmodified.\n\nThe reason why a new snapshot record is published every time the article is\nmodified is to preserve the evidence. Due to the nature of e-community, there\nis always a threat of dispute among the participants. And it can happen that\ndisputes arise through articles or {@link IBbsArticleComment comments}, and to\nprevent such things as modifying existing articles to manipulate the situation,\nthe article is designed in this structure.\n\nIn other words, to keep evidence, and prevent fraud.",
-        "x-typia-jsDocTags": [
-          {
-            "name": "template",
-            "text": [
-              {
-                "text": "Snapshot",
-                "kind": "typeParameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Snapshot content type of the article",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ]
+        "description": "Article entity.\n\n`IBbsArticle* is a super-type entity of all kinds of articles in the current\nbackend system, literally shaping individual articles of the bulletin board.\n\nAnd, as you can see, the elements that must inevitably exist in the article,\nsuch as the `title` or the `body`, do not exist in the `IBbsArticle`, but exist\nin the subsidiary entity, {@link IBbsArticle.ISnapshot }, as a 1: N relationship,\nwhich is because a new snapshot record is published every time the article is\nmodified.\n\nThe reason why a new snapshot record is published every time the article is\nmodified is to preserve the evidence. Due to the nature of e-community, there\nis always a threat of dispute among the participants. And it can happen that\ndisputes arise through articles or {@link IBbsArticleComment comments}, and to\nprevent such things as modifying existing articles to manipulate the situation,\nthe article is designed in this structure.\n\nIn other words, to keep evidence, and prevent fraud."
       },
       "IBbsArticle.ISnapshot": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "Primary Key.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Primary Key."
           },
           "created_at": {
-            "description": "Creation time of snapshot record.\n\nIn other words, creation time or update time or article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Creation time of snapshot record.\n\nIn other words, creation time or update time or article."
           },
           "format": {
-            "$ref": "#/components/schemas/IBbsArticle.Format"
+            "$ref": "#/components/schemas/IBbsArticle.Format",
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
-            "description": "Content body of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of article."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           },
           "title": {
-            "description": "Title of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Title of article."
           }
         },
         "nullable": false,
@@ -2183,54 +856,41 @@
           "files",
           "title"
         ],
-        "description": "Snapshot of article.\n\n`IBbsArticle.ISnapshot` is a snapshot entity that contains the contents of\nthe article, as mentioned in {@link IBbsArticle }, the contents of the article\nare separated from the article record to keep evidence and prevent fraud.",
-        "x-typia-jsDocTags": []
+        "description": "Snapshot of article.\n\n`IBbsArticle.ISnapshot` is a snapshot entity that contains the contents of\nthe article, as mentioned in {@link IBbsArticle }, the contents of the article\nare separated from the article record to keep evidence and prevent fraud."
       },
       "IBbsArticle.ICreate": {
         "type": "object",
         "properties": {
           "writer": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "format": {
-            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "enum": [
               "txt",
               "md",
               "html"
-            ]
+            ],
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "title": {
-            "description": "Title of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Title of article."
           },
           "body": {
-            "description": "Content body of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of article."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           },
           "password": {
-            "description": "Password for modification.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Password for modification."
           }
         },
         "nullable": false,
@@ -2242,49 +902,38 @@
           "files",
           "password"
         ],
-        "description": "Store content type of the article.",
-        "x-typia-jsDocTags": []
+        "description": "Store content type of the article."
       },
       "IBbsArticle.IUpdate": {
         "type": "object",
         "properties": {
           "format": {
-            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "enum": [
               "txt",
               "md",
               "html"
-            ]
+            ],
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "title": {
-            "description": "Title of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Title of article."
           },
           "body": {
-            "description": "Content body of article.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of article."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           },
           "password": {
-            "description": "Password for modification.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Password for modification."
           }
         },
         "nullable": false,
@@ -2294,23 +943,19 @@
           "body",
           "files",
           "password"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "IBbsArticle.IErase": {
         "type": "object",
         "properties": {
           "password": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           }
         },
         "nullable": false,
         "required": [
           "password"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "IBbsArticleComment.IRequest": {
         "type": "object",
@@ -2319,12 +964,8 @@
             "$ref": "#/components/schemas/IBbsArticleComment.IRequest.ISearch"
           },
           "sort": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "array",
             "items": {
-              "x-typia-required": false,
-              "x-typia-optional": true,
               "type": "string",
               "enum": [
                 "-writer",
@@ -2335,84 +976,42 @@
             }
           },
           "page": {
-            "description": "Page number.",
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ]
+            "description": "Page number."
           },
           "limit": {
-            "description": "Limitation of records per a page.",
-            "x-typia-jsDocTags": [
-              {
-                "name": "default",
-                "text": [
-                  {
-                    "text": "100",
-                    "kind": "text"
-                  }
-                ]
-              }
-            ],
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "integer",
-            "x-typia-typeTags": [
-              {
-                "target": "number",
-                "name": "Type<\"uint32\">",
-                "kind": "type",
-                "value": "uint32",
-                "validate": "Math.floor($input) === $input && 0 <= $input && $input <= 4294967295",
-                "exclusive": true
-              }
-            ],
-            "default": 100
+            "default": 100,
+            "description": "Limitation of records per a page."
           }
         },
-        "nullable": false,
-        "x-typia-jsDocTags": []
+        "nullable": false
       },
       "IBbsArticleComment.IRequest.ISearch": {
         "type": "object",
         "properties": {
           "writer": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "body": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           }
         },
-        "nullable": false,
-        "x-typia-jsDocTags": []
+        "nullable": false
       },
       "IPageIBbsArticleComment": {
         "type": "object",
         "properties": {
           "pagination": {
-            "$ref": "#/components/schemas/IPage.IPagination"
+            "$ref": "#/components/schemas/IPage.IPagination",
+            "description": "Page information."
           },
           "data": {
-            "description": "List of records.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IBbsArticleComment"
-            }
+            },
+            "description": "List of records."
           }
         },
         "nullable": false,
@@ -2420,125 +1019,38 @@
           "pagination",
           "data"
         ],
-        "description": "A page.\n\nCollection of records with pagination indformation.",
-        "x-typia-jsDocTags": [
-          {
-            "name": "template",
-            "text": [
-              {
-                "text": "T",
-                "kind": "typeParameterName"
-              },
-              {
-                "text": " ",
-                "kind": "space"
-              },
-              {
-                "text": "Record type",
-                "kind": "text"
-              }
-            ]
-          },
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ]
+        "description": "A page.\n\nCollection of records with pagination indformation."
       },
       "IBbsArticleComment": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "Primary Key.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Primary Key."
           },
           "parent_id": {
-            "description": "Parent comment's ID.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ],
-            "nullable": true
+            "nullable": true,
+            "description": "Parent comment's ID."
           },
           "writer": {
-            "description": "Writer of comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Writer of comment."
           },
           "snapshots": {
-            "description": "List of snapshot contents.\n\nIt is created for the first time when a comment being created, and is\naccumulated every time the comment is modified.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IBbsArticleComment.ISnapshot"
             },
             "minItems": 1,
-            "x-typia-typeTags": [
-              {
-                "target": "array",
-                "name": "MinItems<1>",
-                "kind": "minItems",
-                "value": 1,
-                "validate": "1 <= $input.length",
-                "exclusive": true
-              }
-            ]
+            "description": "List of snapshot contents.\n\nIt is created for the first time when a comment being created, and is\naccumulated every time the comment is modified."
           },
           "created_at": {
-            "description": "Creation time of comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Creation time of comment."
           }
         },
         "nullable": false,
@@ -2549,79 +1061,35 @@
           "snapshots",
           "created_at"
         ],
-        "description": "Comment written on an article.\n\n`IBbsArticleComment` is an entity that shapes the comments written on an article.\n\nAnd for this comment, as in the previous relationship between\n{@link IBbsArticle } and {@link IBbsArticle.ISnapshot }, the content body of the\ncomment is stored in the sub {@link IBbsArticleComment.ISnapshot } table for\nevidentialism, and a new snapshot record is issued every time the comment is modified.\n\nAlso, `IBbsArticleComment` is expressing the relationship of the hierarchical reply\nstructure through the {@link IBbsArticleComment.parent_id } attribute.",
-        "x-typia-jsDocTags": [
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ]
+        "description": "Comment written on an article.\n\n`IBbsArticleComment` is an entity that shapes the comments written on an article.\n\nAnd for this comment, as in the previous relationship between\n{@link IBbsArticle } and {@link IBbsArticle.ISnapshot }, the content body of the\ncomment is stored in the sub {@link IBbsArticleComment.ISnapshot } table for\nevidentialism, and a new snapshot record is issued every time the comment is modified.\n\nAlso, `IBbsArticleComment` is expressing the relationship of the hierarchical reply\nstructure through the {@link IBbsArticleComment.parent_id } attribute."
       },
       "IBbsArticleComment.ISnapshot": {
         "type": "object",
         "properties": {
           "id": {
-            "description": "Primary Key.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "uuid",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"uuid\">",
-                "kind": "format",
-                "value": "uuid",
-                "validate": "/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i.test($input)",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Primary Key."
           },
           "created_at": {
-            "description": "Creation time of snapshot record.\n\nIn other words, creation time or update time or comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "format": "date-time",
-            "x-typia-typeTags": [
-              {
-                "target": "string",
-                "name": "Format<\"date-time\">",
-                "kind": "format",
-                "value": "date-time",
-                "validate": "!isNaN(new Date($input).getTime())",
-                "exclusive": [
-                  "format",
-                  "pattern"
-                ]
-              }
-            ]
+            "description": "Creation time of snapshot record.\n\nIn other words, creation time or update time or comment."
           },
           "format": {
-            "$ref": "#/components/schemas/IBbsArticleComment.Format"
+            "$ref": "#/components/schemas/IBbsArticleComment.Format",
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
-            "description": "Content body of comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of comment."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           }
         },
         "nullable": false,
@@ -2632,8 +1100,7 @@
           "body",
           "files"
         ],
-        "description": "Snapshot of comment.\n\n`IBbsArticleComment.ISnapshot` is a snapshot entity that contains\nthe contents of the comment.\n\nAs mentioned in {@link IBbsArticleComment }, designed to keep evidence\nand prevent fraud.",
-        "x-typia-jsDocTags": []
+        "description": "Snapshot of comment.\n\n`IBbsArticleComment.ISnapshot` is a snapshot entity that contains\nthe contents of the comment.\n\nAs mentioned in {@link IBbsArticleComment }, designed to keep evidence\nand prevent fraud."
       },
       "IBbsArticleComment.Format": {
         "type": "string",
@@ -2647,42 +1114,32 @@
         "type": "object",
         "properties": {
           "writer": {
-            "description": "Writer of comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Writer of comment."
           },
           "format": {
-            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "enum": [
               "txt",
               "md",
               "html"
-            ]
+            ],
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
-            "description": "Content body of comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of comment."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           },
           "password": {
-            "description": "Password for modification.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Password for modification."
           }
         },
         "nullable": false,
@@ -2692,43 +1149,34 @@
           "body",
           "files",
           "password"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "IBbsArticleComment.IUpdate": {
         "type": "object",
         "properties": {
           "format": {
-            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string",
             "enum": [
               "txt",
               "md",
               "html"
-            ]
+            ],
+            "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
-            "description": "Content body of comment.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Content body of comment."
           },
           "files": {
-            "description": "List of attachment files.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
-            }
+            },
+            "description": "List of attachment files."
           },
           "password": {
-            "description": "Password for modification.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Password for modification."
           }
         },
         "nullable": false,
@@ -2737,23 +1185,19 @@
           "body",
           "files",
           "password"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "IBbsArticleComment.IErase": {
         "type": "object",
         "properties": {
           "password": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           }
         },
         "nullable": false,
         "required": [
           "password"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "IPerformance": {
         "type": "object",
@@ -2773,20 +1217,15 @@
           "cpu",
           "memory",
           "resource"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "process.global.NodeJS.CpuUsage": {
         "type": "object",
         "properties": {
           "user": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "system": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           }
         },
@@ -2794,35 +1233,24 @@
         "required": [
           "user",
           "system"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "process.global.NodeJS.MemoryUsage": {
         "type": "object",
         "properties": {
           "rss": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "heapTotal": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "heapUsed": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "external": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "arrayBuffers": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           }
         },
@@ -2833,90 +1261,57 @@
           "heapUsed",
           "external",
           "arrayBuffers"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "process.global.NodeJS.ResourceUsage": {
         "type": "object",
         "properties": {
           "fsRead": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "fsWrite": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "involuntaryContextSwitches": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "ipcReceived": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "ipcSent": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "majorPageFault": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "maxRSS": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "minorPageFault": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "sharedMemorySize": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "signalsCount": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "swappedOut": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "systemCPUTime": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "unsharedDataSize": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "unsharedStackSize": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "userCPUTime": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           },
           "voluntaryContextSwitches": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "number"
           }
         },
@@ -2938,41 +1333,33 @@
           "unsharedStackSize",
           "userCPUTime",
           "voluntaryContextSwitches"
-        ],
-        "x-typia-jsDocTags": []
+        ]
       },
       "ISystem": {
         "type": "object",
         "properties": {
           "uid": {
-            "description": "Random Unique ID.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "number"
+            "type": "number",
+            "description": "Random Unique ID."
           },
           "arguments": {
-            "description": "`process.argv`",
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
-              "description": "`process.argv`",
-              "x-typia-required": true,
-              "x-typia-optional": false,
               "type": "string"
-            }
+            },
+            "description": "`process.argv`"
           },
           "commit": {
-            "$ref": "#/components/schemas/ISystem.ICommit"
+            "$ref": "#/components/schemas/ISystem.ICommit",
+            "description": "Git commit info."
           },
           "package": {
-            "$ref": "#/components/schemas/ISystem.IPackage"
+            "$ref": "#/components/schemas/ISystem.IPackage",
+            "description": "`package.json`"
           },
           "created_at": {
-            "description": "Creation time of this server.",
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
+            "type": "string",
+            "description": "Creation time of this server."
           }
         },
         "nullable": false,
@@ -2983,50 +1370,27 @@
           "package",
           "created_at"
         ],
-        "description": "System Information.",
-        "x-typia-jsDocTags": [
-          {
-            "name": "author",
-            "text": [
-              {
-                "text": "Samchon",
-                "kind": "text"
-              }
-            ]
-          }
-        ]
+        "description": "System Information."
       },
       "ISystem.ICommit": {
         "type": "object",
         "properties": {
           "shortHash": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "branch": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "hash": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "subject": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "sanitizedSubject": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "body": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "author": {
@@ -3036,27 +1400,17 @@
             "$ref": "#/components/schemas/ISystem.ICommit.IUser"
           },
           "authored_at": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "commited_at": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "notes": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "tags": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "array",
             "items": {
-              "x-typia-required": true,
-              "x-typia-optional": false,
               "type": "string"
             }
           }
@@ -3075,20 +1429,15 @@
           "commited_at",
           "tags"
         ],
-        "description": "Git commit info.",
-        "x-typia-jsDocTags": []
+        "description": "Git commit info."
       },
       "ISystem.ICommit.IUser": {
         "type": "object",
         "properties": {
           "name": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "email": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           }
         },
@@ -3097,59 +1446,67 @@
           "name",
           "email"
         ],
-        "description": "Git user account info.",
-        "x-typia-jsDocTags": []
+        "description": "Git user account info."
       },
       "ISystem.IPackage": {
         "type": "object",
         "properties": {
           "name": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "version": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "description": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "main": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "typings": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "string"
           },
           "scripts": {
             "$ref": "#/components/schemas/Recordstringstring"
           },
           "repository": {
-            "$ref": "#/components/schemas/__type"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "git"
+                ]
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "nullable": false,
+            "required": [
+              "type",
+              "url"
+            ]
           },
           "author": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "license": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "bugs": {
-            "$ref": "#/components/schemas/__type.o1"
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            },
+            "nullable": false,
+            "required": [
+              "url"
+            ]
           },
           "homepage": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
             "type": "string"
           },
           "devDependencies": {
@@ -3159,15 +1516,20 @@
             "$ref": "#/components/schemas/Recordstringstring"
           },
           "publishConfig": {
-            "$ref": "#/components/schemas/__type.o2"
+            "type": "object",
+            "properties": {
+              "registry": {
+                "type": "string"
+              }
+            },
+            "nullable": false,
+            "required": [
+              "registry"
+            ]
           },
           "files": {
-            "x-typia-required": false,
-            "x-typia-optional": true,
             "type": "array",
             "items": {
-              "x-typia-required": false,
-              "x-typia-optional": true,
               "type": "string"
             }
           }
@@ -3185,79 +1547,13 @@
           "homepage",
           "dependencies"
         ],
-        "description": "NPM package info.",
-        "x-typia-jsDocTags": []
+        "description": "NPM package info."
       },
       "Recordstringstring": {
         "type": "object",
         "properties": {},
         "nullable": false,
-        "description": "Construct a type with a set of properties K of type T",
-        "x-typia-jsDocTags": [],
-        "x-typia-additionalProperties": {
-          "x-typia-required": true,
-          "x-typia-optional": false,
-          "type": "string"
-        },
-        "additionalProperties": {
-          "x-typia-required": true,
-          "x-typia-optional": false,
-          "type": "string"
-        }
-      },
-      "__type": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string",
-            "enum": [
-              "git"
-            ]
-          },
-          "url": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
-          }
-        },
-        "nullable": false,
-        "required": [
-          "type",
-          "url"
-        ],
-        "x-typia-jsDocTags": []
-      },
-      "__type.o1": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
-          }
-        },
-        "nullable": false,
-        "required": [
-          "url"
-        ],
-        "x-typia-jsDocTags": []
-      },
-      "__type.o2": {
-        "type": "object",
-        "properties": {
-          "registry": {
-            "x-typia-required": true,
-            "x-typia-optional": false,
-            "type": "string"
-          }
-        },
-        "nullable": false,
-        "required": [
-          "registry"
-        ],
-        "x-typia-jsDocTags": []
+        "description": "Construct a type with a set of properties K of type T"
       }
     }
   }

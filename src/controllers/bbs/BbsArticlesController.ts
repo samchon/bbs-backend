@@ -17,6 +17,8 @@ export class BbsArticlesController {
    *
    * @param input Request info of pagination and searching options.
    * @returns Paginated summarized articles.
+   * @tag BBS
+   * 
    * @author Samchon
    */
   @core.TypedRoute.Patch()
@@ -33,6 +35,8 @@ export class BbsArticlesController {
    *
    * @param input Request info of pagination and searching options.
    * @returns Paginated abridged articles.
+   * @tag BBS
+   * 
    * @author Samchon
    */
   @core.TypedRoute.Patch("abridges")
@@ -49,6 +53,8 @@ export class BbsArticlesController {
    *
    * @param id Target article's {@link IBbsArticle.id}
    * @returns Article information
+   * @tag BBS
+   * 
    * @author Samchon
    */
   @core.TypedRoute.Get(":id")
@@ -65,6 +71,8 @@ export class BbsArticlesController {
    *
    * @param input Article information to create.
    * @returns Newly created article.
+   * @tag BBS
+   * 
    * @author Samchon
    */
   @core.TypedRoute.Post()
@@ -83,6 +91,8 @@ export class BbsArticlesController {
    * @param id Target article's {@link IBbsArticle.id}
    * @param input Article information to update.
    * @returns Newly accumulated snapshot information.
+   * @tag BBS
+   * 
    * @author Samchon
    */
   @core.TypedRoute.Put(":id")
@@ -101,6 +111,8 @@ export class BbsArticlesController {
    *
    * @param id Target article's {@link IBbsArticle.id}
    * @param input Password of the article.
+   * @tag BBS
+   * 
    * @author Samchon
    */
   @core.TypedRoute.Delete(":id")

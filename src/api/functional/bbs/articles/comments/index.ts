@@ -20,6 +20,7 @@ import { NestiaSimulator } from "../../../../utils/NestiaSimulator";
  * 
  * @param input Request info of pagination and searching options.
  * @returns Paginated summarized comments.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticleCommentsController.index
@@ -105,6 +106,7 @@ export namespace index {
  * @param articleId Belonged article's {@link IBbsArticle.id }
  * @param id Target comment's {@link IBbsArticleComment.id}
  * @returns Comment information
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticleCommentsController.at
@@ -179,6 +181,7 @@ export namespace at {
  * @param articleId Belonged article's {@link IBbsArticle.id }
  * @param input Comment information to create.
  * @returns Newly created comment.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticleCommentsController.create
@@ -265,6 +268,7 @@ export namespace create {
  * @param id Target comment's {@link IBbsArticleComment.id}
  * @param input Comment information to update.
  * @returns Newly accumulated snapshot information.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticleCommentsController.update
@@ -354,6 +358,7 @@ export namespace update {
  * @param articleId Belonged article's {@link IBbsArticle.id }
  * @param id Target comment's {@link IBbsArticleComment.id}
  * @param input Password of the comment.
+ * @tag BBS
  * @author Samchon
  * 
  * @controller BbsArticleCommentsController.erase
