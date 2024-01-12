@@ -1,11 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { MutexConnector } from "mutex-server";
-import { MutableSingleton, Singleton } from "tstl";
+import { Singleton } from "tstl";
 import typia from "typia";
-
-import { BbsConfiguration } from "./BbsConfiguration";
 
 /**
  * Global variables of the server.
@@ -41,25 +38,13 @@ export class BbsGlobal {
     typia.assert<typeof mode>(mode);
     modeWrapper.value = mode;
   }
-
-  public static readonly critical: MutableSingleton<
-    MutexConnector<string, null>
-  > = new MutableSingleton(async () => {
-    const connector: MutexConnector<string, null> = new MutexConnector(
-      BbsConfiguration.SYSTEM_PASSWORD(),
-      null,
-    );
-    await connector.connect(
-      `ws://${BbsConfiguration.MASTER_IP()}:${BbsConfiguration.UPDATOR_PORT()}/api`,
-    );
-    return connector;
-  });
 }
 export namespace BbsGlobal {
   export interface IEnvironments {
     BBS_MODE: "local" | "dev" | "real";
-    BBS_UPDATOR_PORT: `${number}`;
     BBS_API_PORT: `${number}`;
+    BBS_API_ENCRYPTION_KEY: string;
+    BBS_API_ENCRYPTION_IV: string;
     BBS_SYSTEM_PASSWORD: string;
 
     BBS_POSTGRES_HOST: string;

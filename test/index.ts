@@ -8,7 +8,6 @@ import BbsApi from "@samchon/bbs-api";
 import { BbsBackend } from "../src/BbsBackend";
 import { BbsConfiguration } from "../src/BbsConfiguration";
 import { BbsGlobal } from "../src/BbsGlobal";
-import { BbsUpdator } from "../src/BbsUpdator";
 import { BbsSetupWizard } from "../src/setup/BbsSetupWizard";
 import { ArgumentParser } from "../src/utils/ArgumentParser";
 import { ErrorUtil } from "../src/utils/ErrorUtil";
@@ -75,13 +74,16 @@ async function main(): Promise<void> {
   }
 
   // OPEN SERVER
-  const updator = await BbsUpdator.master();
   const backend: BbsBackend = new BbsBackend();
   await backend.open();
 
   // DO TEST
   const connection: BbsApi.IConnection = {
     host: `http://127.0.0.1:${BbsConfiguration.API_PORT()}`,
+    encryption: {
+      key: BbsGlobal.env.BBS_API_ENCRYPTION_KEY,
+      iv: BbsGlobal.env.BBS_API_ENCRYPTION_IV,
+    },
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",
@@ -101,7 +103,6 @@ async function main(): Promise<void> {
   // TERMINATE
   await sleep_for(2500); // WAIT FOR BACKGROUND EVENTS
   await backend.close();
-  await updator.close();
 
   const exceptions: Error[] = report.executions
     .filter((exec) => exec.error !== null)

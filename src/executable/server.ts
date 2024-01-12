@@ -49,12 +49,14 @@ async function main(): Promise<void> {
   const backend: BbsBackend = new BbsBackend();
   await backend.open();
 
-  //----
-  // POST-PROCESSES
-  //----
-  // UNEXPECTED ERRORS
-  global.process.on("uncaughtException", handle_error);
-  global.process.on("unhandledRejection", handle_error);
+  // POST-PROCESS
+  process.send?.("ready");
+  process.on("SIGTERM", async () => {
+    await backend.close();
+    process.exit(0);
+  });
+  process.on("uncaughtException", handle_error);
+  process.on("unhandledRejection", handle_error);
 }
 main().catch((exp) => {
   console.log(exp);
