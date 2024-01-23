@@ -18,7 +18,7 @@ export class BbsArticleCommentsController {
    * @param input Request info of pagination and searching options.
    * @returns Paginated summarized comments.
    * @tag BBS
-   * 
+   *
    * @author Samchon
    */
   @core.TypedRoute.Patch()
@@ -38,7 +38,7 @@ export class BbsArticleCommentsController {
    * @param id Target comment's {@link IBbsArticleComment.id}
    * @returns Comment information
    * @tag BBS
-   * 
+   *
    * @author Samchon
    */
   @core.TypedRoute.Get(":id")
@@ -58,7 +58,7 @@ export class BbsArticleCommentsController {
    * @param input Comment information to create.
    * @returns Newly created comment.
    * @tag BBS
-   * 
+   *
    * @author Samchon
    */
   @core.TypedRoute.Post()
@@ -83,7 +83,7 @@ export class BbsArticleCommentsController {
    * @param input Comment information to update.
    * @returns Newly accumulated snapshot information.
    * @tag BBS
-   * 
+   *
    * @author Samchon
    */
   @core.TypedRoute.Put(":id")
@@ -108,7 +108,7 @@ export class BbsArticleCommentsController {
    * @param id Target comment's {@link IBbsArticleComment.id}
    * @param input Password of the comment.
    * @tag BBS
-   * 
+   *
    * @author Samchon
    */
   @core.TypedRoute.Delete(":id")

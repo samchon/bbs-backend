@@ -15,7 +15,7 @@ export namespace AttachmentFileProvider {
       created_at: input.created_at.toISOString(),
     });
     export const select = () =>
-      ({} satisfies Prisma.attachment_filesFindManyArgs);
+      ({}) satisfies Prisma.attachment_filesFindManyArgs;
   }
 
   export const collect = (input: IAttachmentFile.ICreate) =>
@@ -25,5 +25,5 @@ export namespace AttachmentFileProvider {
       extension: input.extension,
       url: input.url,
       created_at: new Date(),
-    } satisfies Prisma.attachment_filesCreateInput);
+    }) satisfies Prisma.attachment_filesCreateInput;
 }
