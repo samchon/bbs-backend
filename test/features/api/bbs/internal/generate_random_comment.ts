@@ -13,9 +13,13 @@ export const generate_random_comment = async (
   password?: string,
 ): Promise<IBbsArticleComment> => {
   const comment: IBbsArticleComment =
-    await BbsApi.functional.bbs.articles.comments.create(connection, article.id, {
-      writer: RandomGenerator.name(),
-      ...prepare_random_comment(password ?? RandomGenerator.alphaNumeric(8)),
-    });
+    await BbsApi.functional.bbs.articles.comments.create(
+      connection,
+      article.id,
+      {
+        writer: RandomGenerator.name(),
+        ...prepare_random_comment(password ?? RandomGenerator.alphaNumeric(8)),
+      },
+    );
   return typia.assertEquals(comment);
 };
