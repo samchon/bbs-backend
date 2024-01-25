@@ -7,7 +7,7 @@
     }
   ],
   "info": {
-    "version": "2.0.1",
+    "version": "2.0.2",
     "title": "@samchon/bbs-backend",
     "description": "Backend for bbs",
     "license": {
@@ -755,9 +755,7 @@
           "name": {
             "type": "string",
             "maxLength": 255,
-            "minLength": 1,
-            "nullable": true,
-            "description": "File name, except extension.\n\nPossible to omit like `.gitignore` case."
+            "description": "File name, except extension."
           },
           "extension": {
             "type": "string",
@@ -768,7 +766,7 @@
           },
           "url": {
             "type": "string",
-            "format": "url",
+            "format": "uri",
             "description": "URL path of the real file."
           }
         },

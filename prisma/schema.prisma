@@ -22,9 +22,6 @@ generator markdown {
 ///
 /// Every attachment files that are managed in current system.
 ///
-/// For reference, it is possible to omit one of file name or extension like 
-/// `.gitignore` or `README` case, but not possible to omit both of them.
-///
 /// @namespace Articles
 /// @author Samchon
 model attachment_files {
@@ -36,11 +33,8 @@ model attachment_files {
 
   /// File name, except extension.
   ///
-  /// Possible to omit like `.gitignore` case.
-  ///
-  /// @minLength 1
   /// @maxLength 255
-  name String? @db.VarChar
+  name String @db.VarChar
 
   /// Extension.
   ///

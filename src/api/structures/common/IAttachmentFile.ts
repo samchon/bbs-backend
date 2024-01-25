@@ -5,9 +5,7 @@ import { tags } from "typia";
  *
  * Every attachment files that are managed in current system.
  *
- * For reference, it is possible to omit one of file {@link name}
- * or {@link extension} like `.gitignore` or `README` case, but not
- * possible to omit both of them.
+ * @author Samchon
  */
 export interface IAttachmentFile extends IAttachmentFile.ICreate {
   /**
@@ -25,10 +23,8 @@ export namespace IAttachmentFile {
   export interface ICreate {
     /**
      * File name, except extension.
-     *
-     * Possible to omit like `.gitignore` case.
      */
-    name: null | (string & tags.MinLength<1> & tags.MaxLength<255>);
+    name: string & tags.MaxLength<255>;
 
     /**
      * Extension.
@@ -40,6 +36,6 @@ export namespace IAttachmentFile {
     /**
      * URL path of the real file.
      */
-    url: string & tags.Format<"url">;
+    url: string & tags.Format<"uri">;
   }
 }
