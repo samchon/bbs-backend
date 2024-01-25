@@ -8,7 +8,7 @@
 erDiagram
 "attachment_files" {
     String id PK
-    String name "nullable"
+    String name
     String extension "nullable"
     String url
     DateTime created_at
@@ -73,15 +73,9 @@ Attachment File.
 
 Every attachment files that are managed in current system.
 
-For reference, it is possible to omit one of file name or extension like 
-`.gitignore` or `README` case, but not possible to omit both of them.
-
 **Properties**
   - `id`: 
-  - `name`
-    > File name, except extension.
-    > 
-    > Possible to omit like `.gitignore` case.
+  - `name`: File name, except extension.
   - `extension`
     > Extension.
     > 
