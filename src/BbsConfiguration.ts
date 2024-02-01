@@ -1,5 +1,5 @@
 import { ExceptionManager } from "@nestia/core";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { Prisma } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 
@@ -23,7 +23,7 @@ export namespace BbsConfiguration {
   export const API_PORT = () => Number(BbsGlobal.env.BBS_API_PORT);
 }
 
-ExceptionManager.insert(PrismaClientKnownRequestError, (exp) => {
+ExceptionManager.insert(Prisma.PrismaClientKnownRequestError, (exp) => {
   switch (exp.code) {
     case "P2025":
       return ErrorProvider.notFound(exp.message);
