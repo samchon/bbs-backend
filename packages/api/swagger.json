@@ -33,7 +33,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Paginated summarized articles.",
             "content": {
               "application/json": {
@@ -97,7 +97,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Paginated abridged articles.",
             "content": {
               "application/json": {
@@ -172,7 +172,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Newly accumulated snapshot information.",
             "content": {
               "application/json": {
@@ -251,7 +251,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Paginated summarized comments.",
             "content": {
               "application/json": {
@@ -388,7 +388,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Newly accumulated snapshot information.",
             "content": {
               "application/json": {
@@ -517,6 +517,7 @@
         "properties": {
           "search": {
             "$ref": "#/components/schemas/IBbsArticle.IRequest.ISearch",
+            "title": "Search condition",
             "description": "Search condition."
           },
           "sort": {
@@ -534,15 +535,18 @@
                 "+updated_at"
               ]
             },
+            "title": "Sort condition",
             "description": "Sort condition."
           },
           "page": {
             "type": "integer",
+            "title": "Page number",
             "description": "Page number."
           },
           "limit": {
             "type": "integer",
             "default": 100,
+            "title": "Limitation of records per a page",
             "description": "Limitation of records per a page."
           }
         },
@@ -580,6 +584,7 @@
         "properties": {
           "pagination": {
             "$ref": "#/components/schemas/IPage.IPagination",
+            "title": "Page information",
             "description": "Page information."
           },
           "data": {
@@ -587,6 +592,7 @@
             "items": {
               "$ref": "#/components/schemas/IBbsArticle.ISummary"
             },
+            "title": "List of records",
             "description": "List of records."
           }
         },
@@ -602,19 +608,23 @@
         "properties": {
           "current": {
             "type": "integer",
+            "title": "Current page number",
             "description": "Current page number."
           },
           "limit": {
             "type": "integer",
             "default": 100,
+            "title": "Limitation of records per a page",
             "description": "Limitation of records per a page."
           },
           "records": {
             "type": "integer",
+            "title": "Total records in the database",
             "description": "Total records in the database."
           },
           "pages": {
             "type": "integer",
+            "title": "Total pages",
             "description": "Total pages.\n\nEqual to {@link records } / {@link limit } with ceiling."
           }
         },
@@ -633,24 +643,29 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "title": "Primary Key",
             "description": "Primary Key."
           },
           "writer": {
             "type": "string",
+            "title": "Writer of the article",
             "description": "Writer of the article."
           },
           "title": {
             "type": "string",
+            "title": "Title of the last snapshot",
             "description": "Title of the last snapshot."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Creation time of the article",
             "description": "Creation time of the article."
           },
           "updated_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Modification time of the article",
             "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created."
           }
         },
@@ -669,6 +684,7 @@
         "properties": {
           "pagination": {
             "$ref": "#/components/schemas/IPage.IPagination",
+            "title": "Page information",
             "description": "Page information."
           },
           "data": {
@@ -676,6 +692,7 @@
             "items": {
               "$ref": "#/components/schemas/IBbsArticle.IAbridge"
             },
+            "title": "List of records",
             "description": "List of records."
           }
         },
@@ -692,32 +709,39 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "title": "Primary Key",
             "description": "Primary Key."
           },
           "writer": {
             "type": "string",
+            "title": "Writer of the article",
             "description": "Writer of the article."
           },
           "title": {
             "type": "string",
+            "title": "Title of the last snapshot",
             "description": "Title of the last snapshot."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Creation time of the article",
             "description": "Creation time of the article."
           },
           "updated_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Modification time of the article",
             "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created."
           },
           "format": {
             "$ref": "#/components/schemas/IBbsArticle.Format",
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
             "type": "string",
+            "title": "Content body of article",
             "description": "Content body of article."
           },
           "files": {
@@ -725,6 +749,7 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           }
         },
@@ -755,6 +780,7 @@
           "name": {
             "type": "string",
             "maxLength": 255,
+            "title": "File name, except extension",
             "description": "File name, except extension."
           },
           "extension": {
@@ -762,11 +788,13 @@
             "maxLength": 8,
             "minLength": 1,
             "nullable": true,
+            "title": "Extension",
             "description": "Extension.\n\nPossible to omit like `README` case."
           },
           "url": {
             "type": "string",
             "format": "uri",
+            "title": "URL path of the real file",
             "description": "URL path of the real file."
           }
         },
@@ -783,10 +811,12 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "title": "Primary Key",
             "description": "Primary Key."
           },
           "writer": {
             "type": "string",
+            "title": "Writer of article",
             "description": "Writer of article."
           },
           "snapshots": {
@@ -795,11 +825,13 @@
               "$ref": "#/components/schemas/IBbsArticle.ISnapshot"
             },
             "minItems": 1,
+            "title": "List of snapshot contents",
             "description": "List of snapshot contents.\n\nIt is created for the first time when an article is created, and is\naccumulated every time the article is modified."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Creation time of article",
             "description": "Creation time of article."
           }
         },
@@ -818,19 +850,23 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "title": "Primary Key",
             "description": "Primary Key."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Creation time of snapshot record",
             "description": "Creation time of snapshot record.\n\nIn other words, creation time or update time or article."
           },
           "format": {
             "$ref": "#/components/schemas/IBbsArticle.Format",
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
             "type": "string",
+            "title": "Content body of article",
             "description": "Content body of article."
           },
           "files": {
@@ -838,10 +874,12 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           },
           "title": {
             "type": "string",
+            "title": "Title of article",
             "description": "Title of article."
           }
         },
@@ -869,14 +907,17 @@
               "md",
               "html"
             ],
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "title": {
             "type": "string",
+            "title": "Title of article",
             "description": "Title of article."
           },
           "body": {
             "type": "string",
+            "title": "Content body of article",
             "description": "Content body of article."
           },
           "files": {
@@ -884,10 +925,12 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           },
           "password": {
             "type": "string",
+            "title": "Password for modification",
             "description": "Password for modification."
           }
         },
@@ -912,14 +955,17 @@
               "md",
               "html"
             ],
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "title": {
             "type": "string",
+            "title": "Title of article",
             "description": "Title of article."
           },
           "body": {
             "type": "string",
+            "title": "Content body of article",
             "description": "Content body of article."
           },
           "files": {
@@ -927,10 +973,12 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           },
           "password": {
             "type": "string",
+            "title": "Password for modification",
             "description": "Password for modification."
           }
         },
@@ -975,11 +1023,13 @@
           },
           "page": {
             "type": "integer",
+            "title": "Page number",
             "description": "Page number."
           },
           "limit": {
             "type": "integer",
             "default": 100,
+            "title": "Limitation of records per a page",
             "description": "Limitation of records per a page."
           }
         },
@@ -1002,6 +1052,7 @@
         "properties": {
           "pagination": {
             "$ref": "#/components/schemas/IPage.IPagination",
+            "title": "Page information",
             "description": "Page information."
           },
           "data": {
@@ -1009,6 +1060,7 @@
             "items": {
               "$ref": "#/components/schemas/IBbsArticleComment"
             },
+            "title": "List of records",
             "description": "List of records."
           }
         },
@@ -1025,16 +1077,19 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "title": "Primary Key",
             "description": "Primary Key."
           },
           "parent_id": {
             "type": "string",
             "format": "uuid",
             "nullable": true,
+            "title": "Parent comment's ID",
             "description": "Parent comment's ID."
           },
           "writer": {
             "type": "string",
+            "title": "Writer of comment",
             "description": "Writer of comment."
           },
           "snapshots": {
@@ -1043,11 +1098,13 @@
               "$ref": "#/components/schemas/IBbsArticleComment.ISnapshot"
             },
             "minItems": 1,
+            "title": "List of snapshot contents",
             "description": "List of snapshot contents.\n\nIt is created for the first time when a comment being created, and is\naccumulated every time the comment is modified."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Creation time of comment",
             "description": "Creation time of comment."
           }
         },
@@ -1067,19 +1124,23 @@
           "id": {
             "type": "string",
             "format": "uuid",
+            "title": "Primary Key",
             "description": "Primary Key."
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
+            "title": "Creation time of snapshot record",
             "description": "Creation time of snapshot record.\n\nIn other words, creation time or update time or comment."
           },
           "format": {
             "$ref": "#/components/schemas/IBbsArticleComment.Format",
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
             "type": "string",
+            "title": "Content body of comment",
             "description": "Content body of comment."
           },
           "files": {
@@ -1087,6 +1148,7 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           }
         },
@@ -1113,6 +1175,7 @@
         "properties": {
           "writer": {
             "type": "string",
+            "title": "Writer of comment",
             "description": "Writer of comment."
           },
           "format": {
@@ -1122,10 +1185,12 @@
               "md",
               "html"
             ],
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
             "type": "string",
+            "title": "Content body of comment",
             "description": "Content body of comment."
           },
           "files": {
@@ -1133,10 +1198,12 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           },
           "password": {
             "type": "string",
+            "title": "Password for modification",
             "description": "Password for modification."
           }
         },
@@ -1159,10 +1226,12 @@
               "md",
               "html"
             ],
+            "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
           "body": {
             "type": "string",
+            "title": "Content body of comment",
             "description": "Content body of comment."
           },
           "files": {
@@ -1170,10 +1239,12 @@
             "items": {
               "$ref": "#/components/schemas/IAttachmentFile.ICreate"
             },
+            "title": "List of attachment files",
             "description": "List of attachment files."
           },
           "password": {
             "type": "string",
+            "title": "Password for modification",
             "description": "Password for modification."
           }
         },
@@ -1338,6 +1409,7 @@
         "properties": {
           "uid": {
             "type": "number",
+            "title": "Random Unique ID",
             "description": "Random Unique ID."
           },
           "arguments": {
@@ -1345,18 +1417,22 @@
             "items": {
               "type": "string"
             },
+            "title": "`process",
             "description": "`process.argv`"
           },
           "commit": {
             "$ref": "#/components/schemas/ISystem.ICommit",
+            "title": "Git commit info",
             "description": "Git commit info."
           },
           "package": {
             "$ref": "#/components/schemas/ISystem.IPackage",
+            "title": "`package",
             "description": "`package.json`"
           },
           "created_at": {
             "type": "string",
+            "title": "Creation time of this server",
             "description": "Creation time of this server."
           }
         },

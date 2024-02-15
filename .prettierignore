@@ -4,8 +4,6 @@ lib
 
 node_modules
 packages
-src/api/functional
-src/api/module.ts
 
 README.md
 tsconfig.json
