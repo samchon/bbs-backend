@@ -4,7 +4,6 @@ import fs from "fs";
 import { sleep_for } from "tstl";
 
 import { BbsConfiguration } from "../src/BbsConfiguration";
-import { BbsGlobal } from "../src/BbsGlobal";
 import BbsApi from "../src/api";
 
 const webpackTest = async (): Promise<void> => {
@@ -20,10 +19,6 @@ const webpackTest = async (): Promise<void> => {
   // DO TEST
   const connection: BbsApi.IConnection = {
     host: `http://127.0.0.1:${BbsConfiguration.API_PORT()}`,
-    encryption: {
-      key: BbsGlobal.env.BBS_API_ENCRYPTION_KEY,
-      iv: BbsGlobal.env.BBS_API_ENCRYPTION_IV,
-    },
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",

@@ -80,10 +80,6 @@ async function main(): Promise<void> {
   // DO TEST
   const connection: BbsApi.IConnection = {
     host: `http://127.0.0.1:${BbsConfiguration.API_PORT()}`,
-    encryption: {
-      key: BbsGlobal.env.BBS_API_ENCRYPTION_KEY,
-      iv: BbsGlobal.env.BBS_API_ENCRYPTION_IV,
-    },
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",
