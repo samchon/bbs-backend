@@ -43,8 +43,6 @@ export namespace BbsGlobal {
   export interface IEnvironments {
     BBS_MODE: "local" | "dev" | "real";
     BBS_API_PORT: `${number}`;
-    BBS_API_ENCRYPTION_KEY: string;
-    BBS_API_ENCRYPTION_IV: string;
     BBS_SYSTEM_PASSWORD: string;
 
     BBS_POSTGRES_HOST: string;
