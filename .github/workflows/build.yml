@@ -1,5 +1,17 @@
 name: build
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - "prisma/**"
+      - "src/**"
+      - "test/**"
+      - "package.json"
+  pull_request:
+    paths:
+      - "prisma/**"
+      - "src/**"
+      - "test/**"
+      - "package.json"
 
 jobs:
   Ubuntu:
@@ -18,13 +30,16 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      
+
       - name: Install Backend-Server
         run: pnpm install
 
       - name: Compile Backend-Server
         run: npm run build
-      
+
+      - name: Validate through EsLint
+        run: npm run eslint
+
       - name: Create DB Schema
         run: npm run schema postgres root
 
