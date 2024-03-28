@@ -7,7 +7,7 @@
     }
   ],
   "info": {
-    "version": "2.1.0",
+    "version": "2.2.0",
     "title": "@samchon/bbs-backend",
     "description": "Backend for bbs",
     "license": {
@@ -523,14 +523,14 @@
             "items": {
               "type": "string",
               "enum": [
-                "-writer",
-                "-title",
-                "-created_at",
-                "-updated_at",
-                "+writer",
-                "+title",
                 "+created_at",
-                "+updated_at"
+                "+title",
+                "+updated_at",
+                "+writer",
+                "-created_at",
+                "-title",
+                "-updated_at",
+                "-writer"
               ]
             },
             "title": "Sort condition",
@@ -901,9 +901,9 @@
           "format": {
             "type": "string",
             "enum": [
-              "txt",
+              "html",
               "md",
-              "html"
+              "txt"
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -949,9 +949,9 @@
           "format": {
             "type": "string",
             "enum": [
-              "txt",
+              "html",
               "md",
-              "html"
+              "txt"
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -1012,10 +1012,10 @@
             "items": {
               "type": "string",
               "enum": [
-                "-writer",
-                "-created_at",
+                "+created_at",
                 "+writer",
-                "+created_at"
+                "-created_at",
+                "-writer"
               ]
             }
           },
@@ -1179,9 +1179,9 @@
           "format": {
             "type": "string",
             "enum": [
-              "txt",
+              "html",
               "md",
-              "html"
+              "txt"
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -1220,9 +1220,9 @@
           "format": {
             "type": "string",
             "enum": [
-              "txt",
+              "html",
               "md",
-              "html"
+              "txt"
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -1415,7 +1415,6 @@
             "items": {
               "type": "string"
             },
-            "title": "`process",
             "description": "`process.argv`"
           },
           "commit": {
@@ -1425,7 +1424,6 @@
           },
           "package": {
             "$ref": "#/components/schemas/ISystem.IPackage",
-            "title": "`package",
             "description": "`package.json`"
           },
           "created_at": {
