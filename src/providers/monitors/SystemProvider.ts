@@ -1,7 +1,6 @@
 import fs from "fs";
 import git from "git-last-commit";
-import { randint } from "tstl/algorithm/random";
-import { Singleton } from "tstl/thread/Singleton";
+import { Singleton, randint } from "tstl";
 
 import { ISystem } from "@samchon/bbs-api/lib/structures/monitors/ISystem";
 

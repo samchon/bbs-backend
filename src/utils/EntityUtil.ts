@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { HashMap, hash } from "tstl";
-import { equal } from "tstl/ranges";
+import { ranges } from "tstl";
 import typia from "typia";
 
 /**
@@ -145,7 +145,7 @@ export namespace EntityUtil {
       const dict: HashMap<any[], any[]> = new HashMap(
         (elements) => hash(...elements.map((e) => JSON.stringify(e))),
         (x, y) =>
-          equal(x, y, (a, b) => JSON.stringify(a) === JSON.stringify(b)),
+          ranges.equal(x, y, (a, b) => JSON.stringify(a) === JSON.stringify(b)),
       );
       const recordList: any[] = await (client as any)[
         current.model.name
