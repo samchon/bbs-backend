@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "servers": [
     {
       "url": "http://localhost:37001",
@@ -7,7 +7,7 @@
     }
   ],
   "info": {
-    "version": "2.2.0",
+    "version": "3.0.0",
     "title": "@samchon/bbs-backend",
     "description": "Backend for bbs",
     "license": {
@@ -521,16 +521,31 @@
           "sort": {
             "type": "array",
             "items": {
-              "type": "string",
-              "enum": [
-                "+created_at",
-                "+title",
-                "+updated_at",
-                "+writer",
-                "-created_at",
-                "-title",
-                "-updated_at",
-                "-writer"
+              "oneOf": [
+                {
+                  "const": "-writer"
+                },
+                {
+                  "const": "-title"
+                },
+                {
+                  "const": "-created_at"
+                },
+                {
+                  "const": "-updated_at"
+                },
+                {
+                  "const": "+writer"
+                },
+                {
+                  "const": "+title"
+                },
+                {
+                  "const": "+created_at"
+                },
+                {
+                  "const": "+updated_at"
+                }
               ]
             },
             "title": "Sort condition",
@@ -543,12 +558,10 @@
           },
           "limit": {
             "type": "integer",
-            "default": 100,
             "title": "Limitation of records per a page",
             "description": "Limitation of records per a page."
           }
-        },
-        "nullable": false
+        }
       },
       "IBbsArticle.IRequest.ISearch": {
         "type": "object",
@@ -574,7 +587,6 @@
             "format": "date-time"
           }
         },
-        "nullable": false,
         "description": "검색 정보."
       },
       "IPageIBbsArticle.ISummary": {
@@ -594,7 +606,6 @@
             "description": "List of records."
           }
         },
-        "nullable": false,
         "required": [
           "pagination",
           "data"
@@ -611,7 +622,6 @@
           },
           "limit": {
             "type": "integer",
-            "default": 100,
             "title": "Limitation of records per a page",
             "description": "Limitation of records per a page."
           },
@@ -626,7 +636,6 @@
             "description": "Total pages.\n\nEqual to {@link records } / {@link limit } with ceiling."
           }
         },
-        "nullable": false,
         "required": [
           "current",
           "limit",
@@ -667,7 +676,6 @@
             "description": "Modification time of the article.\n\nIn other words, the time when the last snapshot was created."
           }
         },
-        "nullable": false,
         "required": [
           "id",
           "writer",
@@ -694,7 +702,6 @@
             "description": "List of records."
           }
         },
-        "nullable": false,
         "required": [
           "pagination",
           "data"
@@ -751,7 +758,6 @@
             "description": "List of attachment files."
           }
         },
-        "nullable": false,
         "required": [
           "id",
           "writer",
@@ -765,11 +771,16 @@
         "description": "Abriged information of the article."
       },
       "IBbsArticle.Format": {
-        "type": "string",
-        "enum": [
-          "txt",
-          "md",
-          "html"
+        "oneOf": [
+          {
+            "const": "txt"
+          },
+          {
+            "const": "md"
+          },
+          {
+            "const": "html"
+          }
         ]
       },
       "IAttachmentFile.ICreate": {
@@ -782,10 +793,16 @@
             "description": "File name, except extension."
           },
           "extension": {
-            "type": "string",
-            "maxLength": 8,
-            "minLength": 1,
-            "nullable": true,
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8
+              }
+            ],
             "title": "Extension",
             "description": "Extension.\n\nPossible to omit like `README` case."
           },
@@ -796,7 +813,6 @@
             "description": "URL path of the real file."
           }
         },
-        "nullable": false,
         "required": [
           "name",
           "extension",
@@ -833,7 +849,6 @@
             "description": "Creation time of article."
           }
         },
-        "nullable": false,
         "required": [
           "id",
           "writer",
@@ -881,7 +896,6 @@
             "description": "Title of article."
           }
         },
-        "nullable": false,
         "required": [
           "id",
           "created_at",
@@ -899,11 +913,16 @@
             "type": "string"
           },
           "format": {
-            "type": "string",
-            "enum": [
-              "html",
-              "md",
-              "txt"
+            "oneOf": [
+              {
+                "const": "txt"
+              },
+              {
+                "const": "md"
+              },
+              {
+                "const": "html"
+              }
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -932,7 +951,6 @@
             "description": "Password for modification."
           }
         },
-        "nullable": false,
         "required": [
           "writer",
           "format",
@@ -947,11 +965,16 @@
         "type": "object",
         "properties": {
           "format": {
-            "type": "string",
-            "enum": [
-              "html",
-              "md",
-              "txt"
+            "oneOf": [
+              {
+                "const": "txt"
+              },
+              {
+                "const": "md"
+              },
+              {
+                "const": "html"
+              }
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -980,7 +1003,6 @@
             "description": "Password for modification."
           }
         },
-        "nullable": false,
         "required": [
           "format",
           "title",
@@ -996,7 +1018,6 @@
             "type": "string"
           }
         },
-        "nullable": false,
         "required": [
           "password"
         ]
@@ -1010,12 +1031,19 @@
           "sort": {
             "type": "array",
             "items": {
-              "type": "string",
-              "enum": [
-                "+created_at",
-                "+writer",
-                "-created_at",
-                "-writer"
+              "oneOf": [
+                {
+                  "const": "-writer"
+                },
+                {
+                  "const": "-created_at"
+                },
+                {
+                  "const": "+writer"
+                },
+                {
+                  "const": "+created_at"
+                }
               ]
             }
           },
@@ -1026,12 +1054,10 @@
           },
           "limit": {
             "type": "integer",
-            "default": 100,
             "title": "Limitation of records per a page",
             "description": "Limitation of records per a page."
           }
-        },
-        "nullable": false
+        }
       },
       "IBbsArticleComment.IRequest.ISearch": {
         "type": "object",
@@ -1042,8 +1068,7 @@
           "body": {
             "type": "string"
           }
-        },
-        "nullable": false
+        }
       },
       "IPageIBbsArticleComment": {
         "type": "object",
@@ -1062,7 +1087,6 @@
             "description": "List of records."
           }
         },
-        "nullable": false,
         "required": [
           "pagination",
           "data"
@@ -1079,9 +1103,15 @@
             "description": "Primary Key."
           },
           "parent_id": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true,
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "format": "uuid"
+              }
+            ],
             "title": "Parent comment's ID",
             "description": "Parent comment's ID."
           },
@@ -1106,7 +1136,6 @@
             "description": "Creation time of comment."
           }
         },
-        "nullable": false,
         "required": [
           "id",
           "parent_id",
@@ -1150,7 +1179,6 @@
             "description": "List of attachment files."
           }
         },
-        "nullable": false,
         "required": [
           "id",
           "created_at",
@@ -1161,11 +1189,16 @@
         "description": "Snapshot of comment.\n\n`IBbsArticleComment.ISnapshot` is a snapshot entity that contains\nthe contents of the comment.\n\nAs mentioned in {@link IBbsArticleComment }, designed to keep evidence\nand prevent fraud."
       },
       "IBbsArticleComment.Format": {
-        "type": "string",
-        "enum": [
-          "txt",
-          "md",
-          "html"
+        "oneOf": [
+          {
+            "const": "txt"
+          },
+          {
+            "const": "md"
+          },
+          {
+            "const": "html"
+          }
         ]
       },
       "IBbsArticleComment.ICreate": {
@@ -1177,11 +1210,16 @@
             "description": "Writer of comment."
           },
           "format": {
-            "type": "string",
-            "enum": [
-              "html",
-              "md",
-              "txt"
+            "oneOf": [
+              {
+                "const": "txt"
+              },
+              {
+                "const": "md"
+              },
+              {
+                "const": "html"
+              }
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -1205,7 +1243,6 @@
             "description": "Password for modification."
           }
         },
-        "nullable": false,
         "required": [
           "writer",
           "format",
@@ -1218,11 +1255,16 @@
         "type": "object",
         "properties": {
           "format": {
-            "type": "string",
-            "enum": [
-              "html",
-              "md",
-              "txt"
+            "oneOf": [
+              {
+                "const": "txt"
+              },
+              {
+                "const": "md"
+              },
+              {
+                "const": "html"
+              }
             ],
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
@@ -1246,7 +1288,6 @@
             "description": "Password for modification."
           }
         },
-        "nullable": false,
         "required": [
           "format",
           "body",
@@ -1261,7 +1302,6 @@
             "type": "string"
           }
         },
-        "nullable": false,
         "required": [
           "password"
         ]
@@ -1279,7 +1319,6 @@
             "$ref": "#/components/schemas/process.global.NodeJS.ResourceUsage"
           }
         },
-        "nullable": false,
         "required": [
           "cpu",
           "memory",
@@ -1296,7 +1335,6 @@
             "type": "number"
           }
         },
-        "nullable": false,
         "required": [
           "user",
           "system"
@@ -1321,7 +1359,6 @@
             "type": "number"
           }
         },
-        "nullable": false,
         "required": [
           "rss",
           "heapTotal",
@@ -1382,7 +1419,6 @@
             "type": "number"
           }
         },
-        "nullable": false,
         "required": [
           "fsRead",
           "fsWrite",
@@ -1432,7 +1468,6 @@
             "description": "Creation time of this server."
           }
         },
-        "nullable": false,
         "required": [
           "uid",
           "arguments",
@@ -1485,7 +1520,6 @@
             }
           }
         },
-        "nullable": false,
         "required": [
           "shortHash",
           "branch",
@@ -1511,7 +1545,6 @@
             "type": "string"
           }
         },
-        "nullable": false,
         "required": [
           "name",
           "email"
@@ -1543,16 +1576,12 @@
             "type": "object",
             "properties": {
               "type": {
-                "type": "string",
-                "enum": [
-                  "git"
-                ]
+                "const": "git"
               },
               "url": {
                 "type": "string"
               }
             },
-            "nullable": false,
             "required": [
               "type",
               "url"
@@ -1571,7 +1600,6 @@
                 "type": "string"
               }
             },
-            "nullable": false,
             "required": [
               "url"
             ]
@@ -1592,7 +1620,6 @@
                 "type": "string"
               }
             },
-            "nullable": false,
             "required": [
               "registry"
             ]
@@ -1604,7 +1631,6 @@
             }
           }
         },
-        "nullable": false,
         "required": [
           "name",
           "version",
@@ -1622,9 +1648,19 @@
       "Recordstringstring": {
         "type": "object",
         "properties": {},
-        "nullable": false,
-        "description": "Construct a type with a set of properties K of type T"
+        "description": "Construct a type with a set of properties K of type T",
+        "additionalProperties": {
+          "type": "string"
+        }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "BBS"
+    },
+    {
+      "name": "Monitor"
+    }
+  ]
 }
