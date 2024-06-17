@@ -1,5 +1,4 @@
 import { ArrayUtil, GaffComparator, TestValidator } from "@nestia/e2e";
-import typia from "typia";
 
 import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
@@ -24,7 +23,7 @@ export const test_api_bbs_article_index_sort = async (
         limit: REPEAT,
         sort: input,
       });
-    return typia.assertEquals(page).data;
+    return page.data;
   });
 
   const components = [

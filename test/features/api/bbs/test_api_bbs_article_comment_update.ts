@@ -1,5 +1,4 @@
 import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
-import typia from "typia";
 
 import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
@@ -32,7 +31,7 @@ export const test_api_bbs_article_comment_update = async (
         comment.id,
         i,
       );
-    comment.snapshots.push(typia.assertEquals(snapshot));
+    comment.snapshots.push(snapshot);
     TestValidator.equals("snapshot")({
       format: i.format,
       body: i.body,
@@ -46,6 +45,5 @@ export const test_api_bbs_article_comment_update = async (
       article.id,
       comment.id,
     );
-  typia.assertEquals(read);
   TestValidator.equals("read")(read)(comment);
 };

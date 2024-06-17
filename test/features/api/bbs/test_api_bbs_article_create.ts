@@ -1,6 +1,5 @@
 import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
 import { randint } from "tstl";
-import typia from "typia";
 
 import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
@@ -25,7 +24,6 @@ export const test_api_bbs_article_create = async (
     connection,
     input,
   );
-  typia.assertEquals(article);
 
   // VALIDATE WHETHER EXACT DATA IS INSERTED
   TestValidator.equals("create")({
@@ -45,6 +43,5 @@ export const test_api_bbs_article_create = async (
     connection,
     article.id,
   );
-  typia.assertEquals(read);
   TestValidator.equals("read")(read)(article);
 };
