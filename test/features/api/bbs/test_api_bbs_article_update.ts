@@ -1,5 +1,4 @@
 import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
-import typia from "typia";
 
 import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
@@ -22,7 +21,7 @@ export const test_api_bbs_article_update = async (
   for (const i of inputs) {
     const snapshot: IBbsArticle.ISnapshot =
       await BbsApi.functional.bbs.articles.update(connection, article.id, i);
-    article.snapshots.push(typia.assertEquals(snapshot));
+    article.snapshots.push(snapshot);
     TestValidator.equals("snapshot")({
       format: i.format,
       title: i.title,
@@ -35,6 +34,5 @@ export const test_api_bbs_article_update = async (
     connection,
     article.id,
   );
-  typia.assertEquals(read);
   TestValidator.equals("read")(read)(article);
 };

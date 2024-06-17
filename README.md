@@ -150,6 +150,10 @@ npm run test -- --include cart order issue
 npm run test -- --include cart order issue --exclude index deposit
 ```
 
+For reference, if you run `npm run benchmark` command, your test functions defined in the [test/features/api](test/features/api) directory would be utilized for performance benchmarking. If you want to see the performance bench result earlier, visit below link please:
+
+  - [docs/benchmarks/AMD Ryzen 9 7940HS w Radeon 780M Graphics.md](https://github.com/samchon/bbs-backend/blob/master/docs/benchmarks/AMD%20Ryzen%209%207940HS%20w%20Radeon%20780M%20Graphics.md)
+
 ### 3.4. Main Program
 After [Definition](#31-definition), client [SDK](#32-software-development-kit) building and [Test Automation Program](#33-test-automation-program) are all prepared, finally you can develop the Main Program. Also, when you complete the Main Program implementation, it would better to validate the implementation through the pre-built [SDK](#32-software-development-kit) and [Test Automation Program](#33-test-automation-program).
 
@@ -164,6 +168,7 @@ List of the run commands defined in the [package.json](package.json) are like be
 
   - Test
     - **`test`**: **Run [Test Automation Program](#33-test-automation-program)**
+    - `benchmark`: Run performance benchmark program
   - Build
     - `build`: Build every below programs
     - `build:sdk`: Build SDK library, but only for local

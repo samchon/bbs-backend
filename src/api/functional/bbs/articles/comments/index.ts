@@ -44,6 +44,7 @@ export async function index(
         },
         {
           ...index.METADATA,
+          template: index.METADATA.path,
           path: index.path(articleId),
         },
         input,
@@ -117,6 +118,7 @@ export async function at(
     ? at.simulate(connection, articleId, id)
     : PlainFetcher.fetch(connection, {
         ...at.METADATA,
+        template: at.METADATA.path,
         path: at.path(articleId, id),
       });
 }
@@ -195,6 +197,7 @@ export async function create(
         },
         {
           ...create.METADATA,
+          template: create.METADATA.path,
           path: create.path(articleId),
         },
         input,
@@ -278,6 +281,7 @@ export async function update(
         },
         {
           ...update.METADATA,
+          template: update.METADATA.path,
           path: update.path(articleId, id),
         },
         input,
@@ -366,6 +370,7 @@ export async function erase(
         },
         {
           ...erase.METADATA,
+          template: erase.METADATA.path,
           path: erase.path(articleId, id),
         },
         input,

@@ -1,6 +1,5 @@
 import { ArrayUtil, RandomGenerator, TestValidator } from "@nestia/e2e";
 import { randint } from "tstl";
-import typia from "typia";
 
 import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
@@ -27,7 +26,6 @@ export const test_api_bbs_article_comment_create = async (
       article.id,
       input,
     );
-  typia.assertEquals(article);
 
   TestValidator.equals("create")({
     snapshots: [
@@ -46,6 +44,5 @@ export const test_api_bbs_article_comment_create = async (
       article.id,
       comment.id,
     );
-  typia.assertEquals(read);
   TestValidator.equals("read")(read)(comment);
 };

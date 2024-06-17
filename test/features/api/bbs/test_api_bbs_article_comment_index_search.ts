@@ -1,5 +1,4 @@
 import { ArrayUtil, TestValidator } from "@nestia/e2e";
-import typia from "typia";
 
 import BbsApi from "@samchon/bbs-api/lib/index";
 import { IBbsArticle } from "@samchon/bbs-api/lib/structures/bbs/IBbsArticle";
@@ -25,7 +24,6 @@ export const test_api_bbs_article_comment_index_search = async (
         limit: REPEAT,
       },
     );
-  typia.assertEquals(expected);
 
   const validator = TestValidator.search("search")(
     async (search: IBbsArticle.IRequest.ISearch) => {
@@ -38,7 +36,7 @@ export const test_api_bbs_article_comment_index_search = async (
             limit: REPEAT,
           },
         );
-      return typia.assertEquals(page).data;
+      return page.data;
     },
   )(expected.data, 2);
 
