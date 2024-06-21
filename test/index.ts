@@ -1,6 +1,5 @@
 import { DynamicExecutor, StopWatch } from "@nestia/e2e";
-import fs from "fs";
-import { Singleton, randint, sleep_for } from "tstl";
+import { sleep_for } from "tstl";
 
 import BbsApi from "@samchon/bbs-api";
 
@@ -9,7 +8,6 @@ import { BbsConfiguration } from "../src/BbsConfiguration";
 import { BbsGlobal } from "../src/BbsGlobal";
 import { BbsSetupWizard } from "../src/setup/BbsSetupWizard";
 import { ArgumentParser } from "../src/utils/ArgumentParser";
-import { ErrorUtil } from "../src/utils/ErrorUtil";
 
 interface IOptions {
   reset: boolean;
@@ -34,35 +32,7 @@ const getOptions = () =>
     });
   });
 
-function cipher(val: number): string {
-  if (val < 10) return "0" + val;
-  else return String(val);
-}
-
-async function handle_error(exp: any): Promise<void> {
-  try {
-    const date: Date = new Date();
-    const fileName: string = `${date.getFullYear()}${cipher(
-      date.getMonth() + 1,
-    )}${cipher(date.getDate())}${cipher(date.getHours())}${cipher(
-      date.getMinutes(),
-    )}${cipher(date.getSeconds())}.${randint(0, Number.MAX_SAFE_INTEGER)}`;
-    const content: string = JSON.stringify(ErrorUtil.toJSON(exp), null, 4);
-
-    await directory.get();
-    await fs.promises.writeFile(
-      `${__dirname}/../../assets/logs/errors/${fileName}.log`,
-      content,
-      "utf8",
-    );
-  } catch {}
-}
-
-async function main(): Promise<void> {
-  // UNEXPECTED ERRORS
-  global.process.on("uncaughtException", handle_error);
-  global.process.on("unhandledRejection", handle_error);
-
+const main = async (): Promise<void> => {
   // CONFIGURE
   const options: IOptions = await getOptions();
   BbsGlobal.testing = true;
@@ -82,12 +52,7 @@ async function main(): Promise<void> {
   };
   const report: DynamicExecutor.IReport = await DynamicExecutor.validate({
     prefix: "test",
-    parameters: () => [
-      {
-        host: connection.host,
-        encryption: connection.encryption,
-      },
-    ],
+    parameters: () => [{ ...connection }],
     filter: (func) =>
       (!options.include?.length ||
         (options.include ?? []).some((str) => func.includes(str))) &&
@@ -111,20 +76,8 @@ async function main(): Promise<void> {
     console.log("Elapsed time", report.time.toLocaleString(), `ms`);
     process.exit(-1);
   }
-}
+};
 main().catch((exp) => {
   console.log(exp);
   process.exit(-1);
 });
-
-const directory = new Singleton(async () => {
-  await mkdir(`${__dirname}/../../assets`);
-  await mkdir(`${__dirname}/../../assets/logs`);
-  await mkdir(`${__dirname}/../../assets/logs/errors`);
-});
-
-async function mkdir(path: string): Promise<void> {
-  try {
-    await fs.promises.mkdir(path);
-  } catch {}
-}
