@@ -1,8 +1,9 @@
 {
   "name": "@samchon/bbs-api",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "API for bbs",
   "main": "lib/index.js",
+  "module": "lib/index.mjs",
   "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
@@ -15,11 +16,13 @@
   },
   "homepage": "https://github.com/samchon/bbs-backend#readme",
   "dependencies": {
-    "@nestia/fetcher": "^3.3.2",
-    "typia": "^6.3.1"
+    "@nestia/fetcher": "^3.5.0",
+    "typia": "^6.4.3"
   },
   "include": [
     "lib",
+    "package.json",
+    "swagger.json",
     "README.md"
   ]
 }
