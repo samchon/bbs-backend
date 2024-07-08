@@ -7,7 +7,7 @@
     }
   ],
   "info": {
-    "version": "3.0.0",
+    "version": "3.0.1",
     "title": "@samchon/bbs-backend",
     "description": "Backend for bbs",
     "license": {
@@ -877,6 +877,11 @@
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
+          "title": {
+            "type": "string",
+            "title": "Title of article",
+            "description": "Title of article."
+          },
           "body": {
             "type": "string",
             "title": "Content body of article",
@@ -889,20 +894,15 @@
             },
             "title": "List of attachment files",
             "description": "List of attachment files."
-          },
-          "title": {
-            "type": "string",
-            "title": "Title of article",
-            "description": "Title of article."
           }
         },
         "required": [
           "id",
           "created_at",
           "format",
+          "title",
           "body",
-          "files",
-          "title"
+          "files"
         ],
         "description": "Snapshot of article.\n\n`IBbsArticle.ISnapshot` is a snapshot entity that contains the contents of\nthe article, as mentioned in {@link IBbsArticle}, the contents of the article\nare separated from the article record to keep evidence and prevent fraud."
       },
@@ -1269,6 +1269,11 @@
             "title": "Format of body",
             "description": "Format of body.\n\nSame meaning with extension like `html`, `md`, `txt`."
           },
+          "password": {
+            "type": "string",
+            "title": "Password for modification",
+            "description": "Password for modification."
+          },
           "body": {
             "type": "string",
             "title": "Content body of comment",
@@ -1281,18 +1286,13 @@
             },
             "title": "List of attachment files",
             "description": "List of attachment files."
-          },
-          "password": {
-            "type": "string",
-            "title": "Password for modification",
-            "description": "Password for modification."
           }
         },
         "required": [
           "format",
+          "password",
           "body",
-          "files",
-          "password"
+          "files"
         ]
       },
       "IBbsArticleComment.IErase": {
