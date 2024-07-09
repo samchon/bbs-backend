@@ -39,7 +39,8 @@
   },
   "homepage": "https://github.com/samchon/bbs-backend",
   "devDependencies": {
-    "@nestia/e2e": "^0.6.0",
+    "@nestia/benchmark": "^0.1.0",
+    "@nestia/e2e": "^0.7.0",
     "@nestia/sdk": "^3.5.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
