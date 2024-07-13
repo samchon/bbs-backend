@@ -3,7 +3,7 @@
 ![Nestia Logo](https://nestia.io/logo.png)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/samchon/bbs-backend/tree/master/LICENSE)
-[![npm version](https://badge.fury.io/js/@samchon/bbs-api.svg)](https://www.npmjs.com/package/@samchon/bbs-api)
+[![npm version](https://img.shields.io/npm/v/@samchon/bbs-api.svg)](https://www.npmjs.com/package/@samchon/bbs-api)
 [![Build Status](https://github.com/samchon/bbs-backend/workflows/build/badge.svg)](https://github.com/samchon/bbs-backend/actions?query=workflow%3Abuild)
 [![Guide Documents](https://img.shields.io/badge/guide-documents-forestgreen)](https://nestia.io/docs/)
 

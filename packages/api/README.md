@@ -1,5 +1,10 @@
 # SDK for Client Developers
 ## Outline
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/samchon/bbs-backend/tree/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@samchon/bbs-api.svg)](https://www.npmjs.com/package/@samchon/bbs-api)
+[![Build Status](https://github.com/samchon/bbs-backend/workflows/build/badge.svg)](https://github.com/samchon/bbs-backend/actions?query=workflow%3Abuild)
+[![Guide Documents](https://img.shields.io/badge/guide-documents-forestgreen)](https://nestia.io/docs/)
+
 [`@samchon/bbs-backend`](https://github.com/samchon/bbs-backend) provides SDK (Software Development Kit) for convenience.
 
 For the client developers who are connecting to this backend server, [`@samchon/bbs-backend`](https://github.com/samchon/bbs-backend) provides not API documents like the Swagger, but provides the API interaction library, one of the typical SDK (Software Development Kit) for the convenience.
