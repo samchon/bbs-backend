@@ -11,32 +11,48 @@
     - Threads: 4
     - Simultaneous: 32
   - Time
-    - Start: 2024-07-15T15:57:39.111Z
-    - Complete: 2024-07-15T15:58:45.932Z
-    - Elapsed: 66,821 ms
+    - Start: 2024-07-26T17:47:22.181Z
+    - Complete: 2024-07-26T17:48:27.476Z
+    - Elapsed: 65,295 ms
 
 Type | Count | Success | Mean. | Stdev. | Minimum | Maximum
 ----|----|----|----|----|----|----
-Total | 1,288 | 1,288 | 1,568.55 | 678.77 | 6 | 3,374
+Total | 1,351 | 1,351 | 1,449.36 | 631.37 | 6 | 2,841
 
 > Unit: milliseconds
+
+## Memory Consumptions
+```mermaid
+xychart-beta
+  x-axis "Time (second)"
+  y-axis "Memory (MB)"
+  line "Resident Set Size" [71, 82, 85, 88, 91, 95, 94, 95, 97, 97, 97, 99, 99, 104, 106, 109, 114, 114, 114, 115, 115, 116, 116, 117, 116, 118, 117, 118, 117, 118, 118, 120, 119, 120, 120, 121, 122, 121, 122, 123, 123, 125, 126, 125, 126, 123, 123, 90, 93]
+  line "Heap Total" [32, 37, 47, 47, 47, 47, 47, 47, 48, 48, 48, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 67, 67, 67, 67, 67, 68, 68, 69, 69, 70, 70, 71, 70, 70, 70, 70, 71, 71, 71, 42, 46]
+  line "Heap Used + External" [29, 31, 34, 37, 35, 36, 37, 37, 38, 38, 37, 34, 36, 44, 37, 42, 36, 40, 46, 40, 45, 36, 42, 35, 42, 47, 38, 43, 36, 43, 50, 43, 50, 43, 50, 44, 49, 43, 50, 42, 37, 36, 45, 45, 41, 42, 42, 32, 34]
+  line "Heap Used Only" [26, 28, 31, 34, 33, 34, 34, 34, 35, 36, 34, 32, 34, 41, 34, 39, 33, 38, 43, 37, 43, 34, 39, 32, 39, 44, 35, 41, 34, 40, 47, 41, 47, 40, 47, 41, 46, 41, 48, 39, 34, 34, 43, 42, 38, 39, 39, 30, 31]
+```
+
+> - 🟦 Resident Set Size
+> - 🟢 Heap Total
+> - 🔴 Heap Used + External
+> - 🟡 Heap Used Only
 
 ## Endpoints
 Type | Count | Success | Mean. | Stdev. | Minimum | Maximum
 ----|----|----|----|----|----|----
-PUT /bbs/articles/:id | 43 | 43 | 2,146.74 | 461.93 | 995 | 3,374
-POST /bbs/articles/:articleId/comments | 501 | 501 | 1,953.12 | 490.58 | 188 | 2,888
-PUT /bbs/articles/:articleId/comments/:id | 31 | 31 | 1,596.41 | 422.63 | 534 | 2,068
-POST /bbs/articles | 426 | 426 | 1,530.43 | 572.12 | 70 | 2,737
-DELETE /bbs/articles/:id | 14 | 14 | 1,419.5 | 344.5 | 839 | 2,070
-DELETE /bbs/articles/:articleId/comments/:id | 18 | 18 | 1,375.55 | 510.58 | 542 | 2,062
-PATCH /bbs/articles/abridges | 28 | 28 | 1,299.78 | 379.66 | 594 | 1,764
-GET /bbs/articles/:id | 24 | 24 | 813.04 | 485.12 | 128 | 1,653
-PATCH /bbs/articles/:articleId/comments | 88 | 88 | 786.36 | 453.21 | 17 | 1,526
-PATCH /bbs/articles | 80 | 80 | 738.58 | 597.41 | 6 | 1,760
-GET /bbs/articles/:articleId/comments/:id | 19 | 19 | 671.84 | 315.97 | 323 | 1,501
-GET /monitors/health | 9 | 9 | 459.11 | 413.48 | 32 | 1,303
-GET /monitors/system | 7 | 7 | 327 | 314.95 | 38 | 1,044
+PUT /bbs/articles/:id | 30 | 30 | 1,956.03 | 441.51 | 780 | 2,461
+POST /bbs/articles/:articleId/comments | 394 | 394 | 1,780.99 | 673.93 | 74 | 2,841
+PUT /bbs/articles/:articleId/comments/:id | 68 | 68 | 1,558.64 | 266.8 | 772 | 2,169
+POST /bbs/articles | 538 | 538 | 1,534.94 | 400.54 | 130 | 2,176
+DELETE /bbs/articles/:articleId/comments/:id | 24 | 24 | 1,410.29 | 382.42 | 818 | 2,195
+DELETE /bbs/articles/:id | 17 | 17 | 1,368.82 | 478.81 | 159 | 2,175
+GET /bbs/articles/:articleId/comments/:id | 32 | 32 | 1,009.65 | 327.55 | 313 | 1,801
+GET /bbs/articles/:id | 24 | 24 | 927.7 | 427.03 | 73 | 1,580
+PATCH /bbs/articles/abridges | 49 | 49 | 865.26 | 438.26 | 81 | 1,611
+PATCH /bbs/articles | 88 | 88 | 748.94 | 503.52 | 6 | 1,664
+PATCH /bbs/articles/:articleId/comments | 65 | 65 | 577.61 | 417.37 | 6 | 1,470
+GET /monitors/health | 11 | 11 | 424.72 | 263.94 | 35 | 810
+GET /monitors/system | 11 | 11 | 336.45 | 204.68 | 48 | 779
 
 > Unit: milliseconds
 
