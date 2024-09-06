@@ -63,7 +63,7 @@
     "copy-webpack-plugin": "^12.0.2",
     "eslint-plugin-deprecation": "^2.0.0",
     "inquirer": "^8.2.5",
-    "nestia": "^5.5.0",
+    "nestia": "^6.0.2",
     "prettier": "^3.2.5",
     "prettier-plugin-prisma": "^5.0.0",
     "prisma-markdown": "^1.0.9",
