@@ -66,7 +66,7 @@ export namespace index {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = () => "/bbs/articles";
@@ -144,7 +144,7 @@ export namespace abridges {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = () => "/bbs/articles/abridges";
@@ -176,7 +176,7 @@ export namespace abridges {
  *
  * Reads an article with its every {@link IBbsArticle.ISnapshot snapshots}.
  *
- * @param id Target article's {@link IBbsArticle.id}
+ * @param id Target article's {@link IBbsArticle.id }
  * @returns Article information
  * @tag BBS
  * @author Samchon
@@ -208,11 +208,11 @@ export namespace at {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (id: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(id ?? "null")}`;
+    `/bbs/articles/${encodeURIComponent(id?.toString() ?? "null")}`;
   export const random = (g?: Partial<typia.IRandomGenerator>): IBbsArticle =>
     typia.random<IBbsArticle>(g);
   export const simulate = (
@@ -285,7 +285,7 @@ export namespace create {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 201,
   } as const;
 
   export const path = () => "/bbs/articles";
@@ -315,7 +315,7 @@ export namespace create {
  *
  * Accumulate a new {@link IBbsArticle.ISnapshot snapshot} record to the article.
  *
- * @param id Target article's {@link IBbsArticle.id}
+ * @param id Target article's {@link IBbsArticle.id }
  * @param input Article information to update.
  * @returns Newly accumulated snapshot information.
  * @tag BBS
@@ -363,11 +363,11 @@ export namespace update {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (id: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(id ?? "null")}`;
+    `/bbs/articles/${encodeURIComponent(id?.toString() ?? "null")}`;
   export const random = (
     g?: Partial<typia.IRandomGenerator>,
   ): IBbsArticle.ISnapshot => typia.random<IBbsArticle.ISnapshot>(g);
@@ -397,7 +397,7 @@ export namespace update {
  *
  * Performs soft deletion to the article.
  *
- * @param id Target article's {@link IBbsArticle.id}
+ * @param id Target article's {@link IBbsArticle.id }
  * @param input Password of the article.
  * @tag BBS
  * @author Samchon
@@ -443,11 +443,11 @@ export namespace erase {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (id: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(id ?? "null")}`;
+    `/bbs/articles/${encodeURIComponent(id?.toString() ?? "null")}`;
   export const random = (g?: Partial<typia.IRandomGenerator>): void =>
     typia.random<void>(g);
   export const simulate = (

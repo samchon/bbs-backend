@@ -65,11 +65,11 @@ export namespace index {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (articleId: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(articleId ?? "null")}/comments`;
+    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments`;
   export const random = (
     g?: Partial<typia.IRandomGenerator>,
   ): IPage<IBbsArticleComment> => typia.random<IPage<IBbsArticleComment>>(g);
@@ -100,7 +100,7 @@ export namespace index {
  * Reads a comment with its every {@link IBbsArticleComment.ISnapshot snapshots}.
  *
  * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param id Target comment's {@link IBbsArticleComment.id}
+ * @param id Target comment's {@link IBbsArticleComment.id }
  * @returns Comment information
  * @tag BBS
  * @author Samchon
@@ -133,14 +133,14 @@ export namespace at {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (
     articleId: string & Format<"uuid">,
     id: string & Format<"uuid">,
   ) =>
-    `/bbs/articles/${encodeURIComponent(articleId ?? "null")}/comments/${encodeURIComponent(id ?? "null")}`;
+    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments/${encodeURIComponent(id?.toString() ?? "null")}`;
   export const random = (
     g?: Partial<typia.IRandomGenerator>,
   ): IBbsArticleComment => typia.random<IBbsArticleComment>(g);
@@ -218,11 +218,11 @@ export namespace create {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 201,
   } as const;
 
   export const path = (articleId: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(articleId ?? "null")}/comments`;
+    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments`;
   export const random = (
     g?: Partial<typia.IRandomGenerator>,
   ): IBbsArticleComment => typia.random<IBbsArticleComment>(g);
@@ -253,7 +253,7 @@ export namespace create {
  * Accumulate a new {@link IBbsArticleComment.ISnapshot snapshot} record to the comment.
  *
  * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param id Target comment's {@link IBbsArticleComment.id}
+ * @param id Target comment's {@link IBbsArticleComment.id }
  * @param input Comment information to update.
  * @returns Newly accumulated snapshot information.
  * @tag BBS
@@ -302,14 +302,14 @@ export namespace update {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (
     articleId: string & Format<"uuid">,
     id: string & Format<"uuid">,
   ) =>
-    `/bbs/articles/${encodeURIComponent(articleId ?? "null")}/comments/${encodeURIComponent(id ?? "null")}`;
+    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments/${encodeURIComponent(id?.toString() ?? "null")}`;
   export const random = (
     g?: Partial<typia.IRandomGenerator>,
   ): IBbsArticleComment.ISnapshot =>
@@ -343,7 +343,7 @@ export namespace update {
  * Performs soft deletion to the comment.
  *
  * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param id Target comment's {@link IBbsArticleComment.id}
+ * @param id Target comment's {@link IBbsArticleComment.id }
  * @param input Password of the comment.
  * @tag BBS
  * @author Samchon
@@ -390,14 +390,14 @@ export namespace erase {
       type: "application/json",
       encrypted: false,
     },
-    status: null,
+    status: 200,
   } as const;
 
   export const path = (
     articleId: string & Format<"uuid">,
     id: string & Format<"uuid">,
   ) =>
-    `/bbs/articles/${encodeURIComponent(articleId ?? "null")}/comments/${encodeURIComponent(id ?? "null")}`;
+    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments/${encodeURIComponent(id?.toString() ?? "null")}`;
   export const random = (g?: Partial<typia.IRandomGenerator>): void =>
     typia.random<void>(g);
   export const simulate = (

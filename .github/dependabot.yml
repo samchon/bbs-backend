@@ -18,6 +18,7 @@ updates:
       - dependency-name: "typia"
       - dependency-name: "tgrid"
       - dependency-name: "typescript"
+      - dependency-name: "typescript-transform-paths"
       - dependency-name: "ts-patch"
     groups:
       Samchon:
@@ -38,6 +39,7 @@ updates:
       TypeScript:
         patterns:
           - "typescript"
+          - "typescript-transform-paths"
           - "ts-patch"
   #######################################################
   - package-ecosystem: "npm"
@@ -45,7 +47,7 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 25
-    # versioning-strategy: increase
+    versioning-strategy: increase
     allow:
       - dependency-name: "@nestia/fetcher"
       - dependency-name: "typia"
