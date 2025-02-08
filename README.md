@@ -11,10 +11,10 @@ Example backend server of Bullet-in Board System for education.
 
 `@samchon/bbs-backend` is an example backend project of [NestJS](https://nestjs.com) and [Prisma](https://prisma.io) stack. It has been developed to educate how to adapt **functional programming** in the NestJS development. Therefore, it is not the actual bullet-in board service, and implementation of most functions is different from the actual bullet-in board service and may be meaningless.
 
-Also, `@samchon/bbs-backend` guides how to utilize those 3rd party libraries (what I've developed) in the production, and demonostrates how they are powerful for the productivity. Especially, I have ideally implemented **TDD (Test Driven Development)** through below libaries. I hope this repo would be helpful for your learning.
+Also, `@samchon/bbs-backend` guides how to utilize those 3rd party libraries (what I've developed) in the production, and demonostrates how they are powerful for the productivity. Especially, I have ideally implemented **TDD (Test Driven Development)** through below libraries. I hope this repo would be helpful for your learning.
 
   - [typia](https://github.com/samchon/typia): Superfast runtime validator
-  - [nestia](https://github.com/samchon/nestia): NestJS helper libaries like SDK generation
+  - [nestia](https://github.com/samchon/nestia): NestJS helper libraries like SDK generation
   - [prisma-markdown](https://github.com/samchon/prisma-markdown): Markdown generator of Prisma, including ERD and descriptions
 
 
@@ -185,6 +185,7 @@ List of the run commands defined in the [package.json](package.json) are like be
     - `package:api`: Build and deploy the SDK library to the NPM
     - `schema`: Create DB, users and schemas on local database
     - `start`: Start the backend server
+    - `start:dev`: Start the backend server with incremental build and reload
   - Webpack
     - `webpack`: Run webpack bundler
     - `webpack:start`: Start the backend server built by webpack

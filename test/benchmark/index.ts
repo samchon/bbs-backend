@@ -8,7 +8,7 @@ import { BbsBackend } from "../../src/BbsBackend";
 import { BbsConfiguration } from "../../src/BbsConfiguration";
 import { BbsGlobal } from "../../src/BbsGlobal";
 import { BbsSetupWizard } from "../../src/setup/BbsSetupWizard";
-import { ArgumentParser } from "../../src/utils/ArgumentParser";
+import { ArgumentParser } from "../internal/ArgumentParser";
 import { StopWatch } from "../internal/StopWatch";
 
 interface IOptions {
