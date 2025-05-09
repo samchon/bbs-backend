@@ -12,7 +12,7 @@ generator client {
 generator markdown {
   provider = "prisma-markdown"
   title    = "Bullet-in Board System"
-  output   = "../docs/ERD.md"
+  output   = "../../docs/ERD.md"
 }
 
 //-----------------------------------------------------------
