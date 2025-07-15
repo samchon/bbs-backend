@@ -13,8 +13,10 @@ export const generate_random_article = async (
   const article: IBbsArticle = await BbsApi.functional.bbs.articles.create(
     connection,
     {
-      writer: RandomGenerator.name(),
-      ...prepare_random_article(password ?? RandomGenerator.alphaNumeric(8)),
+      body: {
+        ...prepare_random_article(password ?? RandomGenerator.alphaNumeric(8)),
+        writer: RandomGenerator.name(),
+      },
     },
   );
   return typia.assertEquals(article);

@@ -23,14 +23,13 @@ export const test_api_bbs_article_comment_index_sort = async (
     IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>
   >(async (input: IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>) => {
     const page: IPage<IBbsArticleComment> =
-      await BbsApi.functional.bbs.articles.comments.index(
-        connection,
-        article.id,
-        {
+      await BbsApi.functional.bbs.articles.comments.index(connection, {
+        articleId: article.id,
+        body: {
           limit: REPEAT,
           sort: input,
         },
-      );
+      });
     return page.data;
   });
 

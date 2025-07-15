@@ -33,40 +33,39 @@ export namespace BbsArticleSnapshotProvider {
       }) satisfies Prisma.bbs_article_snapshotsFindManyArgs;
   }
 
-  export const create =
-    (article: IEntity) =>
-    async (
-      input: IBbsArticle.IUpdate,
-      ip: string,
-    ): Promise<IBbsArticle.ISnapshot> => {
-      const snapshot = await BbsGlobal.prisma.bbs_article_snapshots.create({
-        data: {
-          ...collect(input, ip),
-          article: { connect: { id: article.id } },
-        },
-        ...json.select(),
-      });
-      await BbsGlobal.prisma.mv_bbs_article_last_snapshots.update({
-        where: {
-          bbs_article_id: article.id,
-        },
-        data: {
-          bbs_article_snapshot_id: snapshot.id,
-        },
-      });
-      return json.transform(snapshot);
-    };
+  export const create = async (props: {
+    article: IEntity;
+    body: IBbsArticle.IUpdate;
+    ip: string;
+  }): Promise<IBbsArticle.ISnapshot> => {
+    const snapshot = await BbsGlobal.prisma.bbs_article_snapshots.create({
+      data: {
+        ...collect(props),
+        article: { connect: { id: props.article.id } },
+      },
+      ...json.select(),
+    });
+    await BbsGlobal.prisma.mv_bbs_article_last_snapshots.update({
+      where: {
+        bbs_article_id: props.article.id,
+      },
+      data: {
+        bbs_article_snapshot_id: snapshot.id,
+      },
+    });
+    return json.transform(snapshot);
+  };
 
-  export const collect = (input: IBbsArticle.IUpdate, ip: string) =>
+  export const collect = (props: { body: IBbsArticle.IUpdate; ip: string }) =>
     ({
       id: v4(),
-      title: input.title,
-      format: input.format,
-      body: input.body,
-      ip,
+      title: props.body.title,
+      format: props.body.format,
+      body: props.body.body,
+      ip: props.ip,
       created_at: new Date(),
       to_files: {
-        create: input.files.map((file, i) => ({
+        create: props.body.files.map((file, i) => ({
           id: v4(),
           file: {
             create: AttachmentFileProvider.collect(file),

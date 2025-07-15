@@ -16,16 +16,18 @@ export const test_api_bbs_article_password = async (
   );
 
   await TestValidator.httpError("update")(403)(() =>
-    BbsApi.functional.bbs.articles.update(
-      connection,
-      article.id,
-      prepare_random_article("invalid-password"),
-    ),
+    BbsApi.functional.bbs.articles.update(connection, {
+      id: article.id,
+      body: prepare_random_article("invalid-password"),
+    }),
   );
 
   await TestValidator.httpError("erase")(403)(() =>
-    BbsApi.functional.bbs.articles.erase(connection, article.id, {
-      password: "invalid-password",
+    BbsApi.functional.bbs.articles.erase(connection, {
+      id: article.id,
+      body: {
+        password: "invalid-password",
+      },
     }),
   );
 };

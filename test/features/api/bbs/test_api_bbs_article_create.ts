@@ -22,7 +22,9 @@ export const test_api_bbs_article_create = async (
   // DO CREATE
   const article: IBbsArticle = await BbsApi.functional.bbs.articles.create(
     connection,
-    input,
+    {
+      body: input,
+    },
   );
 
   // VALIDATE WHETHER EXACT DATA IS INSERTED
@@ -41,7 +43,9 @@ export const test_api_bbs_article_create = async (
   // COMPARE WITH READ DATA
   const read: IBbsArticle = await BbsApi.functional.bbs.articles.at(
     connection,
-    article.id,
+    {
+      id: article.id,
+    },
   );
   TestValidator.equals("read")(read)(article);
 };

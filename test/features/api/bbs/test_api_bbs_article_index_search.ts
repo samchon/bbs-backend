@@ -15,15 +15,19 @@ export const test_api_bbs_article_index_search = async (
 
   const expected: IPage<IBbsArticle.IAbridge> =
     await BbsApi.functional.bbs.articles.abridges(connection, {
-      limit: REPEAT,
+      body: {
+        limit: REPEAT,
+      },
     });
 
   const validator = TestValidator.search("search")(
     async (search: IBbsArticle.IRequest.ISearch) => {
       const page: IPage<IBbsArticle.IAbridge> =
         await BbsApi.functional.bbs.articles.abridges(connection, {
-          search,
-          limit: REPEAT,
+          body: {
+            search,
+            limit: REPEAT,
+          },
         });
       return page.data;
     },

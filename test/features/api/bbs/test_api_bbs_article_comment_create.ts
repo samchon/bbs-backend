@@ -13,7 +13,7 @@ export const test_api_bbs_article_comment_create = async (
 ): Promise<void> => {
   const article: IBbsArticle = await generate_random_article(connection);
 
-  const input: IBbsArticleComment.ICreate = {
+  const body: IBbsArticleComment.ICreate = {
     writer: RandomGenerator.name(),
     password: RandomGenerator.alphaNumeric(8),
     body: RandomGenerator.content()()(),
@@ -21,28 +21,26 @@ export const test_api_bbs_article_comment_create = async (
     files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
   };
   const comment: IBbsArticleComment =
-    await BbsApi.functional.bbs.articles.comments.create(
-      connection,
-      article.id,
-      input,
-    );
+    await BbsApi.functional.bbs.articles.comments.create(connection, {
+      articleId: article.id,
+      body,
+    });
 
   TestValidator.equals("create")({
     snapshots: [
       {
-        format: input.format,
-        body: input.body,
-        files: input.files,
+        format: body.format,
+        body: body.body,
+        files: body.files,
       },
     ],
-    writer: input.writer,
+    writer: body.writer,
   })(comment);
 
   const read: IBbsArticleComment =
-    await BbsApi.functional.bbs.articles.comments.at(
-      connection,
-      article.id,
-      comment.id,
-    );
+    await BbsApi.functional.bbs.articles.comments.at(connection, {
+      articleId: article.id,
+      id: comment.id,
+    });
   TestValidator.equals("read")(read)(comment);
 };

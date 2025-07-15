@@ -20,7 +20,10 @@ export const test_api_bbs_article_update = async (
   );
   for (const i of inputs) {
     const snapshot: IBbsArticle.ISnapshot =
-      await BbsApi.functional.bbs.articles.update(connection, article.id, i);
+      await BbsApi.functional.bbs.articles.update(connection, {
+        id: article.id,
+        body: i,
+      });
     article.snapshots.push(snapshot);
     TestValidator.equals("snapshot")({
       format: i.format,
@@ -32,7 +35,9 @@ export const test_api_bbs_article_update = async (
 
   const read: IBbsArticle = await BbsApi.functional.bbs.articles.at(
     connection,
-    article.id,
+    {
+      id: article.id,
+    },
   );
   TestValidator.equals("read")(read)(article);
 };

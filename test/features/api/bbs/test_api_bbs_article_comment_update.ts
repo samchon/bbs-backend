@@ -25,12 +25,11 @@ export const test_api_bbs_article_comment_update = async (
   );
   for (const i of inputs) {
     const snapshot: IBbsArticleComment.ISnapshot =
-      await BbsApi.functional.bbs.articles.comments.update(
-        connection,
-        article.id,
-        comment.id,
-        i,
-      );
+      await BbsApi.functional.bbs.articles.comments.update(connection, {
+        articleId: article.id,
+        id: comment.id,
+        body: i,
+      });
     comment.snapshots.push(snapshot);
     TestValidator.equals("snapshot")({
       format: i.format,
@@ -40,10 +39,9 @@ export const test_api_bbs_article_comment_update = async (
   }
 
   const read: IBbsArticleComment =
-    await BbsApi.functional.bbs.articles.comments.at(
-      connection,
-      article.id,
-      comment.id,
-    );
+    await BbsApi.functional.bbs.articles.comments.at(connection, {
+      articleId: article.id,
+      id: comment.id,
+    });
   TestValidator.equals("read")(read)(comment);
 };

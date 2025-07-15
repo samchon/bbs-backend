@@ -236,17 +236,17 @@ export namespace BbsArticleProvider {
   /* -----------------------------------------------------------
     WRITERS
   ----------------------------------------------------------- */
-  export const create = async (
-    input: IBbsArticle.ICreate,
-    ip: string,
-  ): Promise<IBbsArticle> => {
-    const snapshot = BbsArticleSnapshotProvider.collect(input, ip);
+  export const create = async (props: {
+    body: IBbsArticle.ICreate;
+    ip: string;
+  }): Promise<IBbsArticle> => {
+    const snapshot = BbsArticleSnapshotProvider.collect(props);
     const record = await BbsGlobal.prisma.bbs_articles.create({
       data: {
         id: v4(),
-        writer: input.writer,
+        writer: props.body.writer,
         created_at: new Date(),
-        password: await BcryptUtil.hash(input.password),
+        password: await BcryptUtil.hash(props.body.password),
         snapshots: {
           create: [snapshot],
         },
@@ -261,58 +261,62 @@ export namespace BbsArticleProvider {
     return json.transform(record);
   };
 
-  export const update =
-    (id: string) =>
-    async (
-      input: IBbsArticle.IUpdate,
-      ip: string,
-    ): Promise<IBbsArticle.ISnapshot> => {
-      const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
-        where: {
-          id,
-          deleted_at: null,
-        },
-        ...json.select(),
+  export const update = async (props: {
+    id: string;
+    body: IBbsArticle.IUpdate;
+    ip: string;
+  }): Promise<IBbsArticle.ISnapshot> => {
+    const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+      where: {
+        id: props.id,
+        deleted_at: null,
+      },
+      ...json.select(),
+    });
+    if (
+      false ===
+      (await BcryptUtil.equals({
+        input: props.body.password,
+        hashed: record.password,
+      }))
+    )
+      throw ErrorProvider.forbidden({
+        accessor: "input.password",
+        message: "Wrong password.",
       });
-      if (
-        false ===
-        (await BcryptUtil.equals({
-          input: input.password,
-          hashed: record.password,
-        }))
-      )
-        throw ErrorProvider.forbidden({
-          accessor: "input.password",
-          message: "Wrong password.",
-        });
-      return BbsArticleSnapshotProvider.create({ id })(input, ip);
-    };
+    return BbsArticleSnapshotProvider.create({
+      article: { id: record.id },
+      body: props.body,
+      ip: props.ip,
+    });
+  };
 
-  export const erase =
-    (id: string) =>
-    async (input: IBbsArticle.IErase): Promise<void> => {
-      const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
-        where: {
-          id,
-          deleted_at: null,
-        },
+  export const erase = async (props: {
+    id: string;
+    body: IBbsArticle.IErase;
+  }): Promise<void> => {
+    const record = await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+      where: {
+        id: props.id,
+        deleted_at: null,
+      },
+    });
+    if (
+      false ===
+      (await BcryptUtil.equals({
+        input: props.body.password,
+        hashed: record.password,
+      }))
+    )
+      throw ErrorProvider.forbidden({
+        accessor: "input.password",
+        message: "Wrong password.",
       });
-      if (
-        false ===
-        (await BcryptUtil.equals({
-          input: input.password,
-          hashed: record.password,
-        }))
-      )
-        throw ErrorProvider.forbidden({
-          accessor: "input.password",
-          message: "Wrong password.",
-        });
-      await BbsGlobal.prisma.bbs_articles.update({
-        where: { id },
-        data: {
-          deleted_at: new Date(),
-        },
-      });
-    };
+    await BbsGlobal.prisma.bbs_articles.update({
+      where: { id: props.id },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+  };
 }
