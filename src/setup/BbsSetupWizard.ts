@@ -1,5 +1,6 @@
 import cp from "child_process";
 
+import { BbsConfiguration } from "../BbsConfiguration";
 import { BbsGlobal } from "../BbsGlobal";
 
 export namespace BbsSetupWizard {
@@ -9,8 +10,9 @@ export namespace BbsSetupWizard {
         "Error on SetupWizard.schema(): unable to reset database in non-test mode.",
       );
     const execute = (type: string) => (argv: string) =>
-      cp.execSync(`npx prisma migrate ${type} --schema=prisma/schema ${argv}`, {
+      cp.execSync(`prisma migrate ${type} --schema=prisma/schema ${argv}`, {
         stdio: "inherit",
+        cwd: BbsConfiguration.ROOT,
       });
     execute("reset")("--force");
     execute("dev")("--name init");
