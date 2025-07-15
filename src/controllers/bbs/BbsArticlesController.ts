@@ -15,7 +15,7 @@ export class BbsArticlesController {
    *
    * List up all summarized articles with pagination and searching options.
    *
-   * @param input Request info of pagination and searching options.
+   * @param body Request info of pagination and searching options.
    * @returns Paginated summarized articles.
    * @tag BBS
    *
@@ -23,9 +23,9 @@ export class BbsArticlesController {
    */
   @core.TypedRoute.Patch()
   public index(
-    @core.TypedBody() input: IBbsArticle.IRequest,
+    @core.TypedBody() body: IBbsArticle.IRequest,
   ): Promise<IPage<IBbsArticle.ISummary>> {
-    return BbsArticleProvider.index(input);
+    return BbsArticleProvider.index(body);
   }
 
   /**
@@ -33,7 +33,7 @@ export class BbsArticlesController {
    *
    * List up all abridged articles with pagination and searching options.
    *
-   * @param input Request info of pagination and searching options.
+   * @param body Request info of pagination and searching options.
    * @returns Paginated abridged articles.
    * @tag BBS
    *
@@ -41,9 +41,9 @@ export class BbsArticlesController {
    */
   @core.TypedRoute.Patch("abridges")
   public abridges(
-    @core.TypedBody() input: IBbsArticle.IRequest,
+    @core.TypedBody() body: IBbsArticle.IRequest,
   ): Promise<IPage<IBbsArticle.IAbridge>> {
-    return BbsArticleProvider.abridges(input);
+    return BbsArticleProvider.abridges(body);
   }
 
   /**
@@ -69,7 +69,7 @@ export class BbsArticlesController {
    *
    * Create a new article with its first {@link IBbsArticle.ISnapshot snapshot}.
    *
-   * @param input Article information to create.
+   * @param body Article information to create.
    * @returns Newly created article.
    * @tag BBS
    *
@@ -78,9 +78,12 @@ export class BbsArticlesController {
   @core.TypedRoute.Post()
   public create(
     @Request() request: FastifyRequest,
-    @core.TypedBody() input: IBbsArticle.ICreate,
+    @core.TypedBody() body: IBbsArticle.ICreate,
   ): Promise<IBbsArticle> {
-    return BbsArticleProvider.create(input, request.ip);
+    return BbsArticleProvider.create({
+      body,
+      ip: request.ip,
+    });
   }
 
   /**
@@ -89,7 +92,7 @@ export class BbsArticlesController {
    * Accumulate a new {@link IBbsArticle.ISnapshot snapshot} record to the article.
    *
    * @param id Target article's {@link IBbsArticle.id}
-   * @param input Article information to update.
+   * @param body Article information to update.
    * @returns Newly accumulated snapshot information.
    * @tag BBS
    *
@@ -99,9 +102,13 @@ export class BbsArticlesController {
   public update(
     @Request() request: FastifyRequest,
     @core.TypedParam("id") id: string & tags.Format<"uuid">,
-    @core.TypedBody() input: IBbsArticle.IUpdate,
+    @core.TypedBody() body: IBbsArticle.IUpdate,
   ): Promise<IBbsArticle.ISnapshot> {
-    return BbsArticleProvider.update(id)(input, request.ip);
+    return BbsArticleProvider.update({
+      id,
+      body,
+      ip: request.ip,
+    });
   }
 
   /**
@@ -110,7 +117,7 @@ export class BbsArticlesController {
    * Performs soft deletion to the article.
    *
    * @param id Target article's {@link IBbsArticle.id}
-   * @param input Password of the article.
+   * @param body Password of the article.
    * @tag BBS
    *
    * @author Samchon
@@ -118,8 +125,11 @@ export class BbsArticlesController {
   @core.TypedRoute.Delete(":id")
   public erase(
     @core.TypedParam("id") id: string & tags.Format<"uuid">,
-    @core.TypedBody() input: IBbsArticle.IErase,
+    @core.TypedBody() body: IBbsArticle.IErase,
   ): Promise<void> {
-    return BbsArticleProvider.erase(id)(input);
+    return BbsArticleProvider.erase({
+      id,
+      body,
+    });
   }
 }

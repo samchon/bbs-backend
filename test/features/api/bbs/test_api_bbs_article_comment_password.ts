@@ -21,22 +21,20 @@ export const test_api_bbs_article_comment_password = async (
   );
 
   await TestValidator.httpError("update")(403)(() =>
-    BbsApi.functional.bbs.articles.comments.update(
-      connection,
-      article.id,
-      comment.id,
-      prepare_random_comment("invalid-password"),
-    ),
+    BbsApi.functional.bbs.articles.comments.update(connection, {
+      articleId: article.id,
+      id: comment.id,
+      body: prepare_random_comment("invalid-password"),
+    }),
   );
 
   await TestValidator.httpError("erase")(403)(() =>
-    BbsApi.functional.bbs.articles.comments.erase(
-      connection,
-      article.id,
-      comment.id,
-      {
+    BbsApi.functional.bbs.articles.comments.erase(connection, {
+      articleId: article.id,
+      id: comment.id,
+      body: {
         password: "invalid-password",
       },
-    ),
+    }),
   );
 };

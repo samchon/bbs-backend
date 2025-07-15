@@ -34,32 +34,34 @@ export namespace BbsArticleCommentSnapshotProvider {
       }) satisfies Prisma.bbs_article_comment_snapshotsFindManyArgs;
   }
 
-  export const create =
-    (comment: IEntity) =>
-    async (
-      input: IBbsArticleComment.IUpdate,
-      ip: string,
-    ): Promise<IBbsArticleComment.ISnapshot> => {
-      const snapshot =
-        await BbsGlobal.prisma.bbs_article_comment_snapshots.create({
-          data: {
-            ...collect(input, ip),
-            comment: { connect: { id: comment.id } },
-          },
-          ...json.select(),
-        });
-      return json.transform(snapshot);
-    };
+  export const create = async (props: {
+    comment: IEntity;
+    body: IBbsArticleComment.IUpdate;
+    ip: string;
+  }): Promise<IBbsArticleComment.ISnapshot> => {
+    const snapshot =
+      await BbsGlobal.prisma.bbs_article_comment_snapshots.create({
+        data: {
+          ...collect(props),
+          comment: { connect: { id: props.comment.id } },
+        },
+        ...json.select(),
+      });
+    return json.transform(snapshot);
+  };
 
-  export const collect = (input: IBbsArticleComment.IUpdate, ip: string) =>
+  export const collect = (props: {
+    body: IBbsArticleComment.IUpdate;
+    ip: string;
+  }) =>
     ({
       id: v4(),
-      format: input.format,
-      body: input.body,
-      ip,
+      format: props.body.format,
+      body: props.body.body,
+      ip: props.ip,
       created_at: new Date(),
       to_files: {
-        create: input.files.map((file, i) => ({
+        create: props.body.files.map((file, i) => ({
           id: v4(),
           file: {
             create: AttachmentFileProvider.collect(file),

@@ -13,10 +13,15 @@ export const test_api_bbs_article_erase = async (
     connection,
     password,
   );
-  await BbsApi.functional.bbs.articles.erase(connection, article.id, {
-    password,
+  await BbsApi.functional.bbs.articles.erase(connection, {
+    id: article.id,
+    body: {
+      password,
+    },
   });
   await TestValidator.httpError("erase")(404)(() =>
-    BbsApi.functional.bbs.articles.at(connection, article.id),
+    BbsApi.functional.bbs.articles.at(connection, {
+      id: article.id,
+    }),
   );
 };

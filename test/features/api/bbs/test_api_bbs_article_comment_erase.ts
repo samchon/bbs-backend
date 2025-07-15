@@ -17,17 +17,15 @@ export const test_api_bbs_article_comment_erase = async (
     article,
     password,
   );
-  await BbsApi.functional.bbs.articles.comments.erase(
-    connection,
-    article.id,
-    comment.id,
-    { password },
-  );
+  await BbsApi.functional.bbs.articles.comments.erase(connection, {
+    articleId: article.id,
+    id: comment.id,
+    body: { password },
+  });
   await TestValidator.httpError("erase")(404)(() =>
-    BbsApi.functional.bbs.articles.comments.at(
-      connection,
-      article.id,
-      comment.id,
-    ),
+    BbsApi.functional.bbs.articles.comments.at(connection, {
+      articleId: article.id,
+      id: comment.id,
+    }),
   );
 };

@@ -18,7 +18,7 @@ import type { IPage } from "../../../../structures/common/IPage";
  *
  * List up all summarized comments with pagination and searching options.
  *
- * @param input Request info of pagination and searching options.
+ * @param props.body Request info of pagination and searching options.
  * @returns Paginated summarized comments.
  * @tag BBS
  * @author Samchon
@@ -29,11 +29,10 @@ import type { IPage } from "../../../../structures/common/IPage";
  */
 export async function index(
   connection: IConnection,
-  articleId: string & Format<"uuid">,
-  input: IBbsArticleComment.IRequest,
+  props: index.Props,
 ): Promise<index.Output> {
-  return !!connection.simulate
-    ? index.simulate(connection, articleId, input)
+  return true === connection.simulate
+    ? index.simulate(connection, props)
     : PlainFetcher.fetch(
         {
           ...connection,
@@ -45,13 +44,21 @@ export async function index(
         {
           ...index.METADATA,
           template: index.METADATA.path,
-          path: index.path(articleId),
+          path: index.path(props),
         },
-        input,
+        props.body,
       );
 }
 export namespace index {
-  export type Input = IBbsArticleComment.IRequest;
+  export type Props = {
+    articleId: string & Format<"uuid">;
+
+    /**
+     * Request info of pagination and searching options.
+     */
+    body: Body;
+  };
+  export type Body = IBbsArticleComment.IRequest;
   export type Output = IPage<IBbsArticleComment>;
 
   export const METADATA = {
@@ -68,29 +75,20 @@ export namespace index {
     status: 200,
   } as const;
 
-  export const path = (articleId: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments`;
-  export const random = (
-    g?: Partial<typia.IRandomGenerator>,
-  ): IPage<IBbsArticleComment> => typia.random<IPage<IBbsArticleComment>>(g);
-  export const simulate = (
-    connection: IConnection,
-    articleId: string & Format<"uuid">,
-    input: IBbsArticleComment.IRequest,
-  ): Output => {
+  export const path = (props: Omit<Props, "body">) =>
+    `/bbs/articles/${encodeURIComponent(props.articleId?.toString() ?? "null")}/comments`;
+  export const random = (): IPage<IBbsArticleComment> =>
+    typia.random<IPage<IBbsArticleComment>>();
+  export const simulate = (connection: IConnection, props: Props): Output => {
     const assert = NestiaSimulator.assert({
       method: METADATA.method,
       host: connection.host,
-      path: path(articleId),
+      path: path(props),
       contentType: "application/json",
     });
-    assert.param("articleId")(() => typia.assert(articleId));
-    assert.body(() => typia.assert(input));
-    return random(
-      "object" === typeof connection.simulate && null !== connection.simulate
-        ? connection.simulate
-        : undefined,
-    );
+    assert.param("articleId")(() => typia.assert(props.articleId));
+    assert.body(() => typia.assert(props.body));
+    return random();
   };
 }
 
@@ -99,8 +97,8 @@ export namespace index {
  *
  * Reads a comment with its every {@link IBbsArticleComment.ISnapshot snapshots}.
  *
- * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param id Target comment's {@link IBbsArticleComment.id }
+ * @param props.articleId Belonged article's {@link IBbsArticle.id }
+ * @param props.id Target comment's {@link IBbsArticleComment.id }
  * @returns Comment information
  * @tag BBS
  * @author Samchon
@@ -111,18 +109,28 @@ export namespace index {
  */
 export async function at(
   connection: IConnection,
-  articleId: string & Format<"uuid">,
-  id: string & Format<"uuid">,
+  props: at.Props,
 ): Promise<at.Output> {
-  return !!connection.simulate
-    ? at.simulate(connection, articleId, id)
+  return true === connection.simulate
+    ? at.simulate(connection, props)
     : PlainFetcher.fetch(connection, {
         ...at.METADATA,
         template: at.METADATA.path,
-        path: at.path(articleId, id),
+        path: at.path(props),
       });
 }
 export namespace at {
+  export type Props = {
+    /**
+     * Belonged article's
+     */
+    articleId: string & Format<"uuid">;
+
+    /**
+     * Target comment's
+     */
+    id: string & Format<"uuid">;
+  };
   export type Output = IBbsArticleComment;
 
   export const METADATA = {
@@ -136,32 +144,20 @@ export namespace at {
     status: 200,
   } as const;
 
-  export const path = (
-    articleId: string & Format<"uuid">,
-    id: string & Format<"uuid">,
-  ) =>
-    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments/${encodeURIComponent(id?.toString() ?? "null")}`;
-  export const random = (
-    g?: Partial<typia.IRandomGenerator>,
-  ): IBbsArticleComment => typia.random<IBbsArticleComment>(g);
-  export const simulate = (
-    connection: IConnection,
-    articleId: string & Format<"uuid">,
-    id: string & Format<"uuid">,
-  ): Output => {
+  export const path = (props: Props) =>
+    `/bbs/articles/${encodeURIComponent(props.articleId?.toString() ?? "null")}/comments/${encodeURIComponent(props.id?.toString() ?? "null")}`;
+  export const random = (): IBbsArticleComment =>
+    typia.random<IBbsArticleComment>();
+  export const simulate = (connection: IConnection, props: Props): Output => {
     const assert = NestiaSimulator.assert({
       method: METADATA.method,
       host: connection.host,
-      path: path(articleId, id),
+      path: path(props),
       contentType: "application/json",
     });
-    assert.param("articleId")(() => typia.assert(articleId));
-    assert.param("id")(() => typia.assert(id));
-    return random(
-      "object" === typeof connection.simulate && null !== connection.simulate
-        ? connection.simulate
-        : undefined,
-    );
+    assert.param("articleId")(() => typia.assert(props.articleId));
+    assert.param("id")(() => typia.assert(props.id));
+    return random();
   };
 }
 
@@ -170,8 +166,8 @@ export namespace at {
  *
  * Create a new comment with its first {@link IBbsArticleComment.ISnapshot snapshot}.
  *
- * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param input Comment information to create.
+ * @param props.articleId Belonged article's {@link IBbsArticle.id }
+ * @param props.body Comment information to create.
  * @returns Newly created comment.
  * @tag BBS
  * @author Samchon
@@ -182,11 +178,10 @@ export namespace at {
  */
 export async function create(
   connection: IConnection,
-  articleId: string & Format<"uuid">,
-  input: IBbsArticleComment.ICreate,
+  props: create.Props,
 ): Promise<create.Output> {
-  return !!connection.simulate
-    ? create.simulate(connection, articleId, input)
+  return true === connection.simulate
+    ? create.simulate(connection, props)
     : PlainFetcher.fetch(
         {
           ...connection,
@@ -198,13 +193,24 @@ export async function create(
         {
           ...create.METADATA,
           template: create.METADATA.path,
-          path: create.path(articleId),
+          path: create.path(props),
         },
-        input,
+        props.body,
       );
 }
 export namespace create {
-  export type Input = IBbsArticleComment.ICreate;
+  export type Props = {
+    /**
+     * Belonged article's
+     */
+    articleId: string & Format<"uuid">;
+
+    /**
+     * Comment information to create.
+     */
+    body: Body;
+  };
+  export type Body = IBbsArticleComment.ICreate;
   export type Output = IBbsArticleComment;
 
   export const METADATA = {
@@ -221,29 +227,20 @@ export namespace create {
     status: 201,
   } as const;
 
-  export const path = (articleId: string & Format<"uuid">) =>
-    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments`;
-  export const random = (
-    g?: Partial<typia.IRandomGenerator>,
-  ): IBbsArticleComment => typia.random<IBbsArticleComment>(g);
-  export const simulate = (
-    connection: IConnection,
-    articleId: string & Format<"uuid">,
-    input: IBbsArticleComment.ICreate,
-  ): Output => {
+  export const path = (props: Omit<Props, "body">) =>
+    `/bbs/articles/${encodeURIComponent(props.articleId?.toString() ?? "null")}/comments`;
+  export const random = (): IBbsArticleComment =>
+    typia.random<IBbsArticleComment>();
+  export const simulate = (connection: IConnection, props: Props): Output => {
     const assert = NestiaSimulator.assert({
       method: METADATA.method,
       host: connection.host,
-      path: path(articleId),
+      path: path(props),
       contentType: "application/json",
     });
-    assert.param("articleId")(() => typia.assert(articleId));
-    assert.body(() => typia.assert(input));
-    return random(
-      "object" === typeof connection.simulate && null !== connection.simulate
-        ? connection.simulate
-        : undefined,
-    );
+    assert.param("articleId")(() => typia.assert(props.articleId));
+    assert.body(() => typia.assert(props.body));
+    return random();
   };
 }
 
@@ -252,9 +249,9 @@ export namespace create {
  *
  * Accumulate a new {@link IBbsArticleComment.ISnapshot snapshot} record to the comment.
  *
- * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param id Target comment's {@link IBbsArticleComment.id }
- * @param input Comment information to update.
+ * @param props.articleId Belonged article's {@link IBbsArticle.id }
+ * @param props.id Target comment's {@link IBbsArticleComment.id }
+ * @param props.body Comment information to update.
  * @returns Newly accumulated snapshot information.
  * @tag BBS
  * @author Samchon
@@ -265,12 +262,10 @@ export namespace create {
  */
 export async function update(
   connection: IConnection,
-  articleId: string & Format<"uuid">,
-  id: string & Format<"uuid">,
-  input: IBbsArticleComment.IUpdate,
+  props: update.Props,
 ): Promise<update.Output> {
-  return !!connection.simulate
-    ? update.simulate(connection, articleId, id, input)
+  return true === connection.simulate
+    ? update.simulate(connection, props)
     : PlainFetcher.fetch(
         {
           ...connection,
@@ -282,13 +277,29 @@ export async function update(
         {
           ...update.METADATA,
           template: update.METADATA.path,
-          path: update.path(articleId, id),
+          path: update.path(props),
         },
-        input,
+        props.body,
       );
 }
 export namespace update {
-  export type Input = IBbsArticleComment.IUpdate;
+  export type Props = {
+    /**
+     * Belonged article's
+     */
+    articleId: string & Format<"uuid">;
+
+    /**
+     * Target comment's
+     */
+    id: string & Format<"uuid">;
+
+    /**
+     * Comment information to update.
+     */
+    body: Body;
+  };
+  export type Body = IBbsArticleComment.IUpdate;
   export type Output = IBbsArticleComment.ISnapshot;
 
   export const METADATA = {
@@ -305,35 +316,21 @@ export namespace update {
     status: 200,
   } as const;
 
-  export const path = (
-    articleId: string & Format<"uuid">,
-    id: string & Format<"uuid">,
-  ) =>
-    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments/${encodeURIComponent(id?.toString() ?? "null")}`;
-  export const random = (
-    g?: Partial<typia.IRandomGenerator>,
-  ): IBbsArticleComment.ISnapshot =>
-    typia.random<IBbsArticleComment.ISnapshot>(g);
-  export const simulate = (
-    connection: IConnection,
-    articleId: string & Format<"uuid">,
-    id: string & Format<"uuid">,
-    input: IBbsArticleComment.IUpdate,
-  ): Output => {
+  export const path = (props: Omit<Props, "body">) =>
+    `/bbs/articles/${encodeURIComponent(props.articleId?.toString() ?? "null")}/comments/${encodeURIComponent(props.id?.toString() ?? "null")}`;
+  export const random = (): IBbsArticleComment.ISnapshot =>
+    typia.random<IBbsArticleComment.ISnapshot>();
+  export const simulate = (connection: IConnection, props: Props): Output => {
     const assert = NestiaSimulator.assert({
       method: METADATA.method,
       host: connection.host,
-      path: path(articleId, id),
+      path: path(props),
       contentType: "application/json",
     });
-    assert.param("articleId")(() => typia.assert(articleId));
-    assert.param("id")(() => typia.assert(id));
-    assert.body(() => typia.assert(input));
-    return random(
-      "object" === typeof connection.simulate && null !== connection.simulate
-        ? connection.simulate
-        : undefined,
-    );
+    assert.param("articleId")(() => typia.assert(props.articleId));
+    assert.param("id")(() => typia.assert(props.id));
+    assert.body(() => typia.assert(props.body));
+    return random();
   };
 }
 
@@ -342,9 +339,9 @@ export namespace update {
  *
  * Performs soft deletion to the comment.
  *
- * @param articleId Belonged article's {@link IBbsArticle.id }
- * @param id Target comment's {@link IBbsArticleComment.id }
- * @param input Password of the comment.
+ * @param props.articleId Belonged article's {@link IBbsArticle.id }
+ * @param props.id Target comment's {@link IBbsArticleComment.id }
+ * @param props.body Password of the comment.
  * @tag BBS
  * @author Samchon
  *
@@ -354,12 +351,10 @@ export namespace update {
  */
 export async function erase(
   connection: IConnection,
-  articleId: string & Format<"uuid">,
-  id: string & Format<"uuid">,
-  input: IBbsArticleComment.IErase,
+  props: erase.Props,
 ): Promise<void> {
-  return !!connection.simulate
-    ? erase.simulate(connection, articleId, id, input)
+  return true === connection.simulate
+    ? erase.simulate(connection, props)
     : PlainFetcher.fetch(
         {
           ...connection,
@@ -371,13 +366,29 @@ export async function erase(
         {
           ...erase.METADATA,
           template: erase.METADATA.path,
-          path: erase.path(articleId, id),
+          path: erase.path(props),
         },
-        input,
+        props.body,
       );
 }
 export namespace erase {
-  export type Input = IBbsArticleComment.IErase;
+  export type Props = {
+    /**
+     * Belonged article's
+     */
+    articleId: string & Format<"uuid">;
+
+    /**
+     * Target comment's
+     */
+    id: string & Format<"uuid">;
+
+    /**
+     * Password of the comment.
+     */
+    body: Body;
+  };
+  export type Body = IBbsArticleComment.IErase;
 
   export const METADATA = {
     method: "DELETE",
@@ -393,32 +404,19 @@ export namespace erase {
     status: 200,
   } as const;
 
-  export const path = (
-    articleId: string & Format<"uuid">,
-    id: string & Format<"uuid">,
-  ) =>
-    `/bbs/articles/${encodeURIComponent(articleId?.toString() ?? "null")}/comments/${encodeURIComponent(id?.toString() ?? "null")}`;
-  export const random = (g?: Partial<typia.IRandomGenerator>): void =>
-    typia.random<void>(g);
-  export const simulate = (
-    connection: IConnection,
-    articleId: string & Format<"uuid">,
-    id: string & Format<"uuid">,
-    input: IBbsArticleComment.IErase,
-  ): void => {
+  export const path = (props: Omit<Props, "body">) =>
+    `/bbs/articles/${encodeURIComponent(props.articleId?.toString() ?? "null")}/comments/${encodeURIComponent(props.id?.toString() ?? "null")}`;
+  export const random = (): void => typia.random<void>();
+  export const simulate = (connection: IConnection, props: Props): void => {
     const assert = NestiaSimulator.assert({
       method: METADATA.method,
       host: connection.host,
-      path: path(articleId, id),
+      path: path(props),
       contentType: "application/json",
     });
-    assert.param("articleId")(() => typia.assert(articleId));
-    assert.param("id")(() => typia.assert(id));
-    assert.body(() => typia.assert(input));
-    return random(
-      "object" === typeof connection.simulate && null !== connection.simulate
-        ? connection.simulate
-        : undefined,
-    );
+    assert.param("articleId")(() => typia.assert(props.articleId));
+    assert.param("id")(() => typia.assert(props.id));
+    assert.body(() => typia.assert(props.body));
+    return random();
   };
 }

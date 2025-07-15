@@ -17,25 +17,23 @@ export const test_api_bbs_article_comment_index_search = async (
   );
 
   const expected: IPage<IBbsArticleComment> =
-    await BbsApi.functional.bbs.articles.comments.index(
-      connection,
-      article.id,
-      {
+    await BbsApi.functional.bbs.articles.comments.index(connection, {
+      articleId: article.id,
+      body: {
         limit: REPEAT,
       },
-    );
+    });
 
   const validator = TestValidator.search("search")(
     async (search: IBbsArticle.IRequest.ISearch) => {
       const page: IPage<IBbsArticleComment> =
-        await BbsApi.functional.bbs.articles.comments.index(
-          connection,
-          article.id,
-          {
+        await BbsApi.functional.bbs.articles.comments.index(connection, {
+          articleId: article.id,
+          body: {
             search,
             limit: REPEAT,
           },
-        );
+        });
       return page.data;
     },
   )(expected.data, 2);

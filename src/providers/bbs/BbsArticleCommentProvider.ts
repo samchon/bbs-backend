@@ -38,48 +38,49 @@ export namespace BbsArticleCommentProvider {
   /* -----------------------------------------------------------
     READERS
   ----------------------------------------------------------- */
-  export const index =
-    (article: IEntity) =>
-    async (
-      input: IBbsArticleComment.IRequest,
-    ): Promise<IPage<IBbsArticleComment>> => {
-      await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
-        where: {
-          id: article.id,
-          deleted_at: null,
-        },
-      });
-      return PaginationUtil.paginate({
-        schema: BbsGlobal.prisma.bbs_article_comments,
-        payload: json.select(),
-        transform: json.transform,
-      })({
-        where: {
-          AND: [{ deleted_at: null }, ...search(input.search ?? {})],
-        },
-        orderBy: input.sort?.length
-          ? PaginationUtil.orderBy(orderBy)(input.sort)
-          : [{ created_at: "asc" }],
-      })(input);
-    };
+  export const index = async (props: {
+    article: IEntity;
+    body: IBbsArticleComment.IRequest;
+  }): Promise<IPage<IBbsArticleComment>> => {
+    await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+      where: {
+        id: props.article.id,
+        deleted_at: null,
+      },
+    });
+    return PaginationUtil.paginate({
+      schema: BbsGlobal.prisma.bbs_article_comments,
+      payload: json.select(),
+      transform: json.transform,
+    })({
+      where: {
+        AND: [{ deleted_at: null }, ...search(props.body.search ?? {})],
+      },
+      orderBy: props.body.sort?.length
+        ? PaginationUtil.orderBy(orderBy)(props.body.sort)
+        : [{ created_at: "asc" }],
+    })(props.body);
+  };
 
-  export const at =
-    (article: IEntity) =>
-    async (id: string): Promise<IBbsArticleComment> => {
-      const record =
-        await BbsGlobal.prisma.bbs_article_comments.findFirstOrThrow({
-          where: {
-            id,
+  export const at = async (props: {
+    article: IEntity;
+    id: string;
+  }): Promise<IBbsArticleComment> => {
+    const record = await BbsGlobal.prisma.bbs_article_comments.findFirstOrThrow(
+      {
+        where: {
+          id: props.id,
+          deleted_at: null,
+          article: {
+            id: props.article.id,
             deleted_at: null,
-            article: {
-              id: article.id,
-              deleted_at: null,
-            },
           },
-          ...json.select(),
-        });
-      return json.transform(record);
-    };
+        },
+        ...json.select(),
+      },
+    );
+    return json.transform(record);
+  };
 
   const search = (input: IBbsArticleComment.IRequest.ISearch | undefined) =>
     [
@@ -120,104 +121,110 @@ export namespace BbsArticleCommentProvider {
   /* -----------------------------------------------------------
     WRITERS
   ----------------------------------------------------------- */
-  export const create =
-    (article: IEntity) =>
-    async (
-      input: IBbsArticleComment.ICreate,
-      ip: string,
-    ): Promise<IBbsArticleComment> => {
-      await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+  export const create = async (props: {
+    article: IEntity;
+    body: IBbsArticleComment.ICreate;
+    ip: string;
+  }): Promise<IBbsArticleComment> => {
+    await BbsGlobal.prisma.bbs_articles.findFirstOrThrow({
+      where: {
+        id: props.article.id,
+        deleted_at: null,
+      },
+    });
+
+    const snapshot = BbsArticleCommentSnapshotProvider.collect(props);
+    const record = await BbsGlobal.prisma.bbs_article_comments.create({
+      data: {
+        id: v4(),
+        writer: props.body.writer,
+        article: {
+          connect: {
+            id: props.article.id,
+          },
+        },
+        snapshots: {
+          create: [snapshot],
+        },
+        created_at: new Date(),
+        password: await BcryptUtil.hash(props.body.password),
+      },
+      ...json.select(),
+    });
+    return json.transform(record);
+  };
+
+  export const update = async (props: {
+    article: IEntity;
+    id: string;
+    body: IBbsArticleComment.IUpdate;
+    ip: string;
+  }): Promise<IBbsArticleComment.ISnapshot> => {
+    const comment =
+      await BbsGlobal.prisma.bbs_article_comments.findFirstOrThrow({
         where: {
-          id: article.id,
+          id: props.id,
           deleted_at: null,
-        },
-      });
-
-      const snapshot = BbsArticleCommentSnapshotProvider.collect(input, ip);
-      const record = await BbsGlobal.prisma.bbs_article_comments.create({
-        data: {
-          id: v4(),
-          writer: input.writer,
           article: {
-            connect: { id: article.id },
+            id: props.article.id,
+            deleted_at: null,
           },
-          snapshots: {
-            create: [snapshot],
-          },
-          created_at: new Date(),
-          password: await BcryptUtil.hash(input.password),
         },
-        ...json.select(),
       });
-      return json.transform(record);
-    };
+    if (
+      false ===
+      (await BcryptUtil.equals({
+        input: props.body.password,
+        hashed: comment.password,
+      }))
+    )
+      throw ErrorProvider.forbidden({
+        accessor: "input.password",
+        message: "Wrong password.",
+      });
+    return BbsArticleCommentSnapshotProvider.create({
+      comment: { id: comment.id },
+      body: props.body,
+      ip: props.ip,
+    });
+  };
 
-  export const update =
-    (article: IEntity) =>
-    (id: string) =>
-    async (
-      input: IBbsArticleComment.IUpdate,
-      ip: string,
-    ): Promise<IBbsArticleComment.ISnapshot> => {
-      const comment =
-        await BbsGlobal.prisma.bbs_article_comments.findFirstOrThrow({
-          where: {
-            id,
-            deleted_at: null,
-            article: {
-              id: article.id,
-              deleted_at: null,
-            },
-          },
-        });
-      if (
-        false ===
-        (await BcryptUtil.equals({
-          input: input.password,
-          hashed: comment.password,
-        }))
-      )
-        throw ErrorProvider.forbidden({
-          accessor: "input.password",
-          message: "Wrong password.",
-        });
-      return BbsArticleCommentSnapshotProvider.create(comment)(input, ip);
-    };
-
-  export const erase =
-    (article: IEntity) =>
-    (id: string) =>
-    async (input: IBbsArticleComment.IErase): Promise<void> => {
-      const record =
-        await BbsGlobal.prisma.bbs_article_comments.findFirstOrThrow({
-          where: {
-            id,
-            deleted_at: null,
-            article: {
-              id: article.id,
-              deleted_at: null,
-            },
-          },
-        });
-      if (
-        false ===
-        (await BcryptUtil.equals({
-          input: input.password,
-          hashed: record.password,
-        }))
-      )
-        throw ErrorProvider.forbidden({
-          accessor: "input.password",
-          message: "Wrong password.",
-        });
-
-      await BbsGlobal.prisma.bbs_article_comments.update({
+  export const erase = async (props: {
+    article: IEntity;
+    id: string;
+    body: IBbsArticleComment.IErase;
+  }): Promise<void> => {
+    const record = await BbsGlobal.prisma.bbs_article_comments.findFirstOrThrow(
+      {
         where: {
-          id,
+          id: props.id,
+          deleted_at: null,
+          article: {
+            id: props.article.id,
+            deleted_at: null,
+          },
         },
-        data: {
-          deleted_at: new Date(),
-        },
+      },
+    );
+    if (
+      false ===
+      (await BcryptUtil.equals({
+        input: props.body.password,
+        hashed: record.password,
+      }))
+    )
+      throw ErrorProvider.forbidden({
+        accessor: "input.password",
+        message: "Wrong password.",
       });
-    };
+
+    await BbsGlobal.prisma.bbs_article_comments.update({
+      where: {
+        id: props.id,
+      },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+  };
 }

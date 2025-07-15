@@ -20,8 +20,10 @@ export const test_api_bbs_article_index_sort = async (
   >(async (input: IPage.Sort<IBbsArticle.IRequest.SortableColumns>) => {
     const page: IPage<IBbsArticle.ISummary> =
       await BbsApi.functional.bbs.articles.index(connection, {
-        limit: REPEAT,
-        sort: input,
+        body: {
+          limit: REPEAT,
+          sort: input,
+        },
       });
     return page.data;
   });

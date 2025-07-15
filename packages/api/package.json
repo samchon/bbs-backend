@@ -1,6 +1,6 @@
 {
   "name": "@samchon/bbs-api",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "description": "API for bbs",
   "main": "lib/index.js",
   "module": "lib/index.mjs",

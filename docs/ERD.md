@@ -60,12 +60,12 @@ erDiagram
   String attachment_file_id FK
   Int sequence
 }
-"bbs_article_snapshots" }|--|| "bbs_articles" : article
+"bbs_article_snapshots" }o--|| "bbs_articles" : article
 "bbs_article_snapshot_files" }o--|| "bbs_article_snapshots" : snapshot
 "bbs_article_snapshot_files" }o--|| "attachment_files" : file
 "bbs_article_comments" }o--|| "bbs_articles" : article
 "bbs_article_comments" }o--o| "bbs_article_comments" : parent
-"bbs_article_comment_snapshots" }|--|| "bbs_article_comments" : comment
+"bbs_article_comment_snapshots" }o--|| "bbs_article_comments" : comment
 "bbs_article_comment_snapshot_files" }o--|| "bbs_article_comment_snapshots" : snapshot
 "bbs_article_comment_snapshot_files" }o--|| "attachment_files" : file
 ```
@@ -78,7 +78,7 @@ Every attachment files that are managed in current system.
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `name`: File name, except extension.
 - `extension`
   > Extension.
@@ -112,7 +112,7 @@ In other words, to keep evidence, and prevent fraud.
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `writer`: Writer's name.
 - `password`: Password for modification.
 - `created_at`: Creation time of article.
@@ -133,7 +133,7 @@ fraud.
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `bbs_article_id`: Belong article's [bbs_articles.id](#bbs_articles)
 - `format`
   > Format of body.
@@ -162,7 +162,7 @@ see in this documents.
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `bbs_article_snapshot_id`: Belonged snapshot's [bbs_article_snapshots.id](#bbs_article_snapshots)
 - `attachment_file_id`: Belonged file's [attachment_files.id](#attachment_files)
 - `sequence`: Sequence of attachment file in the snapshot.
@@ -185,7 +185,7 @@ hierarchical reply structure through the `parent_id` attribute.
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `bbs_article_id`: Belonged article's [bbs_articles.id](#bbs_articles)
 - `parent_id`
   > Parent comment's [bbs_article_comments.id](#bbs_article_comments)
@@ -212,7 +212,7 @@ and prevent fraud.
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `bbs_article_comment_id`: Belonged article's [bbs_article_comments.id](#bbs_article_comments)
 - `format`
   > Format of content body.
@@ -235,7 +235,7 @@ relationship between [bbs_article_comment_snapshots](#bbs_article_comment_snapsh
 
 Properties as follows:
 
-- `id`:
+- `id`: Primary Key.
 - `bbs_article_comment_snapshot_id`: Belonged snapshot's [bbs_article_comment_snapshots.id](#bbs_article_comment_snapshots)
 - `attachment_file_id`: Belonged file's [attachment_files.id](#attachment_files)
 - `sequence`

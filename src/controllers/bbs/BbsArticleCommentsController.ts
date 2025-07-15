@@ -15,7 +15,7 @@ export class BbsArticleCommentsController {
    *
    * List up all summarized comments with pagination and searching options.
    *
-   * @param input Request info of pagination and searching options.
+   * @param body Request info of pagination and searching options.
    * @returns Paginated summarized comments.
    * @tag BBS
    *
@@ -24,9 +24,12 @@ export class BbsArticleCommentsController {
   @core.TypedRoute.Patch()
   public index(
     @core.TypedParam("articleId") articleId: string & tags.Format<"uuid">,
-    @core.TypedBody() input: IBbsArticleComment.IRequest,
+    @core.TypedBody() body: IBbsArticleComment.IRequest,
   ): Promise<IPage<IBbsArticleComment>> {
-    return BbsArticleCommentProvider.index({ id: articleId })(input);
+    return BbsArticleCommentProvider.index({
+      article: { id: articleId },
+      body,
+    });
   }
 
   /**
@@ -46,7 +49,10 @@ export class BbsArticleCommentsController {
     @core.TypedParam("articleId") articleId: string & tags.Format<"uuid">,
     @core.TypedParam("id") id: string & tags.Format<"uuid">,
   ): Promise<IBbsArticleComment> {
-    return BbsArticleCommentProvider.at({ id: articleId })(id);
+    return BbsArticleCommentProvider.at({
+      article: { id: articleId },
+      id,
+    });
   }
 
   /**
@@ -55,7 +61,7 @@ export class BbsArticleCommentsController {
    * Create a new comment with its first {@link IBbsArticleComment.ISnapshot snapshot}.
    *
    * @param articleId Belonged article's {@link IBbsArticle.id}
-   * @param input Comment information to create.
+   * @param body Comment information to create.
    * @returns Newly created comment.
    * @tag BBS
    *
@@ -65,12 +71,13 @@ export class BbsArticleCommentsController {
   public create(
     @Request() request: FastifyRequest,
     @core.TypedParam("articleId") articleId: string & tags.Format<"uuid">,
-    @core.TypedBody() input: IBbsArticleComment.ICreate,
+    @core.TypedBody() body: IBbsArticleComment.ICreate,
   ): Promise<IBbsArticleComment> {
-    return BbsArticleCommentProvider.create({ id: articleId })(
-      input,
-      request.ip,
-    );
+    return BbsArticleCommentProvider.create({
+      article: { id: articleId },
+      body,
+      ip: request.ip,
+    });
   }
 
   /**
@@ -80,7 +87,7 @@ export class BbsArticleCommentsController {
    *
    * @param articleId Belonged article's {@link IBbsArticle.id}
    * @param id Target comment's {@link IBbsArticleComment.id}
-   * @param input Comment information to update.
+   * @param body Comment information to update.
    * @returns Newly accumulated snapshot information.
    * @tag BBS
    *
@@ -91,12 +98,14 @@ export class BbsArticleCommentsController {
     @Request() request: FastifyRequest,
     @core.TypedParam("articleId") articleId: string & tags.Format<"uuid">,
     @core.TypedParam("id") id: string & tags.Format<"uuid">,
-    @core.TypedBody() input: IBbsArticleComment.IUpdate,
+    @core.TypedBody() body: IBbsArticleComment.IUpdate,
   ): Promise<IBbsArticleComment.ISnapshot> {
-    return BbsArticleCommentProvider.update({ id: articleId })(id)(
-      input,
-      request.ip,
-    );
+    return BbsArticleCommentProvider.update({
+      article: { id: articleId },
+      id,
+      body,
+      ip: request.ip,
+    });
   }
 
   /**
@@ -106,7 +115,7 @@ export class BbsArticleCommentsController {
    *
    * @param articleId Belonged article's {@link IBbsArticle.id}
    * @param id Target comment's {@link IBbsArticleComment.id}
-   * @param input Password of the comment.
+   * @param body Password of the comment.
    * @tag BBS
    *
    * @author Samchon
@@ -115,8 +124,12 @@ export class BbsArticleCommentsController {
   public erase(
     @core.TypedParam("articleId") articleId: string & tags.Format<"uuid">,
     @core.TypedParam("id") id: string & tags.Format<"uuid">,
-    @core.TypedBody() input: IBbsArticleComment.IErase,
+    @core.TypedBody() body: IBbsArticleComment.IErase,
   ): Promise<void> {
-    return BbsArticleCommentProvider.erase({ id: articleId })(id)(input);
+    return BbsArticleCommentProvider.erase({
+      article: { id: articleId },
+      id,
+      body,
+    });
   }
 }
