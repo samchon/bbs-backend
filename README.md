@@ -9,7 +9,7 @@
 
 Example backend server of Bullet-in Board System for education.
 
-`@samchon/bbs-backend` is an example backend project of [NestJS](https://nestjs.com) and [Prisma](https://prisma.io) stack. It has been developed to educate how to adapt **functional programming** in the NestJS development. Therefore, it is not the actual bullet-in board service, and implementation of most functions is different from the actual bullet-in board service and may be meaningless.
+`@samchon/bbs-backend` is an example backend project of [NestJS](https://nestjs.com), [Prisma](https://prisma.io), and SQLite stack. It has been developed to educate how to adapt **functional programming** in the NestJS development. Therefore, it is not the actual bullet-in board service, and implementation of most functions is different from the actual bullet-in board service and may be meaningless.
 
 Also, `@samchon/bbs-backend` guides how to utilize those 3rd party libraries (what I've developed) in the production, and demonostrates how they are powerful for the productivity. Especially, I have ideally implemented **TDD (Test Driven Development)** through below libraries. I hope this repo would be helpful for your learning.
 
@@ -26,26 +26,7 @@ This backend server has implemented through TypeScript and it runs on the NodeJS
 
   - https://nodejs.org/en/
 
-### 2.2. PostgreSQL
-> ```bash
-> bash postgres.sh
->```
->
-> If you've installed Docker, then run the script above.
-
-Otherwise, visit below PostgreSQL official site and install it manually.
-
-https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
-
-After that, run the `npm run schema <root-account> <password>` command. 
-
-Database schema for BBS backend system would be automatically constructed.
-
-```bash
-npm run schema postgres root
-```
-
-### 2.3. Repository
+### 2.2. Repository
 From now on, you can start the backend server development, right now. 
 
 Just download this project through the git clone command and install dependencies by the npm install command. After those preparations, you can start the development by typing the `npm run dev` command.
