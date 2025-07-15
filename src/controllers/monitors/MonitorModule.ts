@@ -1,14 +1,8 @@
 import { Module } from "@nestjs/common";
 
 import { MonitorHealthController } from "./MonitorHealthController";
-import { MonitorPerformanceController } from "./MonitorPerformanceController";
-import { MonitorSystemController } from "./MonitorSystemController";
 
 @Module({
-  controllers: [
-    MonitorHealthController,
-    MonitorPerformanceController,
-    MonitorSystemController,
-  ],
+  controllers: [MonitorHealthController],
 })
 export class MonitorModule {}
