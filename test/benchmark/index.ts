@@ -8,8 +8,8 @@ import { BbsBackend } from "../../src/BbsBackend";
 import { BbsConfiguration } from "../../src/BbsConfiguration";
 import { BbsGlobal } from "../../src/BbsGlobal";
 import { BbsSetupWizard } from "../../src/setup/BbsSetupWizard";
-import { ArgumentParser } from "../internal/ArgumentParser";
-import { StopWatch } from "../internal/StopWatch";
+import { ArgumentParser } from "../helpers/ArgumentParser";
+import { StopWatch } from "../helpers/StopWatch";
 
 interface IOptions {
   reset: boolean;
