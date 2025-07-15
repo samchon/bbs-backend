@@ -1,17 +1,14 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("BBS_POSTGRES_URL")
+generator client {
+  provider = "prisma-client-js"
 }
 
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["views"]
-  binaryTargets   = ["native"]
+datasource db {
+  provider = "sqlite"
+  url      = "file:../bbs.db"
 }
 
 generator markdown {
   provider = "prisma-markdown"
-  title    = "Bullet-in Board System"
   output   = "../../docs/ERD.md"
 }
 
@@ -29,21 +26,21 @@ model attachment_files {
   // COLUMNS
   //----
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// File name, except extension.
-  name String @db.VarChar
+  name String
 
   /// Extension.
   ///
   /// Possible to omit like `README` case.
-  extension String? @db.VarChar
+  extension String?
 
   /// URL path of the real file.
-  url String @db.VarChar
+  url String
 
   /// Creation time of file.
-  created_at DateTime @db.Timestamptz
+  created_at DateTime
 
   //----
   // RELATIONS
@@ -77,22 +74,22 @@ model attachment_files {
 /// @author Samchon
 model bbs_articles {
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// Writer's name.
-  writer String @db.VarChar
+  writer String
 
   /// Password for modification.
-  password String @db.VarChar
+  password String
 
   /// Creation time of article.
-  created_at DateTime @db.Timestamptz
+  created_at DateTime
 
   /// Deletion time of article.
   ///
   /// To keep evidence, do not delete the article, but just mark it as 
   /// deleted.
-  deleted_at DateTime? @db.Timestamptz
+  deleted_at DateTime?
 
   //----
   // RELATIONS
@@ -125,29 +122,29 @@ model bbs_article_snapshots {
   // COLUMNS
   //----
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// Belong article's {@link bbs_articles.id}
-  bbs_article_id String @db.Uuid
+  bbs_article_id String
 
   /// Format of body.
   ///
   /// Same meaning with extension like `html`, `md`, `txt`.
-  format String @db.VarChar
+  format String
 
   /// Title of article.
-  title String @db.VarChar
+  title String
 
   /// Content body of article.
   body String
 
   /// IP address of the snapshot writer.
-  ip String @db.VarChar
+  ip String
 
   /// Creation time of record.
   ///
   /// It means creation time or update time or article.
-  created_at DateTime @db.Timestamptz
+  created_at DateTime
 
   //----
   // RELATIONS
@@ -181,16 +178,16 @@ model bbs_article_snapshot_files {
   // COLUMNS
   //----
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// Belonged snapshot's {@link bbs_article_snapshots.id}
-  bbs_article_snapshot_id String @db.Uuid
+  bbs_article_snapshot_id String
 
   /// Belonged file's {@link attachment_files.id}
-  attachment_file_id String @db.Uuid
+  attachment_file_id String
 
   /// Sequence of attachment file in the snapshot.
-  sequence Int @db.Integer
+  sequence Int
 
   //----
   // RELATIONS
@@ -226,30 +223,30 @@ model bbs_article_comments {
   // COLUMNS
   //----
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// Belonged article's {@link bbs_articles.id}
-  bbs_article_id String @db.Uuid
+  bbs_article_id String
 
   /// Parent comment's {@link bbs_article_comments.id}
   ///
   /// Used to express the hierarchical reply structure.
-  parent_id String? @db.Uuid
+  parent_id String?
 
   /// Writer's name.
-  writer String @db.VarChar
+  writer String
 
   /// Password for modification.
-  password String @db.VarChar
+  password String
 
   /// Creation time of comment.
-  created_at DateTime @db.Timestamptz
+  created_at DateTime
 
   /// Deletion time of comment.
   ///
   /// Do not allow to delete the comment, but just mark it as deleted, 
   /// to keep evidence.
-  deleted_at DateTime? @db.Timestamptz
+  deleted_at DateTime?
 
   //----
   // RELATIONS
@@ -291,26 +288,26 @@ model bbs_article_comment_snapshots {
   // COLUMNS
   //----
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// Belonged article's {@link bbs_article_comments.id}
-  bbs_article_comment_id String @db.Uuid
+  bbs_article_comment_id String
 
   /// Format of content body.
   ///
   /// Same meaning with extension like `html`, `md`, `txt`.
-  format String @db.VarChar
+  format String
 
   /// Content body of comment.
   body String
 
   /// IP address of the snapshot writer.
-  ip String @db.VarChar
+  ip String
 
   /// Creation time of record.
   ///
   /// It means creation time or update time or comment.
-  created_at DateTime @db.Timestamptz
+  created_at DateTime
 
   //----
   // RELATIONS
@@ -337,18 +334,18 @@ model bbs_article_comment_snapshot_files {
   // COLUMNS
   //----
   /// Primary Key.
-  id String @id @db.Uuid
+  id String @id
 
   /// Belonged snapshot's {@link bbs_article_comment_snapshots.id}
-  bbs_article_comment_snapshot_id String @db.Uuid
+  bbs_article_comment_snapshot_id String
 
   /// Belonged file's {@link attachment_files.id}
-  attachment_file_id String @db.Uuid
+  attachment_file_id String
 
   /// Sequence order.
   ///
   /// Sequence order of the attached file in the belonged snapshot.
-  sequence Int @db.Integer
+  sequence Int
 
   //----
   // RELATIONS
@@ -366,8 +363,8 @@ model bbs_article_comment_snapshot_files {
 /// @hidden
 /// @author Samchon
 model mv_bbs_article_last_snapshots {
-  bbs_article_id          String @id @db.Uuid
-  bbs_article_snapshot_id String @db.Uuid
+  bbs_article_id          String @id
+  bbs_article_snapshot_id String
 
   article  bbs_articles          @relation(fields: [bbs_article_id], references: [id], onDelete: Cascade)
   snapshot bbs_article_snapshots @relation(fields: [bbs_article_snapshot_id], references: [id], onDelete: Cascade)
