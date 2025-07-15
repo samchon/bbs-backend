@@ -1,6 +1,7 @@
 import { BbsBackend } from "../src/BbsBackend";
 import { BbsGlobal } from "../src/BbsGlobal";
-import { TestAutomation } from "./TestAutomation";
+import { TestAutomation } from "./helpers/TestAutomation";
+import { TestAutomationStdio } from "./helpers/TestAutomationStdio";
 
 const main = async (): Promise<void> => {
   BbsGlobal.testing = true;
@@ -11,6 +12,9 @@ const main = async (): Promise<void> => {
       return backend;
     },
     close: (backend) => backend.close(),
+    options: await TestAutomationStdio.getOptions(),
+    onComplete: TestAutomationStdio.onComplete,
+    onReset: TestAutomationStdio.onReset(new Date()),
   });
 };
 main().catch((exp) => {
