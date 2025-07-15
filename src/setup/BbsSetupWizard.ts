@@ -6,7 +6,7 @@ export namespace BbsSetupWizard {
   export async function schema(): Promise<void> {
     if (BbsGlobal.testing === false)
       throw new Error(
-        "Erron on SetupWizard.schema(): unable to reset database in non-test mode.",
+        "Error on SetupWizard.schema(): unable to reset database in non-test mode.",
       );
     const execute = (type: string) => (argv: string) =>
       cp.execSync(`npx prisma migrate ${type} --schema=prisma/schema ${argv}`, {
