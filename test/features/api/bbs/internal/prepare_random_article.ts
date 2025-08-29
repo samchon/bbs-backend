@@ -9,8 +9,8 @@ export const prepare_random_article = (
   password: string,
 ): IBbsArticle.IUpdate => ({
   password,
-  title: RandomGenerator.paragraph()(),
-  body: RandomGenerator.content()()(),
+  title: RandomGenerator.paragraph(),
+  body: RandomGenerator.content(),
   format: "txt",
-  files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
+  files: ArrayUtil.repeat(randint(0, 3), () => prepare_random_file()),
 });

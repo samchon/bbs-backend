@@ -9,7 +9,7 @@ export const prepare_random_comment = (
   password: string,
 ): IBbsArticleComment.IUpdate => ({
   password,
-  body: RandomGenerator.content()()(),
+  body: RandomGenerator.content(),
   format: "txt",
-  files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
+  files: ArrayUtil.repeat(randint(0, 3), () => prepare_random_file()),
 });

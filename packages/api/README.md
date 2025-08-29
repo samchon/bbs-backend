@@ -38,10 +38,10 @@ export const test_api_bbs_article_create = async (
   const input: IBbsArticle.ICreate = {
     writer: RandomGenerator.name(),
     password: RandomGenerator.alphaNumeric(8),
-    title: RandomGenerator.paragraph()(),
-    body: RandomGenerator.content()()(),
+    title: RandomGenerator.paragraph(),
+    body: RandomGenerator.content(),
     format: "md",
-    files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
+    files: ArrayUtil.repeat(randint(0, 3), () => prepare_random_file()),
   };
 
   // DO CREATE

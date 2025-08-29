@@ -13,10 +13,10 @@ export const test_api_bbs_article_create = async (
   const input: IBbsArticle.ICreate = {
     writer: RandomGenerator.name(),
     password: RandomGenerator.alphaNumeric(8),
-    title: RandomGenerator.paragraph()(),
-    body: RandomGenerator.content()()(),
+    title: RandomGenerator.paragraph(),
+    body: RandomGenerator.content(),
     format: "md",
-    files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
+    files: ArrayUtil.repeat(randint(0, 3), () => prepare_random_file()),
   };
 
   // DO CREATE
@@ -28,7 +28,7 @@ export const test_api_bbs_article_create = async (
   );
 
   // VALIDATE WHETHER EXACT DATA IS INSERTED
-  TestValidator.equals("create")({
+  const expected = {
     snapshots: [
       {
         format: input.format,
@@ -38,7 +38,8 @@ export const test_api_bbs_article_create = async (
       },
     ],
     writer: input.writer,
-  })(article);
+  };
+  TestValidator.equals("create", expected, article);
 
   // COMPARE WITH READ DATA
   const read: IBbsArticle = await BbsApi.functional.bbs.articles.at(
@@ -47,5 +48,5 @@ export const test_api_bbs_article_create = async (
       id: article.id,
     },
   );
-  TestValidator.equals("read")(read)(article);
+  TestValidator.equals("read", read, article);
 };

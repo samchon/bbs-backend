@@ -20,7 +20,7 @@ export const test_api_bbs_article_comment_update = async (
     password,
   );
 
-  const inputs: IBbsArticleComment.IUpdate[] = ArrayUtil.repeat(4)(() =>
+  const inputs: IBbsArticleComment.IUpdate[] = ArrayUtil.repeat(4, () =>
     prepare_random_comment(password),
   );
   for (const i of inputs) {
@@ -31,11 +31,17 @@ export const test_api_bbs_article_comment_update = async (
         body: i,
       });
     comment.snapshots.push(snapshot);
-    TestValidator.equals("snapshot")({
-      format: i.format,
-      body: i.body,
-      files: i.files,
-    })(snapshot);
+    TestValidator.equals<
+      Pick<IBbsArticleComment.IUpdate, "format" | "body" | "files">
+    >(
+      "snapshot",
+      {
+        format: i.format,
+        body: i.body,
+        files: i.files,
+      },
+      snapshot,
+    );
   }
 
   const read: IBbsArticleComment =
@@ -43,5 +49,5 @@ export const test_api_bbs_article_comment_update = async (
       articleId: article.id,
       id: comment.id,
     });
-  TestValidator.equals("read")(read)(comment);
+  TestValidator.equals("read", read, comment);
 };

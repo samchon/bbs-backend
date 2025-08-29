@@ -15,14 +15,14 @@ export const test_api_bbs_article_password = async (
     password,
   );
 
-  await TestValidator.httpError("update")(403)(() =>
+  await TestValidator.httpError("update", 403, () =>
     BbsApi.functional.bbs.articles.update(connection, {
       id: article.id,
       body: prepare_random_article("invalid-password"),
     }),
   );
 
-  await TestValidator.httpError("erase")(403)(() =>
+  await TestValidator.httpError("erase", 403, () =>
     BbsApi.functional.bbs.articles.erase(connection, {
       id: article.id,
       body: {

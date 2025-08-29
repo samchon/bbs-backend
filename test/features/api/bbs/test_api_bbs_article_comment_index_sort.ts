@@ -13,25 +13,28 @@ export const test_api_bbs_article_comment_index_sort = async (
 ): Promise<void> => {
   const article: IBbsArticle = await generate_random_article(connection);
 
-  await ArrayUtil.asyncRepeat(REPEAT)(() =>
+  await ArrayUtil.asyncRepeat(REPEAT, () =>
     generate_random_comment(connection, article),
   );
 
-  const validator = TestValidator.sort("questions.index")<
+  const validator = TestValidator.sort<
     IBbsArticleComment,
     IBbsArticleComment.IRequest.SortableColumns,
     IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>
-  >(async (input: IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>) => {
-    const page: IPage<IBbsArticleComment> =
-      await BbsApi.functional.bbs.articles.comments.index(connection, {
-        articleId: article.id,
-        body: {
-          limit: REPEAT,
-          sort: input,
-        },
-      });
-    return page.data;
-  });
+  >(
+    "questions.index",
+    async (input: IPage.Sort<IBbsArticleComment.IRequest.SortableColumns>) => {
+      const page: IPage<IBbsArticleComment> =
+        await BbsApi.functional.bbs.articles.comments.index(connection, {
+          articleId: article.id,
+          body: {
+            limit: REPEAT,
+            sort: input,
+          },
+        });
+      return page.data;
+    },
+  );
 
   const components = [
     validator("created_at")(GaffComparator.dates((x) => x.created_at)),

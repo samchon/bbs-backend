@@ -22,7 +22,7 @@ export const test_api_bbs_article_comment_erase = async (
     id: comment.id,
     body: { password },
   });
-  await TestValidator.httpError("erase")(404)(() =>
+  await TestValidator.httpError("erase", 404, () =>
     BbsApi.functional.bbs.articles.comments.at(connection, {
       articleId: article.id,
       id: comment.id,

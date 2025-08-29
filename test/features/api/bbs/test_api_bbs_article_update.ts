@@ -15,7 +15,7 @@ export const test_api_bbs_article_update = async (
     password,
   );
 
-  const inputs: IBbsArticle.IUpdate[] = ArrayUtil.repeat(4)(() =>
+  const inputs: IBbsArticle.IUpdate[] = ArrayUtil.repeat(4, () =>
     prepare_random_article(password),
   );
   for (const i of inputs) {
@@ -25,12 +25,18 @@ export const test_api_bbs_article_update = async (
         body: i,
       });
     article.snapshots.push(snapshot);
-    TestValidator.equals("snapshot")({
-      format: i.format,
-      title: i.title,
-      body: i.body,
-      files: i.files,
-    })(snapshot);
+    TestValidator.equals<
+      Pick<IBbsArticle.IUpdate, "format" | "title" | "body" | "files">
+    >(
+      "snapshot",
+      {
+        format: i.format,
+        title: i.title,
+        body: i.body,
+        files: i.files,
+      },
+      snapshot,
+    );
   }
 
   const read: IBbsArticle = await BbsApi.functional.bbs.articles.at(
@@ -39,5 +45,5 @@ export const test_api_bbs_article_update = async (
       id: article.id,
     },
   );
-  TestValidator.equals("read")(read)(article);
+  TestValidator.equals("read", read, article);
 };

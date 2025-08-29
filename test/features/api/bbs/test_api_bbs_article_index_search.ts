@@ -9,7 +9,7 @@ import { generate_random_article } from "./internal/generate_random_article";
 export const test_api_bbs_article_index_search = async (
   connection: BbsApi.IConnection,
 ): Promise<void> => {
-  await ArrayUtil.asyncRepeat(REPEAT)(() =>
+  await ArrayUtil.asyncRepeat(REPEAT, () =>
     generate_random_article(connection),
   );
 
@@ -20,7 +20,8 @@ export const test_api_bbs_article_index_search = async (
       },
     });
 
-  const validator = TestValidator.search("search")(
+  const validator = TestValidator.search(
+    "search",
     async (search: IBbsArticle.IRequest.ISearch) => {
       const page: IPage<IBbsArticle.IAbridge> =
         await BbsApi.functional.bbs.articles.abridges(connection, {
@@ -31,7 +32,9 @@ export const test_api_bbs_article_index_search = async (
         });
       return page.data;
     },
-  )(expected.data, 2);
+    expected.data,
+    2,
+  );
 
   await validator({
     fields: ["writer"],

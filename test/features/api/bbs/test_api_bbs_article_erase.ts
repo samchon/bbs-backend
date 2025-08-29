@@ -19,7 +19,7 @@ export const test_api_bbs_article_erase = async (
       password,
     },
   });
-  await TestValidator.httpError("erase")(404)(() =>
+  await TestValidator.httpError("erase", 404, () =>
     BbsApi.functional.bbs.articles.at(connection, {
       id: article.id,
     }),

@@ -20,7 +20,7 @@ export const test_api_bbs_article_comment_password = async (
     password,
   );
 
-  await TestValidator.httpError("update")(403)(() =>
+  await TestValidator.httpError("update", 403, () =>
     BbsApi.functional.bbs.articles.comments.update(connection, {
       articleId: article.id,
       id: comment.id,
@@ -28,7 +28,7 @@ export const test_api_bbs_article_comment_password = async (
     }),
   );
 
-  await TestValidator.httpError("erase")(403)(() =>
+  await TestValidator.httpError("erase", 403, () =>
     BbsApi.functional.bbs.articles.comments.erase(connection, {
       articleId: article.id,
       id: comment.id,

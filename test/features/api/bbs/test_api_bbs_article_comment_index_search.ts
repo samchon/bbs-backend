@@ -12,7 +12,7 @@ export const test_api_bbs_article_comment_index_search = async (
   connection: BbsApi.IConnection,
 ): Promise<void> => {
   const article: IBbsArticle = await generate_random_article(connection);
-  await ArrayUtil.asyncRepeat(REPEAT)(() =>
+  await ArrayUtil.asyncRepeat(REPEAT, () =>
     generate_random_comment(connection, article),
   );
 
@@ -24,7 +24,8 @@ export const test_api_bbs_article_comment_index_search = async (
       },
     });
 
-  const validator = TestValidator.search("search")(
+  const validator = TestValidator.search(
+    "search",
     async (search: IBbsArticle.IRequest.ISearch) => {
       const page: IPage<IBbsArticleComment> =
         await BbsApi.functional.bbs.articles.comments.index(connection, {
@@ -36,7 +37,9 @@ export const test_api_bbs_article_comment_index_search = async (
         });
       return page.data;
     },
-  )(expected.data, 2);
+    expected.data,
+    2,
+  );
 
   await validator({
     fields: ["writer"],

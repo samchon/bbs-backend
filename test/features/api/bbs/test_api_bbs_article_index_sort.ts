@@ -9,24 +9,27 @@ import { generate_random_article } from "./internal/generate_random_article";
 export const test_api_bbs_article_index_sort = async (
   connection: BbsApi.IConnection,
 ): Promise<void> => {
-  await ArrayUtil.asyncRepeat(REPEAT)(() =>
+  await ArrayUtil.asyncRepeat(REPEAT, () =>
     generate_random_article(connection),
   );
 
-  const validator = TestValidator.sort("questions.index")<
+  const validator = TestValidator.sort<
     IBbsArticle.ISummary,
     IBbsArticle.IRequest.SortableColumns,
     IPage.Sort<IBbsArticle.IRequest.SortableColumns>
-  >(async (input: IPage.Sort<IBbsArticle.IRequest.SortableColumns>) => {
-    const page: IPage<IBbsArticle.ISummary> =
-      await BbsApi.functional.bbs.articles.index(connection, {
-        body: {
-          limit: REPEAT,
-          sort: input,
-        },
-      });
-    return page.data;
-  });
+  >(
+    "questions.index",
+    async (input: IPage.Sort<IBbsArticle.IRequest.SortableColumns>) => {
+      const page: IPage<IBbsArticle.ISummary> =
+        await BbsApi.functional.bbs.articles.index(connection, {
+          body: {
+            limit: REPEAT,
+            sort: input,
+          },
+        });
+      return page.data;
+    },
+  );
 
   const components = [
     validator("created_at")(GaffComparator.dates((x) => x.created_at)),

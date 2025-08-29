@@ -16,9 +16,9 @@ export const test_api_bbs_article_comment_create = async (
   const body: IBbsArticleComment.ICreate = {
     writer: RandomGenerator.name(),
     password: RandomGenerator.alphaNumeric(8),
-    body: RandomGenerator.content()()(),
+    body: RandomGenerator.content(),
     format: "md",
-    files: ArrayUtil.repeat(randint(0, 3))(() => prepare_random_file()),
+    files: ArrayUtil.repeat(randint(0, 3), () => prepare_random_file()),
   };
   const comment: IBbsArticleComment =
     await BbsApi.functional.bbs.articles.comments.create(connection, {
@@ -26,7 +26,7 @@ export const test_api_bbs_article_comment_create = async (
       body,
     });
 
-  TestValidator.equals("create")({
+  const expected = {
     snapshots: [
       {
         format: body.format,
@@ -35,12 +35,13 @@ export const test_api_bbs_article_comment_create = async (
       },
     ],
     writer: body.writer,
-  })(comment);
+  };
+  TestValidator.equals("create", expected, comment);
 
   const read: IBbsArticleComment =
     await BbsApi.functional.bbs.articles.comments.at(connection, {
       articleId: article.id,
       id: comment.id,
     });
-  TestValidator.equals("read")(read)(comment);
+  TestValidator.equals("read", read, comment);
 };

@@ -11,7 +11,7 @@ export namespace BbsSetupWizard {
       );
     const execute = (type: string) => (argv: string) =>
       cp.execSync(`prisma migrate ${type} --schema=prisma/schema ${argv}`, {
-        stdio: "inherit",
+        stdio: "overlapped",
         cwd: BbsConfiguration.ROOT,
       });
     execute("reset")("--force");
