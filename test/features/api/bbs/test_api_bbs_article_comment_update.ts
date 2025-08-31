@@ -31,9 +31,7 @@ export const test_api_bbs_article_comment_update = async (
         body: i,
       });
     comment.snapshots.push(snapshot);
-    TestValidator.equals<
-      Pick<IBbsArticleComment.IUpdate, "format" | "body" | "files">
-    >(
+    TestValidator.equals(
       "snapshot",
       {
         format: i.format,

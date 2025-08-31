@@ -25,9 +25,7 @@ export const test_api_bbs_article_update = async (
         body: i,
       });
     article.snapshots.push(snapshot);
-    TestValidator.equals<
-      Pick<IBbsArticle.IUpdate, "format" | "title" | "body" | "files">
-    >(
+    TestValidator.equals(
       "snapshot",
       {
         format: i.format,
