@@ -1,8 +1,21 @@
+import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { Singleton } from "tstl";
 import typia from "typia";
+
+interface IEnvironments {
+  BBS_MODE: "local" | "dev" | "real";
+  BBS_API_PORT: `${number}`;
+  BBS_SYSTEM_PASSWORD: string;
+  BBS_SQLITE_FILE: string;
+}
+const environments = new Singleton(() => {
+  const env = dotenv.config();
+  dotenvExpand.expand(env);
+  return typia.assert<IEnvironments>(process.env);
+});
 
 /**
  * Global variables of the server.
@@ -12,9 +25,13 @@ import typia from "typia";
 export class BbsGlobal {
   public static testing: boolean = false;
 
-  public static readonly prisma: PrismaClient = new PrismaClient();
+  public static readonly prisma: PrismaClient = new PrismaClient({
+    adapter: new PrismaBetterSQLite3({
+      url: environments.get().BBS_SQLITE_FILE,
+    }),
+  });
 
-  public static get env(): BbsGlobal.IEnvironments {
+  public static get env(): IEnvironments {
     return environments.get();
   }
 
@@ -39,28 +56,7 @@ export class BbsGlobal {
     modeWrapper.value = mode;
   }
 }
-export namespace BbsGlobal {
-  export interface IEnvironments {
-    BBS_MODE: "local" | "dev" | "real";
-    BBS_API_PORT: `${number}`;
-    BBS_SYSTEM_PASSWORD: string;
-
-    BBS_POSTGRES_HOST: string;
-    BBS_POSTGRES_PORT: `${number}`;
-    BBS_POSTGRES_DATABASE: string;
-    BBS_POSTGRES_SCHEMA: string;
-    BBS_POSTGRES_USERNAME: string;
-    BBS_POSTGRES_USERNAME_READONLY: string;
-    BBS_POSTGRES_PASSWORD: string;
-  }
-}
-
 interface IMode {
   value?: "local" | "dev" | "real";
 }
 const modeWrapper: IMode = {};
-const environments = new Singleton(() => {
-  const env = dotenv.config();
-  dotenvExpand.expand(env);
-  return typia.assert<BbsGlobal.IEnvironments>(process.env);
-});

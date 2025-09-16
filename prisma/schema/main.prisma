@@ -1,10 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  engineType = "client"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:../bbs.db"
+  url      = env("BBS_SQLITE_FILE")
 }
 
 generator markdown {
