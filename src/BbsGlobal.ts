@@ -5,6 +5,8 @@ import dotenvExpand from "dotenv-expand";
 import { Singleton } from "tstl";
 import typia from "typia";
 
+import { BbsConfiguration } from "./BbsConfiguration";
+
 interface IEnvironments {
   BBS_MODE: "local" | "dev" | "real";
   BBS_API_PORT: `${number}`;
@@ -20,7 +22,7 @@ const prismaSingleton = new Singleton(
   () =>
     new PrismaClient({
       adapter: new PrismaBetterSQLite3({
-        url: BbsGlobal.env.BBS_SQLITE_FILE,
+        url: `${BbsConfiguration.ROOT}/prisma/bbs.db`,
       }),
     }),
 );
