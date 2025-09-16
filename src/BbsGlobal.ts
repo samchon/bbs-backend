@@ -11,11 +11,19 @@ interface IEnvironments {
   BBS_SYSTEM_PASSWORD: string;
   BBS_SQLITE_FILE: string;
 }
-const environments = new Singleton(() => {
+const envSingleton = new Singleton(() => {
   const env = dotenv.config();
   dotenvExpand.expand(env);
   return typia.assert<IEnvironments>(process.env);
 });
+const prismaSingleton = new Singleton(
+  () =>
+    new PrismaClient({
+      adapter: new PrismaBetterSQLite3({
+        url: BbsGlobal.env.BBS_SQLITE_FILE,
+      }),
+    }),
+);
 
 /**
  * Global variables of the server.
@@ -25,14 +33,12 @@ const environments = new Singleton(() => {
 export class BbsGlobal {
   public static testing: boolean = false;
 
-  public static readonly prisma: PrismaClient = new PrismaClient({
-    adapter: new PrismaBetterSQLite3({
-      url: environments.get().BBS_SQLITE_FILE,
-    }),
-  });
+  public static get prisma(): PrismaClient {
+    return prismaSingleton.get();
+  }
 
   public static get env(): IEnvironments {
-    return environments.get();
+    return envSingleton.get();
   }
 
   /**
@@ -43,7 +49,7 @@ export class BbsGlobal {
    *   - real: The server is for the real service.
    */
   public static get mode(): "local" | "dev" | "real" {
-    return (modeWrapper.value ??= environments.get().BBS_MODE);
+    return (modeWrapper.value ??= envSingleton.get().BBS_MODE);
   }
 
   /**
