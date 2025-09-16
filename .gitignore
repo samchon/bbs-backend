@@ -8,7 +8,5 @@ prisma/bbs.db
 prisma/bbs.db.-journal
 
 *.DS_Store
-package-lock.json
-pnpm-lock.yaml
 .npmrc
 .env

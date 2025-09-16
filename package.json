@@ -89,6 +89,7 @@
     "@nestjs/common": "^11.1.6",
     "@nestjs/core": "^11.1.6",
     "@nestjs/platform-fastify": "^11.1.6",
+    "@prisma/adapter-better-sqlite3": "^6.16.2",
     "@prisma/client": "^6.16.0",
     "bcryptjs": "^3.0.2",
     "commander": "10.0.0",
@@ -104,5 +105,8 @@
     "tstl": "^3.0.0",
     "typia": "^9.7.2",
     "uuid": "^10.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
   }
 }

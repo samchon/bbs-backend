@@ -76,14 +76,19 @@ export class BbsArticlesController {
    * @author Samchon
    */
   @core.TypedRoute.Post()
-  public create(
+  public async create(
     @Request() request: FastifyRequest,
     @core.TypedBody() body: IBbsArticle.ICreate,
   ): Promise<IBbsArticle> {
-    return BbsArticleProvider.create({
-      body,
-      ip: request.ip,
-    });
+    try {
+      return await BbsArticleProvider.create({
+        body,
+        ip: request.ip,
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   /**

@@ -1,8 +1,31 @@
+import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { Singleton } from "tstl";
 import typia from "typia";
+
+import { BbsConfiguration } from "./BbsConfiguration";
+
+interface IEnvironments {
+  BBS_MODE: "local" | "dev" | "real";
+  BBS_API_PORT: `${number}`;
+  BBS_SYSTEM_PASSWORD: string;
+  BBS_SQLITE_FILE: string;
+}
+const envSingleton = new Singleton(() => {
+  const env = dotenv.config();
+  dotenvExpand.expand(env);
+  return typia.assert<IEnvironments>(process.env);
+});
+const prismaSingleton = new Singleton(
+  () =>
+    new PrismaClient({
+      adapter: new PrismaBetterSQLite3({
+        url: `${BbsConfiguration.ROOT}/prisma/bbs.db`,
+      }),
+    }),
+);
 
 /**
  * Global variables of the server.
@@ -12,10 +35,12 @@ import typia from "typia";
 export class BbsGlobal {
   public static testing: boolean = false;
 
-  public static readonly prisma: PrismaClient = new PrismaClient();
+  public static get prisma(): PrismaClient {
+    return prismaSingleton.get();
+  }
 
-  public static get env(): BbsGlobal.IEnvironments {
-    return environments.get();
+  public static get env(): IEnvironments {
+    return envSingleton.get();
   }
 
   /**
@@ -26,7 +51,7 @@ export class BbsGlobal {
    *   - real: The server is for the real service.
    */
   public static get mode(): "local" | "dev" | "real" {
-    return (modeWrapper.value ??= environments.get().BBS_MODE);
+    return (modeWrapper.value ??= envSingleton.get().BBS_MODE);
   }
 
   /**
@@ -39,28 +64,7 @@ export class BbsGlobal {
     modeWrapper.value = mode;
   }
 }
-export namespace BbsGlobal {
-  export interface IEnvironments {
-    BBS_MODE: "local" | "dev" | "real";
-    BBS_API_PORT: `${number}`;
-    BBS_SYSTEM_PASSWORD: string;
-
-    BBS_POSTGRES_HOST: string;
-    BBS_POSTGRES_PORT: `${number}`;
-    BBS_POSTGRES_DATABASE: string;
-    BBS_POSTGRES_SCHEMA: string;
-    BBS_POSTGRES_USERNAME: string;
-    BBS_POSTGRES_USERNAME_READONLY: string;
-    BBS_POSTGRES_PASSWORD: string;
-  }
-}
-
 interface IMode {
   value?: "local" | "dev" | "real";
 }
 const modeWrapper: IMode = {};
-const environments = new Singleton(() => {
-  const env = dotenv.config();
-  dotenvExpand.expand(env);
-  return typia.assert<BbsGlobal.IEnvironments>(process.env);
-});
