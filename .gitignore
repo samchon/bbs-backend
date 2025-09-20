@@ -4,8 +4,7 @@ lib/
 node_modules/
 prisma/migrations
 prisma/schema/migrations
-prisma/bbs.db
-prisma/bbs.db.-journal
+prisma/db.sqlite
 
 *.DS_Store
 .npmrc

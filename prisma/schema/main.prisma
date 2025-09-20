@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("BBS_SQLITE_FILE")
+  url      = "file:../db.sqlite"
 }
 
 generator markdown {

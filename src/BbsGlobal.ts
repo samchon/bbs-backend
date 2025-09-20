@@ -11,7 +11,6 @@ interface IEnvironments {
   BBS_MODE: "local" | "dev" | "real";
   BBS_API_PORT: `${number}`;
   BBS_SYSTEM_PASSWORD: string;
-  BBS_SQLITE_FILE: string;
 }
 const envSingleton = new Singleton(() => {
   const env = dotenv.config();
@@ -22,7 +21,7 @@ const prismaSingleton = new Singleton(
   () =>
     new PrismaClient({
       adapter: new PrismaBetterSQLite3({
-        url: `${BbsConfiguration.ROOT}/prisma/bbs.db`,
+        url: `${BbsConfiguration.ROOT}/prisma/db.sqlite`,
       }),
     }),
 );
