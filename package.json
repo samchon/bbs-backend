@@ -86,9 +86,9 @@
   "dependencies": {
     "@nestia/core": "^8.1.0",
     "@nestia/fetcher": "^8.1.0",
-    "@nestjs/common": "^11.1.6",
-    "@nestjs/core": "^11.1.6",
-    "@nestjs/platform-fastify": "^11.1.6",
+    "@nestjs/common": "^11.1.7",
+    "@nestjs/core": "^11.1.7",
+    "@nestjs/platform-fastify": "^11.1.7",
     "@prisma/adapter-better-sqlite3": "^6.17.1",
     "@prisma/client": "^6.17.1",
     "bcryptjs": "^3.0.2",
