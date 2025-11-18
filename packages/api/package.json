@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/samchon/bbs-backend#readme",
   "dependencies": {
-    "@nestia/fetcher": "^9.0.1",
+    "@nestia/fetcher": "^9.0.3",
     "typia": "^10.0.2"
   },
   "include": [
