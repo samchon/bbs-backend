@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+import { DMMF } from "@prisma/client/runtime/client";
+import { Prisma } from "@prisma/sdk";
 
 import { IRecordMerge } from "@samchon/bbs-api/lib/structures/common/IRecordMerge";
 
@@ -14,10 +15,10 @@ export namespace EntityMergeProvider {
     ) =>
     async (input: IRecordMerge): Promise<void> => {
       // VALIDATE TABLE
-      const primary: Prisma.DMMF.Field | undefined =
-        Prisma.dmmf.datamodel.models
-          .find((model) => model.name === table)
-          ?.fields.find((field) => field.isId === true);
+      const dmmf = await EntityUtil.getMetadata();
+      const primary: DMMF.Field | undefined = dmmf.datamodel.models
+        .find((model) => model.name === table)
+        ?.fields.find((field) => field.isId === true);
       if (primary === undefined) throw ErrorProvider.internal("Invalid table.");
 
       // FIND MATCHED RECORDS
@@ -37,6 +38,6 @@ export namespace EntityMergeProvider {
         });
 
       // DO MERGE
-      await EntityUtil.merge(BbsGlobal.prisma)(table)(input);
+      await EntityUtil.merge(table)(input);
     };
 }

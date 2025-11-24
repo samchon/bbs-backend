@@ -5,6 +5,7 @@ node_modules/
 prisma/migrations
 prisma/schema/migrations
 prisma/db.sqlite
+src/prisma
 
 *.DS_Store
 .npmrc

@@ -1,5 +1,5 @@
 import { ExceptionManager } from "@nestia/core";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/sdk";
 import fs from "fs";
 import path from "path";
 
