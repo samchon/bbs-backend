@@ -1,5 +1,5 @@
-import { PrismaBetterSQLite3 } from "@prisma/adapter-better-sqlite3";
-import { PrismaClient } from "@prisma/client";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaClient } from "@prisma/sdk";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
 import { Singleton } from "tstl";
@@ -20,7 +20,7 @@ const envSingleton = new Singleton(() => {
 const prismaSingleton = new Singleton(
   () =>
     new PrismaClient({
-      adapter: new PrismaBetterSQLite3({
+      adapter: new PrismaBetterSqlite3({
         url: `${BbsConfiguration.ROOT}/prisma/db.sqlite`,
       }),
     }),
