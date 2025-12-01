@@ -85,8 +85,8 @@ importers:
         specifier: ^9.1.1
         version: 9.1.1(@nestia/core@9.1.1(@nestia/fetcher@9.1.1)(@nestjs/common@11.1.9(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9(@nestjs/common@11.1.9(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)(typia@10.1.0(@types/node@20.19.15)(typescript@5.9.3)))(@types/node@20.19.15)(typescript@5.9.3)
       '@nestjs/cli':
-        specifier: ^11.0.13
-        version: 11.0.13(@types/node@20.19.15)(webpack-cli@5.1.4)
+        specifier: ^11.0.14
+        version: 11.0.14(@types/node@20.19.15)(webpack-cli@5.1.4)
       '@rollup/plugin-terser':
         specifier: ^0.4.4
         version: 0.4.4(rollup@4.50.2)
@@ -617,8 +617,8 @@ packages:
     peerDependencies:
       '@nestia/core': '>=9.1.1'
 
-  '@nestjs/cli@11.0.13':
-    resolution: {integrity: sha512-cPDDahP/IPDcqraIHjUZQXPupYQDoZlBRFOjgM76vVfcVnWQ45TUaat0tgR2ptfeQG0gY2kwtm4/JYwe5xu/8A==}
+  '@nestjs/cli@11.0.14':
+    resolution: {integrity: sha512-YwP03zb5VETTwelXU+AIzMVbEZKk/uxJL+z9pw0mdG9ogAtqZ6/mpmIM4nEq/NU8D0a7CBRLcMYUmWW/55pfqw==}
     engines: {node: '>= 20.11'}
     hasBin: true
     peerDependencies:
@@ -4307,7 +4307,7 @@ snapshots:
       - '@types/node'
       - typescript
 
-  '@nestjs/cli@11.0.13(@types/node@20.19.15)(webpack-cli@5.1.4)':
+  '@nestjs/cli@11.0.14(@types/node@20.19.15)(webpack-cli@5.1.4)':
     dependencies:
       '@angular-devkit/core': 19.2.19(chokidar@4.0.3)
       '@angular-devkit/schematics': 19.2.19(chokidar@4.0.3)
