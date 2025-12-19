@@ -63,8 +63,8 @@ importers:
         specifier: ^0.5.19
         version: 0.5.21
       tgrid:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.1
+        version: 1.2.1
       tstl:
         specifier: ^3.0.0
         version: 3.0.0
@@ -3448,8 +3448,8 @@ packages:
   text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
 
-  tgrid@1.2.0:
-    resolution: {integrity: sha512-AWARbZWFzq81nQz1HX3l+7wBOdtYfG7BcjXgiD7trm8qInv5PKston0NW8+S0A9ImZ6LuqKsSKPO8+ec8JqsCA==}
+  tgrid@1.2.1:
+    resolution: {integrity: sha512-8E37I7G5RiMlwNmsiA6y/FAiKTEGU1Hg4t0Set0WAcRdMnLugXzjRx9bBduF1YROT/hdcS8BNefSPKNHmwYtYA==}
 
   thread-stream@3.1.0:
     resolution: {integrity: sha512-OqyPZ9u96VohAyMfJykzmivOrY2wfMSf3C5TtFJVgN+Hm6aj+voFhlK+kZEIv2FBh1X6Xp3DlnCOfEQ3B2J86A==}
@@ -4243,7 +4243,7 @@ snapshots:
   '@nestia/benchmark@9.1.1':
     dependencies:
       '@nestia/fetcher': 9.1.1
-      tgrid: 1.2.0
+      tgrid: 1.2.1
       tstl: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -4262,7 +4262,7 @@ snapshots:
       raw-body: 2.5.3
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
-      tgrid: 1.2.0
+      tgrid: 1.2.1
       typia: 10.1.0(@types/node@20.19.15)(typescript@5.9.3)
       ws: 7.5.10
     transitivePeerDependencies:
@@ -7302,7 +7302,7 @@ snapshots:
 
   text-table@0.2.0: {}
 
-  tgrid@1.2.0:
+  tgrid@1.2.1:
     dependencies:
       '@types/node': 20.19.15
       '@types/websocket': 1.0.10
