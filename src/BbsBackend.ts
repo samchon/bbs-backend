@@ -19,7 +19,11 @@ export class BbsBackend {
     );
 
     // DO OPEN
-    this.application_.enableCors();
+    this.application_.enableCors({
+      origin: true,
+      methods: "*",
+      allowedHeaders: "*",
+    });
     await this.application_.listen(BbsConfiguration.API_PORT(), "0.0.0.0");
   }
 
