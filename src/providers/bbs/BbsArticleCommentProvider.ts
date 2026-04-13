@@ -54,7 +54,16 @@ export namespace BbsArticleCommentProvider {
       transform: json.transform,
     })({
       where: {
-        AND: [{ deleted_at: null }, ...search(props.body.search ?? {})],
+        AND: [
+          {
+            deleted_at: null,
+            article: {
+              id: props.article.id,
+              deleted_at: null,
+            },
+          },
+          ...search(props.body.search ?? {}),
+        ],
       },
       orderBy: props.body.sort?.length
         ? PaginationUtil.orderBy(orderBy)(props.body.sort)
